@@ -74,28 +74,24 @@
 
 ---
 
-## 📊 GitHub Summary
-
-![](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=CapedCrusader77&theme=github_dark)
-
-![](https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=CapedCrusader77&theme=github_dark)
-
-![](https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=CapedCrusader77&theme=github_dark)
-
----
-
-## 🔥 GitHub Streak
+## 📊 GitHub Analytics
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=CapedCrusader77&theme=tokyonight" />
+  <img width="49%" src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117" />
+
+  <img width="49%" src="https://github-readme-streak-stats.herokuapp.com/?user=CapedCrusader77&theme=tokyonight&hide_border=true&background=0D1117" />
+</p>
+
+<p align="center">
+  <img width="40%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117" />
 </p>
 
 ---
 
-## 🏆 GitHub Trophies
+## 🏆 GitHub Achievements
 
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=CapedCrusader77&theme=radical&no-frame=true&margin-w=10"/>
+  <img src="https://github-profile-trophy.vercel.app/?username=CapedCrusader77&theme=tokyonight&no-frame=true&row=1&column=6"/>
 </p>
 
 ---
