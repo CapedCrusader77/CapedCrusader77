@@ -77,17 +77,23 @@
 ## 📊 GitHub Analytics
 
 <p align="center">
-  <img width="90%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=CapedCrusader77&theme=tokyonight" />
+  <img width="95%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=CapedCrusader77&theme=tokyonight&cache_seconds=1800" />
 </p>
 
 <p align="center">
-  <img width="44%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=CapedCrusader77&theme=tokyonight" />
+  <img width="47%" src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=1800"/>
 
-  <img width="44%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=CapedCrusader77&theme=tokyonight" />
+  <img width="47%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&theme=tokyonight&hide_border=true&cache_seconds=1800"/>
 </p>
 
 <p align="center">
-  <img width="60%" src="https://github-readme-streak-stats.herokuapp.com/?user=CapedCrusader77&theme=tokyonight&hide_border=true" />
+  <img width="47%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=CapedCrusader77&theme=tokyonight&cache_seconds=1800" />
+
+  <img width="47%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=CapedCrusader77&theme=tokyonight&cache_seconds=1800" />
+</p>
+
+<p align="center">
+  <img width="65%" src="https://streak-stats.demolab.com/?user=CapedCrusader77&theme=tokyonight&hide_border=true"/>
 </p>
 
 ---
@@ -112,6 +118,14 @@
 ## 💡 Quote
 
 > "Innovate. Secure. Automate. Evolve."
+
+---
+
+## 📈 Contribution Graph
+
+<p align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=CapedCrusader77&theme=tokyo-night&hide_border=true"/>
+</p>
 
 ---
 
