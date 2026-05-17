@@ -1,120 +1,113 @@
 <p align="center">
-  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=250&color=0:6A5ACD,100:00BFFF&text=GOKUL%20A&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI%20%7C%20Robotics%20%7C%20Cybersecurity%20%7C%20Data%20Science&descAlignY=60&descSize=22"/>
+  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=280&color=0:0F2027,50:203A43,100:2C5364&text=GOKUL%20A&fontSize=65&fontColor=00F7FF&animation=fadeIn&fontAlignY=38&desc=AI%20•%20ROBOTICS%20•%20CYBERSECURITY%20•%20DATA%20SCIENCE&descAlignY=60&descSize=22"/>
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00F7FF&center=true&vCenter=true&width=700&lines=AI+%26+Robotics+Enthusiast;Cybersecurity+Explorer;Data+Science+Learner;Cloud+Computing+Explorer;Building+Future+Tech+Projects" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=24&pause=1000&color=00F7FF&center=true&vCenter=true&width=800&lines=AI+%26+Robotics+Explorer;Cybersecurity+Enthusiast;Cloud+Computing+Learner;Building+Future+Tech+Projects;Always+Learning+New+Technologies" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Focus-AI%20%26%20Robotics-00F7FF?style=for-the-badge&logo=openai&logoColor=black"/>
+  
+  <img src="https://img.shields.io/badge/CyberSecurity-00FF9C?style=for-the-badge&logo=hackthebox&logoColor=black"/>
+  
+  <img src="https://img.shields.io/badge/Data%20Science-B026FF?style=for-the-badge&logo=anaconda&logoColor=white"/>
+  
+  <img src="https://img.shields.io/badge/Cloud-0080FF?style=for-the-badge&logo=googlecloud&logoColor=white"/>
 </p>
 
 ---
 
-## 🧑‍💻 About Me
+# 👨‍💻 About Me
 
-- 🤖 Passionate about AI & Robotics
-- 🔐 Interested in Cyber Security
-- 📊 Exploring Data Science
-- ☁️ Learning Cloud Computing
-- 🚀 Love building innovative tech projects
-- 🌱 Continuously learning new technologies
-- 👥 Open to collaborating on interesting technical projects
+```yaml
+Name: Gokul A
+
+Interests:
+  - Artificial Intelligence
+  - Robotics
+  - Cyber Security
+  - Data Science
+  - Cloud Computing
+
+Currently Learning:
+  - Advanced AI Systems
+  - Cybersecurity Tools
+  - Cloud Technologies
+
+Open To:
+  - Technical Collaborations
+  - Innovative Projects
+  - Open Source Contributions
+```
 
 ---
 
-## 🌐 Connect With Me
+# 🌐 Connect With Me
 
-<p align="left">
+<p align="center">
   <a href="https://www.linkedin.com/in/gokul-a-2726a4391/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
+    <img src="https://img.shields.io/badge/LINKEDIN-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
   </a>
 
   <a href="https://github.com/CapedCrusader77" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-121013?style=for-the-badge&logo=github&logoColor=white"/>
+    <img src="https://img.shields.io/badge/GITHUB-121013?style=for-the-badge&logo=github&logoColor=white"/>
   </a>
 </p>
 
 ---
 
-## ⚡ Tech Stack
+# ⚡ Tech Arsenal
 
-<p align="left">
-
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/AI-FF6F00?style=for-the-badge&logo=openai&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/Robotics-0A66C2?style=for-the-badge&logo=robotframework&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/Cyber%20Security-000000?style=for-the-badge&logo=hackthebox&logoColor=green"/>
-
-  <img src="https://img.shields.io/badge/Data%20Science-8A2BE2?style=for-the-badge&logo=anaconda&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
-
-  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/>
-
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/GitHub-121013?style=for-the-badge&logo=github&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white"/>
-
-  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white"/>
-
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,cpp,c,js,react,nodejs,flask,mysql,mongodb,docker,linux,git,github,tensorflow,opencv,vscode&theme=dark" />
 </p>
 
 ---
 
-## 📊 GitHub Analytics
+# 📊 GitHub Analytics
 
 <p align="center">
-  <img width="90%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=CapedCrusader77&theme=github_dark" />
+  <img width="95%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=CapedCrusader77&theme=tokyonight" />
 </p>
 
 <p align="center">
-  <img width="44%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=CapedCrusader77&theme=github_dark" />
-
-  <img width="44%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=CapedCrusader77&theme=github_dark" />
+  <img width="47%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=CapedCrusader77&theme=tokyonight" />
+  
+  <img width="47%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=CapedCrusader77&theme=tokyonight" />
 </p>
 
 <p align="center">
-  <img width="60%" src="https://github-readme-streak-stats.herokuapp.com/?user=CapedCrusader77&theme=tokyonight&hide_border=true" />
-</p>
-
----
-
-## 🏆 GitHub Achievements
-
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=CapedCrusader77&theme=tokyonight&no-frame=true&row=1&column=6"/>
+  <img width="70%" src="https://github-readme-streak-stats.herokuapp.com/?user=CapedCrusader77&theme=tokyonight&hide_border=true&background=0D1117&stroke=00F7FF&ring=00F7FF&fire=FF00FF&currStreakLabel=00F7FF" />
 </p>
 
 ---
 
-## 🚀 Goals
+# 🏆 Achievements
 
-- Build impactful AI & Robotics projects
-- Learn advanced Cybersecurity techniques
-- Master Cloud technologies
-- Contribute to innovative open-source projects
+<p align="center">
+  <img src="https://github-profile-trophy.vercel.app/?username=CapedCrusader77&theme=algolia&no-frame=true&row=1&column=7"/>
+</p>
 
 ---
 
-## 💡 Quote
+# 🚀 Mission
 
-> "Innovate. Secure. Automate. Evolve."
+- 🤖 Build futuristic AI & Robotics projects
+- 🔐 Explore advanced Cybersecurity concepts
+- ☁️ Master Cloud Infrastructure
+- 🌍 Contribute to impactful Open Source projects
+
+---
+
+# 💡 Philosophy
+
+<p align="center">
+  <h3>Innovate • Secure • Automate • Evolve</h3>
+</p>
 
 ---
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=CapedCrusader77&label=Profile%20Views&color=0e75b6&style=flat" />
+  <img src="https://komarev.com/ghpvc/?username=CapedCrusader77&label=PROFILE+VIEWS&color=00F7FF&style=for-the-badge" />
 </p>
