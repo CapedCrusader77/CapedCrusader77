@@ -55,16 +55,16 @@
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&theme=tokyonight" height="180"/>
+  <img src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&theme=radical" />
 
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&theme=tokyonight" height="180"/>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&theme=radical" />
 </p>
 ---
 
 ## 🔥 GitHub Streak
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=CapedCrusader77&theme=tokyonight"/>
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=CapedCrusader77&theme=radical" />
 </p>
 ---
 
