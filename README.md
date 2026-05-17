@@ -62,15 +62,13 @@ AI & Robotics Enthusiast | Cybersecurity Explorer | Data Science Learner
 
 ---
 
-## 📊 GitHub Stats
+## 📊 GitHub Summary
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&theme=tokyonight" />
-</p>
+![](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=CapedCrusader77&theme=github_dark)
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&theme=tokyonight" />
-</p>
+![](https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=CapedCrusader77&theme=github_dark)
+
+![](https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=CapedCrusader77&theme=github_dark)
 
 ---
 
