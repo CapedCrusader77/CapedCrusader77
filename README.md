@@ -1,8 +1,6 @@
-<h1 align="center">Hi 👋, I'm Gokul A</h1>
-
-<h3 align="center">
-AI & Robotics Enthusiast | Cybersecurity Explorer | Data Science Learner
-</h3>
+<p align="center">
+  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=250&color=0:6A5ACD,100:00BFFF&text=GOKUL%20A&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI%20%7C%20Robotics%20%7C%20Cybersecurity%20%7C%20Data%20Science&descAlignY=60&descSize=22"/>
+</p>
 
 <p align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00F7FF&center=true&vCenter=true&width=700&lines=AI+%26+Robotics+Enthusiast;Cybersecurity+Explorer;Data+Science+Learner;Cloud+Computing+Explorer;Building+Future+Tech+Projects" />
