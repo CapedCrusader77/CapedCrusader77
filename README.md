@@ -39,10 +39,8 @@
 
 # ⚡ Tech Stack
 
-<p align="left">
-
-<img src="https://skillicons.dev/icons?i=python,cpp,react,flask,mysql,linux,git,github,docker,tensorflow,opencv"/>
-
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,cpp,react,flask,mysql,linux,git,github,docker,tensorflow,opencv" />
 </p>
 
 ---
@@ -50,35 +48,27 @@
 # 📊 GitHub Analytics
 
 <p align="center">
-  <img width="95%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=CapedCrusader77&theme=tokyonight"/>
+  <img width="95%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=CapedCrusader77&theme=tokyonight" />
 </p>
 
 <p align="center">
-  <img width="47%" src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&theme=tokyonight&hide_border=true"/>
+  <img width="47%" src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&theme=tokyonight&hide_border=true" />
 
-  <img width="47%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&theme=tokyonight&hide_border=true"/>
+  <img width="47%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&theme=tokyonight&hide_border=true" />
 </p>
 
 <p align="center">
-  <img width="65%" src="https://streak-stats.demolab.com?user=CapedCrusader77&theme=tokyonight&hide_border=true"/>
+  <img width="65%" src="https://streak-stats.demolab.com?user=CapedCrusader77&theme=tokyonight&hide_border=true" />
 </p>
 
 ---
 
-# 🏅 Achievements
+# 🏅 GitHub Overview
 
 <p align="center">
+  <img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=CapedCrusader77&theme=tokyonight" />
 
-<img src="https://img.shields.io/badge/Open%20Source-Contributor-blue?style=for-the-badge&logo=github"/>
-
-<img src="https://img.shields.io/badge/AI-Enthusiast-orange?style=for-the-badge&logo=openai"/>
-
-<img src="https://img.shields.io/badge/Cybersecurity-Learner-black?style=for-the-badge&logo=hackthebox"/>
-
-<img src="https://img.shields.io/badge/Cloud-Explorer-4285F4?style=for-the-badge&logo=googlecloud"/>
-
-<img src="https://img.shields.io/badge/Data%20Science-Learner-purple?style=for-the-badge&logo=anaconda"/>
-
+  <img width="49%" src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=CapedCrusader77&theme=tokyonight&utcOffset=5.5" />
 </p>
 
 ---
@@ -86,7 +76,7 @@
 # 📈 Contribution Graph
 
 <p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=CapedCrusader77&theme=tokyo-night&hide_border=true"/>
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=CapedCrusader77&theme=tokyo-night&hide_border=true" />
 </p>
 
 ---
@@ -109,6 +99,5 @@
 # 👀 Profile Views
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=CapedCrusader77&label=Profile%20Views&color=0e75b6&style=for-the-badge"/>
+  <img src="https://komarev.com/ghpvc/?username=CapedCrusader77&label=Profile%20Views&color=0e75b6&style=for-the-badge" />
 </p>
-
