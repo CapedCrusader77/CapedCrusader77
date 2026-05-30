@@ -65,6 +65,24 @@
 
 ---
 
+# 🏅 Achievements
+
+<p align="center">
+
+<img src="https://img.shields.io/badge/Open%20Source-Contributor-blue?style=for-the-badge&logo=github"/>
+
+<img src="https://img.shields.io/badge/AI-Enthusiast-orange?style=for-the-badge&logo=openai"/>
+
+<img src="https://img.shields.io/badge/Cybersecurity-Learner-black?style=for-the-badge&logo=hackthebox"/>
+
+<img src="https://img.shields.io/badge/Cloud-Explorer-4285F4?style=for-the-badge&logo=googlecloud"/>
+
+<img src="https://img.shields.io/badge/Data%20Science-Learner-purple?style=for-the-badge&logo=anaconda"/>
+
+</p>
+
+---
+
 # 📈 Contribution Graph
 
 <p align="center">
@@ -94,9 +112,3 @@
   <img src="https://komarev.com/ghpvc/?username=CapedCrusader77&label=Profile%20Views&color=0e75b6&style=for-the-badge"/>
 </p>
 
----
-
-<p align="center">
-  <b>Thanks for visiting my profile! ⭐</b>
-</p>
-```
