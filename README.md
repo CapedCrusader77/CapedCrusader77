@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00F7FF&center=true&vCenter=true&width=700&lines=AI+%26+Robotics+Enthusiast;Cybersecurity+Explorer;Data+Science+Learner;Cloud+Computing+Explorer;Building+Future+Tech+Projects" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&pause=1000&color=00F7FF&center=true&vCenter=true&width=700&lines=AI+%26+Robotics+Enthusiast;Cybersecurity+Explorer;Data+Science+Learner;Cloud+Computing+Explorer;Building+Future+Tech+Projects"/>
 </p>
 
 ---
@@ -15,9 +15,9 @@
 - 🔐 Interested in Cybersecurity
 - 📊 Exploring Data Science
 - ☁️ Learning Cloud Computing
-- 🚀 Building innovative tech projects
+- 🚀 Love building innovative tech projects
 - 🌱 Continuously learning new technologies
-- 👥 Open to collaboration and open-source contributions
+- 👥 Open to collaborating on technical projects
 
 ---
 
@@ -65,14 +65,6 @@
 
 ---
 
-# 🏆 GitHub Achievements
-
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=CapedCrusader77&theme=algolia&no-frame=true&no-bg=true&margin-w=10&row=1&column=7" />
-</p>
-
----
-
 # 📈 Contribution Graph
 
 <p align="center">
@@ -81,13 +73,12 @@
 
 ---
 
-# 🚀 Current Focus
+# 🚀 Goals
 
-- Artificial Intelligence
-- Robotics Automation
-- Cybersecurity Research
-- Cloud Computing
-- Open Source Contributions
+- Build impactful AI & Robotics projects
+- Learn advanced Cybersecurity techniques
+- Master Cloud technologies
+- Contribute to innovative open-source projects
 
 ---
 
@@ -106,10 +97,6 @@
 ---
 
 <p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=CapedCrusader77&theme=tokyonight"/>
-</p>
-
-<p align="center">
-  ⭐ Thanks for visiting my profile!
+  <b>Thanks for visiting my profile! ⭐</b>
 </p>
 ```
