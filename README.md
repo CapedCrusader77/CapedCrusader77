@@ -5,7 +5,7 @@
 
 <!-- typing animation -->
 <a href="https://github.com/CapedCrusader77">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=900&color=00E5FF&center=true&vCenter=true&width=700&lines=Computer+Science+Engineering+(AI+%26+Robotics);Building+intelligent+systems+that+see%2C+think+and+move;Machine+Learning+%7C+Computer+Vision+%7C+Embedded+AI" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=3000&pause=900&color=00E5FF&center=true&vCenter=true&width=700&lines=Computer+Science+Engineering+(AI+%26+Robotics);Building+intelligent+systems+that+see%2C+think+and+move;Machine+Learning+%7C+Cyber+Security+%7C+Embedded+AI" />
 </a>
 
 <br/>
