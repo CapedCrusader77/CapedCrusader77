@@ -19,6 +19,33 @@
 
 <img width="100%" src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" />
 
+<!-- ================= VISUAL SHOWCASE (NEW) ================= -->
+## 🛠️ Systems in Motion
+
+<div align="center">
+  <table border="0">
+    <tr>
+      <td width="50%" align="center">
+        <b>Autonomous Navigation (SLAM)</b><br/>
+        <!-- Generate this GIF and add link here -->
+        <img src="https://via.placeholder.com/400x225.png?text=Generate+SLAM+GIF" width="100%" alt="ROS SLAM Demo" />
+      </td>
+      <td width="50%" align="center">
+        <b>Real-time Object Detection (Edge AI)</b><br/>
+        <!-- Generate this GIF and add link here -->
+        <img src="https://via.placeholder.com/400x225.png?text=Generate+Inference+GIF" width="100%" alt="Inference Demo" />
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><i>Custom ROS2 navigation stack running on a diff-drive robot.</i></td>
+      <td align="center"><i>TensorRT optimized YOLOv8 achieving 45+ FPS on Jetson Nano.</i></td>
+    </tr>
+  </table>
+</div>
+
+<img width="100%" src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" />
+
+
 <!-- ================= ABOUT ================= -->
 ## whoami
 
@@ -32,7 +59,9 @@
         def mission(self) -> str:
             return "Teaching machines to perceive, decide and act — reliably."
 
-**Interests** — Artificial Intelligence · Machine Learning · Computer Vision · Robotics · Cloud Computing · Cybersecurity
+<br/>
+
+> Interests — Artificial Intelligence · Machine Learning · Computer Vision · Robotics · Cloud Computing · Cybersecurity
 
 <img width="100%" src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" />
 
@@ -42,31 +71,37 @@
 <div align="center">
 
 <b>Languages</b><br/>
-<img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" />
-<img src="https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white" />
-<img src="https://img.shields.io/badge/C-A8B9CC?style=flat-square&logo=c&logoColor=black" />
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" />
-<img src="https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=mysql&logoColor=white" />
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+<img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white" />
+<img src="https://img.shields.io/badge/C-A8B9CC?style=for-the-badge&logo=c&logoColor=black" />
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+<img src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+
+<br/>
 
 <b>AI / ML / Vision</b><br/>
-<img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" />
-<img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" />
-<img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white" />
-<img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" />
-<img src="https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white" />
-<img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white" />
+<img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" />
+<img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" />
+<img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" />
+<img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white" />
+<img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" />
+<img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" />
+
+<br/>
 
 <b>Robotics & Systems</b><br/>
-<img src="https://img.shields.io/badge/ROS-22314E?style=flat-square&logo=ros&logoColor=white" />
-<img src="https://img.shields.io/badge/Arduino-00979D?style=flat-square&logo=arduino&logoColor=white" />
-<img src="https://img.shields.io/badge/Raspberry%20Pi-A22846?style=flat-square&logo=raspberrypi&logoColor=white" />
-<img src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black" />
+<img src="https://img.shields.io/badge/ROS-22314E?style=for-the-badge&logo=ros&logoColor=white" />
+<img src="https://img.shields.io/badge/Arduino-00979D?style=for-the-badge&logo=arduino&logoColor=white" />
+<img src="https://img.shields.io/badge/Raspberry%20Pi-A22846?style=for-the-badge&logo=raspberrypi&logoColor=white" />
+<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" />
+
+<br/>
 
 <b>Web & Cloud</b><br/>
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" />
-<img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white" />
-<img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />
-<img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" />
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+<img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" />
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
 
 <br/><br/>
 
@@ -81,15 +116,24 @@
 
 <div align="center">
 
-<img width="49%" src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&count_private=true&include_all_commits=true&theme=react&bg_color=0D1117&title_color=00E5FF&icon_color=00E5FF&text_color=C9D1D9&hide_border=true" />
-<img width="49%" src="https://github-readme-streak-stats.herokuapp.com/?user=CapedCrusader77&theme=react&background=0D1117&ring=00E5FF&fire=00E5FF&currStreakLabel=00E5FF&hide_border=true" />
-
-<img width="41%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&langs_count=8&theme=react&bg_color=0D1117&title_color=00E5FF&text_color=C9D1D9&hide_border=true" />
-<img width="57%" src="https://github-readme-activity-graph.vercel.app/graph?username=CapedCrusader77&theme=react-dark&bg_color=0D1117&color=00E5FF&line=00E5FF&point=FFFFFF&area=true&hide_border=true" />
+<!-- Trophies (Ranked by weight) -->
+<img src="https://github-profile-trophy.vercel.app/?username=CapedCrusader77&theme=algolia&no-frame=true&no-bg=true&column=7&margin-w=8&margin-h=8" />
 
 <br/><br/>
 
-<img src="https://github-profile-trophy.vercel.app/?username=CapedCrusader77&theme=algolia&no-frame=true&no-bg=true&column=7&margin-w=8&margin-h=8" />
+<!-- Main Stats Horizontal Layout -->
+<table border="0">
+  <tr>
+    <td align="center">
+      <img src="https://github-readme-stats.vercel.app/api?username=CapedCrusader77&show_icons=true&count_private=true&include_all_commits=true&theme=react&bg_color=0D1117&title_color=00E5FF&icon_color=00E5FF&text_color=C9D1D9&hide_border=true&border_radius=10" alt="Core Stats" />
+    </td>
+    <td align="center">
+      <img src="https://github-readme-streak-stats.herokuapp.com/?user=CapedCrusader77&theme=react&background=0D1117&ring=00E5FF&fire=00E5FF&currStreakLabel=00E5FF&hide_border=true&border_radius=10" alt="Streak Stats" />
+    </td>
+  </tr>
+</table>
+
+<img width="70%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CapedCrusader77&layout=compact&langs_count=8&theme=react&bg_color=0D1117&title_color=00E5FF&text_color=C9D1D9&hide_border=true&border_radius=10" />
 
 <br/><br/>
 
@@ -108,8 +152,8 @@
 
 <div align="center">
 
-<a href="https://github.com/CapedCrusader77/REPO-ONE"><img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=CapedCrusader77&repo=REPO-ONE&theme=react&bg_color=0D1117&title_color=00E5FF&hide_border=true" /></a>
-<a href="https://github.com/CapedCrusader77/REPO-TWO"><img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=CapedCrusader77&repo=REPO-TWO&theme=react&bg_color=0D1117&title_color=00E5FF&hide_border=true" /></a>
+<a href="https://github.com/CapedCrusader77/REPO-ONE"><img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=CapedCrusader77&repo=REPO-ONE&theme=react&bg_color=0D1117&title_color=00E5FF&hide_border=true&border_radius=10" /></a>
+<a href="https://github.com/CapedCrusader77/REPO-TWO"><img width="49%" src="https://github-readme-stats.vercel.app/api/pin/?username=CapedCrusader77&repo=REPO-TWO&theme=react&bg_color=0D1117&title_color=00E5FF&hide_border=true&border_radius=10" /></a>
 
 </div>
 
