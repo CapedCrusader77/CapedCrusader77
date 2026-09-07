@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/CapedCrusader77/CapedCrusader77/feat/neural-control-lab/capedcrusader77-neural-lab.gif" alt="CapedCrusader77 - Neural Control Lab Interface" width="100%" />
+  <img src="https://raw.githubusercontent.com/CapedCrusader77/CapedCrusader77/main/capedcrusader77-neural-lab.gif" alt="CapedCrusader77 - Neural Control Lab Interface" width="100%" />
 
   <br /><br />
 
