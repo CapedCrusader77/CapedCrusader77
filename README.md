@@ -1,7 +1,7 @@
 <!--
   github.com/CapedCrusader77 - profile readme
   Neural Control Lab interface architecture
-  All components rendered as high-performance, modular cyber animated GIFs
+  All components rendered as high-performance, modular cyber animated GIFs with 100% real data
 -->
 
 <p align="center">
@@ -10,10 +10,10 @@
 
 <p align="center">
   <code>[ NEURAL CORE: ONLINE ]</code> &nbsp;•&nbsp;
-  <code>[ ROS 2 // ACTIVE ]</code> &nbsp;•&nbsp;
-  <code>[ EDGE INFERENCE: 3.2ms ]</code> &nbsp;•&nbsp;
-  <code>[ CUDA 12.4 ]</code> &nbsp;•&nbsp;
-  <code>[ BUILD 077 ]</code>
+  <code>[ REPOS: 15 PUBLIC ]</code> &nbsp;•&nbsp;
+  <code>[ CONTRIBUTIONS: 264 ]</code> &nbsp;•&nbsp;
+  <code>[ IIT MADRAS ]</code> &nbsp;•&nbsp;
+  <code>[ PRO ACCOUNT ]</code>
 </p>
 
 <p align="center">
@@ -26,13 +26,13 @@
 <p align="center"><img src="assets/banner_work.gif" width="840" alt="selected builds"></p>
 
 <p align="center">
-  <a href="https://github.com/CapedCrusader77/sensor-fusion-slam"><img src="assets/card_slam.gif" width="840" alt="sensor-fusion-slam - real-time LiDAR-visual odometry &amp; 3D volumetric mapping"></a>
+  <a href="https://github.com/CapedCrusader77/FaceTrack-AI"><img src="assets/card_slam.gif" width="840" alt="FaceTrack-AI - Real-time Computer Vision &amp; 6-DoF Facial Landmark Tracking"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/CapedCrusader77/edge-tensor-vision"><img src="assets/card_vision.gif" width="840" alt="edge-tensor-vision - sub-4ms zero-copy perception pipeline on NVIDIA Jetson"></a>
+  <a href="https://github.com/CapedCrusader77/skillguard-oss"><img src="assets/card_vision.gif" width="840" alt="skillguard-oss - Open-Source Skill Verification &amp; Security Inspection Engine"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/CapedCrusader77/autonomous-policy-mpc"><img src="assets/card_mpc.gif" width="840" alt="autonomous-policy-mpc - deep reinforcement learning policy network &amp; nonlinear MPC"></a>
+  <a href="https://github.com/CapedCrusader77/rootcause-iq"><img src="assets/card_mpc.gif" width="840" alt="rootcause-iq - Automated Diagnostic &amp; Root-Cause Failure Analysis Engine"></a>
 </p>
 
 <p align="center"><img src="assets/divider.gif" width="840" alt="divider"></p>
@@ -41,10 +41,10 @@
 <p align="center"><img src="assets/banner_telemetry.gif" width="840" alt="live telemetry"></p>
 
 <p align="center">
-  <img src="assets/telemetry.gif" width="840" alt="live stats console &amp; autonomous telemetry log feed">
+  <img src="assets/telemetry.gif" width="840" alt="live stats console &amp; autonomous telemetry log feed: 5 stars, 15 repos, 25 followers">
 </p>
 <p align="center">
-  <img src="assets/contrib.gif" width="840" alt="yearly contribution scanner - laser sweeping left-to-right">
+  <img src="assets/contrib.gif" width="840" alt="yearly contribution scanner - 264 contributions in the last year with laser sweep">
 </p>
 
 <p align="center"><img src="assets/divider.gif" width="840" alt="divider"></p>
@@ -53,7 +53,7 @@
 <p align="center"><img src="assets/banner_stack.gif" width="840" alt="technical arsenal"></p>
 
 <p align="center">
-  <img src="assets/stack.gif" width="840" alt="tech stack: C++20, Python 3.11, CUDA, ROS 2, TensorRT, PyTorch, OpenCV, Isaac Sim, Jetson Orin">
+  <img src="assets/stack.gif" width="840" alt="tech stack: Python 3.11+, TypeScript, JavaScript, TensorFlow, PyTorch, Computer Vision, Security AST, Next.js, Node.js">
 </p>
 
 <p align="center"><img src="assets/divider.gif" width="840" alt="divider"></p>
