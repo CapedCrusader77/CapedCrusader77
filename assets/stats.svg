@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" role="img" aria-label="live compute metrics">
+  <!-- Container -->
+  <rect x="1" y="1" width="418" height="298" rx="10" fill="#07090e" stroke="#1e293b" stroke-width="1.5"/>
+  <!-- Title bar -->
+  <rect x="1" y="1" width="418" height="34" rx="10" fill="#0d111a"/>
+  <rect x="1" y="24" width="418" height="11" fill="#0d111a"/>
+  <line x1="1" y1="35" x2="419" y2="35" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- macOS window control dots -->
+  <circle cx="22" cy="18" r="5" fill="#ff5f56" opacity="0.85"/>
+  <circle cx="40" cy="18" r="5" fill="#febc2e" opacity="0.85"/>
+  <circle cx="58" cy="18" r="5" fill="#27c93f" opacity="0.85"/>
+  <text x="404" y="22" text-anchor="end" font-size="11" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">~/stats $ ./metrics --live</text>
+
+  <!-- Big telemetry stats -->
+  <text x="70" y="82" text-anchor="middle" font-size="26" font-weight="700" fill="#00f0ff" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">120</text>
+  <text x="70" y="98" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">FPS TARGET</text>
+
+  <text x="210" y="82" text-anchor="middle" font-size="26" font-weight="700" fill="#8b5cf6" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">3.2ms</text>
+  <text x="210" y="98" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">TRT INFERENCE</text>
+
+  <text x="350" y="82" text-anchor="middle" font-size="26" font-weight="700" fill="#38bdf8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">FP16</text>
+  <text x="350" y="98" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">PRECISION</text>
+
+  <!-- Divider -->
+  <line x1="20" y1="116" x2="400" y2="116" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Language distribution -->
+  <text x="20" y="138" font-size="11" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">// compute distribution</text>
+
+  <!-- Python -->
+  <text x="20" y="166" font-size="12" fill="#f1f5f9" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">python</text>
+  <rect x="120" y="154" width="220" height="14" rx="3" fill="#131b2e"/>
+  <rect x="120" y="154" width="150" height="14" rx="3" fill="#00f0ff"/>
+  <text x="352" y="166" font-size="11" fill="#00f0ff" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">68%</text>
+
+  <!-- C++20 -->
+  <text x="20" y="196" font-size="12" fill="#f1f5f9" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">c++20</text>
+  <rect x="120" y="184" width="220" height="14" rx="3" fill="#131b2e"/>
+  <rect x="120" y="184" width="48" height="14" rx="3" fill="#8b5cf6"/>
+  <text x="352" y="196" font-size="11" fill="#c4b5fd" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">22%</text>
+
+  <!-- CUDA C++ -->
+  <text x="20" y="226" font-size="12" fill="#f1f5f9" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">cuda c++</text>
+  <rect x="120" y="214" width="220" height="14" rx="3" fill="#131b2e"/>
+  <rect x="120" y="214" width="22" height="14" rx="3" fill="#38bdf8"/>
+  <text x="352" y="226" font-size="11" fill="#38bdf8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">10%</text>
+
+  <!-- Subsystems -->
+  <text x="20" y="254" font-size="11" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">// ros2 humble: 4 nodes online [ok]</text>
+
+  <!-- Footer live indicator -->
+  <circle cx="26" cy="278" r="4" fill="#00f0ff">
+    <animate attributeName="opacity" values="1;0.2;1" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <text x="38" y="282" font-size="11" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">telemetry link: nominal // 120hz lock</text>
+</svg>

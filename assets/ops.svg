@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" role="img" aria-label="recent activity feed">
+  <!-- Container -->
+  <rect x="1" y="1" width="418" height="298" rx="10" fill="#07090e" stroke="#1e293b" stroke-width="1.5"/>
+  <!-- Title bar -->
+  <rect x="1" y="1" width="418" height="34" rx="10" fill="#0d111a"/>
+  <rect x="1" y="24" width="418" height="11" fill="#0d111a"/>
+  <line x1="1" y1="35" x2="419" y2="35" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- macOS window control dots -->
+  <circle cx="22" cy="18" r="5" fill="#ff5f56" opacity="0.85"/>
+  <circle cx="40" cy="18" r="5" fill="#febc2e" opacity="0.85"/>
+  <circle cx="58" cy="18" r="5" fill="#27c93f" opacity="0.85"/>
+  <text x="404" y="22" text-anchor="end" font-size="11" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">~/ops $ tail activity.log</text>
+
+  <!-- Log lines -->
+  <text x="20" y="62" font-size="12" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">
+    <tspan fill="#64748b">[09-07] </tspan><tspan fill="#00f0ff">boot </tspan><tspan fill="#f1f5f9">Neural Control Lab v2.8</tspan>
+  </text>
+  <text x="68" y="77" font-size="10" fill="#64748b" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">Architecture: Edge Autonomous Node</text>
+
+  <text x="20" y="98" font-size="12" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">
+    <tspan fill="#64748b">[09-07] </tspan><tspan fill="#8b5cf6">sync </tspan><tspan fill="#f1f5f9">stereo_camera 120mm</tspan><tspan fill="#00f0ff"> [60FPS]</tspan>
+  </text>
+  <text x="68" y="113" font-size="10" fill="#64748b" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">Rectified baseline calibration locked</text>
+
+  <text x="20" y="134" font-size="12" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">
+    <tspan fill="#64748b">[09-07] </tspan><tspan fill="#00f0ff">scan </tspan><tspan fill="#f1f5f9">lidar_points_128</tspan><tspan fill="#38bdf8"> [20Hz]</tspan>
+  </text>
+  <text x="68" y="149" font-size="10" fill="#64748b" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">128-beam Velodyne volumetric cloud</text>
+
+  <text x="20" y="170" font-size="12" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">
+    <tspan fill="#64748b">[09-07] </tspan><tspan fill="#8b5cf6">load </tspan><tspan fill="#f1f5f9">trt_yolov11_pose.plan</tspan>
+  </text>
+  <text x="68" y="185" font-size="10" fill="#64748b" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">Latency: 3.2ms // Zero-Copy pinned memory</text>
+
+  <text x="20" y="206" font-size="12" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">
+    <tspan fill="#64748b">[09-07] </tspan><tspan fill="#00f0ff">loop </tspan><tspan fill="#f1f5f9">perception-action locked</tspan>
+  </text>
+  <text x="68" y="221" font-size="10" fill="#64748b" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">ROS2 Nav2 + nonlinear MPC active</text>
+
+  <text x="20" y="242" font-size="12" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">
+    <tspan fill="#64748b">[09-07] </tspan><tspan fill="#22c55e">stat </tspan><tspan fill="#22c55e">ALL SUBSYSTEMS NOMINAL</tspan>
+  </text>
+
+  <!-- Footer live indicator -->
+  <circle cx="26" cy="278" r="4" fill="#22c55e">
+    <animate attributeName="opacity" values="1;0.2;1" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <text x="38" y="282" font-size="11" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono',monospace">live ● stream active // 0 dropped frames</text>
+</svg>

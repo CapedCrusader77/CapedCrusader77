@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="168" viewBox="0 0 860 168" role="img" aria-label="sensor-fusion-slam - real-time LiDAR-visual odometry &amp; 3D volumetric mapping">
+  <defs>
+    <linearGradient id="shim1" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#00f0ff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#00f0ff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#00f0ff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="cclip1"><rect x="1" y="1" width="858" height="166" rx="10"/></clipPath>
+  </defs>
+
+  <!-- Base container -->
+  <rect x="1" y="1" width="858" height="166" rx="10" fill="#07090e" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="2" y="2" width="5" height="164" fill="#00f0ff" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0.35;0.9" dur="3s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Watermark Icon (Sensor/LiDAR scanner) -->
+  <g opacity="0.08" transform="translate(690, 24) scale(2.8)" stroke="#00f0ff" stroke-width="1" fill="none">
+    <circle cx="24" cy="24" r="22"/>
+    <circle cx="24" cy="24" r="14"/>
+    <circle cx="24" cy="24" r="6"/>
+    <line x1="24" y1="2" x2="24" y2="46"/>
+    <line x1="2" y1="24" x2="46" y2="24"/>
+  </g>
+
+  <!-- Large Index -->
+  <text x="34" y="86" font-size="46" font-weight="700" fill="#00f0ff" fill-opacity="0.14" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,monospace">01</text>
+
+  <!-- Title + Repo -->
+  <text x="92" y="48" font-size="22" font-weight="700" fill="#00f0ff" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,monospace">sensor-fusion-slam</text>
+  <text x="92" y="70" font-size="12" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,monospace">● github.com/CapedCrusader77/sensor-fusion-slam</text>
+
+  <!-- Brief description -->
+  <text x="92" y="96" font-size="13" fill="#f1f5f9" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,monospace">real-time LiDAR-visual odometry &amp; volumetric 3D mapping engine.</text>
+  <text x="92" y="114" font-size="13" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,monospace">fuses stereoscopic optical flow with 128-beam point clouds for GPS-denied environments.</text>
+
+  <!-- Stack chips -->
+  <rect x="92" y="128" width="68" height="20" rx="4" fill="#00f0ff" fill-opacity="0.08" stroke="#00f0ff" stroke-opacity="0.5"/>
+  <text x="126" y="142" text-anchor="middle" font-size="11" fill="#00f0ff" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code',monospace">ROS 2</text>
+
+  <rect x="168" y="128" width="62" height="20" rx="4" fill="#8b5cf6" fill-opacity="0.08" stroke="#8b5cf6" stroke-opacity="0.5"/>
+  <text x="199" y="142" text-anchor="middle" font-size="11" fill="#c4b5fd" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code',monospace">C++20</text>
+
+  <rect x="238" y="128" width="56" height="20" rx="4" fill="#8b5cf6" fill-opacity="0.08" stroke="#8b5cf6" stroke-opacity="0.5"/>
+  <text x="266" y="142" text-anchor="middle" font-size="11" fill="#c4b5fd" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code',monospace">PCL</text>
+
+  <rect x="302" y="128" width="58" height="20" rx="4" fill="#00f0ff" fill-opacity="0.08" stroke="#00f0ff" stroke-opacity="0.5"/>
+  <text x="331" y="142" text-anchor="middle" font-size="11" fill="#00f0ff" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code',monospace">Nav2</text>
+
+  <rect x="368" y="128" width="62" height="20" rx="4" fill="#8b5cf6" fill-opacity="0.08" stroke="#8b5cf6" stroke-opacity="0.5"/>
+  <text x="399" y="142" text-anchor="middle" font-size="11" fill="#c4b5fd" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code',monospace">Eigen</text>
+
+  <!-- HUD brackets -->
+  <path d="M14,16 L14,8 L26,8" fill="none" stroke="#8b5cf6" stroke-opacity="0.5"/>
+  <path d="M846,152 L846,160 L834,160" fill="none" stroke="#8b5cf6" stroke-opacity="0.5"/>
+
+  <!-- Light shimmer sweep -->
+  <g clip-path="url(#cclip1)">
+    <rect x="-200" y="1" width="200" height="166" fill="url(#shim1)">
+      <animate attributeName="x" values="-200;860;860" keyTimes="0;0.6;1" dur="6s" begin="0s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>

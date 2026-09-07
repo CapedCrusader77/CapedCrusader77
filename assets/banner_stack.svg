@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="52" viewBox="0 0 860 52" role="img" aria-label="LOADOUT // TECHNICAL WEAPONRY">
+  <text x="14" y="40" font-size="13" font-weight="700" fill="#8b5cf6" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,'Liberation Mono',Menlo,monospace">&gt;&gt;</text>
+  <text x="42" y="40" font-size="20" font-weight="700" fill="#8b5cf6" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,'Liberation Mono',Menlo,monospace" letter-spacing="2">TECHNICAL ARSENAL</text>
+  <line x1="285" y1="33" x2="680" y2="33" stroke="#8b5cf6" stroke-opacity="0.3" stroke-width="1.5"/>
+  <line x1="305" y1="30" x2="305" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="345" y1="30" x2="345" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="385" y1="30" x2="385" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="425" y1="30" x2="425" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="465" y1="30" x2="465" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="505" y1="30" x2="505" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="545" y1="30" x2="545" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="585" y1="30" x2="585" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="625" y1="30" x2="625" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <rect x="690" y="27" width="8" height="8" fill="#00f0ff">
+    <animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite"/>
+  </rect>
+  <text x="706" y="40" font-size="12" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,'Liberation Mono',Menlo,monospace">// core stack &amp; runtime</text>
+</svg>

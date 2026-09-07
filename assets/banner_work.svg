@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="52" viewBox="0 0 860 52" role="img" aria-label="SELECTED WORK // AUTONOMOUS SYSTEMS">
+  <text x="14" y="40" font-size="13" font-weight="700" fill="#00f0ff" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,'Liberation Mono',Menlo,monospace">&gt;&gt;</text>
+  <text x="42" y="40" font-size="20" font-weight="700" fill="#00f0ff" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,'Liberation Mono',Menlo,monospace" letter-spacing="2">SELECTED WORK</text>
+  <line x1="235" y1="33" x2="660" y2="33" stroke="#8b5cf6" stroke-opacity="0.3" stroke-width="1.5"/>
+  <line x1="255" y1="30" x2="255" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="295" y1="30" x2="295" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="335" y1="30" x2="335" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="375" y1="30" x2="375" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="415" y1="30" x2="415" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="455" y1="30" x2="455" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="495" y1="30" x2="495" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="535" y1="30" x2="535" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="575" y1="30" x2="575" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <line x1="615" y1="30" x2="615" y2="36" stroke="#8b5cf6" stroke-opacity="0.4" stroke-width="1"/>
+  <rect x="670" y="27" width="8" height="8" fill="#00f0ff">
+    <animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite"/>
+  </rect>
+  <text x="686" y="40" font-size="12" fill="#94a3b8" font-family="'SFMono-Regular',ui-monospace,'JetBrains Mono','Fira Code','Cascadia Code',Consolas,'Liberation Mono',Menlo,monospace">// 3 autonomous builds</text>
+</svg>
