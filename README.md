@@ -1,22 +1,17 @@
 <div align="center">
+  <img src="https://raw.githubusercontent.com/CapedCrusader77/CapedCrusader77/feat/neural-control-lab/capedcrusader77-neural-lab.gif" alt="CapedCrusader77 - Neural Control Lab Interface" width="100%" />
 
-  <!-- HERO BANNER CENTERPIECE: NEURAL CONTROL LAB -->
-  <img src="capedcrusader77-neural-lab.gif" alt="CapedCrusader77 - Neural Control Lab Interface" width="100%" />
+  <br /><br />
 
-  <br />
+  <code>[ NEURAL CORE: ONLINE ]</code> &nbsp;•&nbsp;
+  <code>[ ROS2 // ACTIVE ]</code> &nbsp;•&nbsp;
+  <code>[ EDGE INFERENCE: 3.2ms ]</code> &nbsp;•&nbsp;
+  <code>[ CUDA 12.4 ]</code> &nbsp;•&nbsp;
+  <code>[ BUILD 077 ]</code>
 
-  <p align="center">
-    <code>[ NEURAL CORE: ONLINE ]</code> &nbsp;•&nbsp;
-    <code>[ ROS2 // ACTIVE ]</code> &nbsp;•&nbsp;
-    <code>[ EDGE INFERENCE: 3.2ms ]</code> &nbsp;•&nbsp;
-    <code>[ CUDA 12.4 ]</code> &nbsp;•&nbsp;
-    <code>[ BUILD 077 ]</code>
-  </p>
+  <br /><br />
 
-  <p align="center">
-    <strong>"Building machines that can perceive, reason, and act."</strong>
-  </p>
-
+  <strong>"Building machines that can perceive, reason, and act."</strong>
 </div>
 
 ---
