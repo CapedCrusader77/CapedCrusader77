@@ -1,10 +1,11 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/CapedCrusader77/CapedCrusader77/main/capedcrusader77-neural-lab.gif" alt="CapedCrusader77 - Neural Control Lab Interface" width="100%" />
+
+  <img src="capedcrusader77-neural-lab.gif" alt="CapedCrusader77 - Neural Control Lab Interface" width="100%" />
 
   <br /><br />
 
   <code>[ NEURAL CORE: ONLINE ]</code> &nbsp;•&nbsp;
-  <code>[ ROS2 // ACTIVE ]</code> &nbsp;•&nbsp;
+  <code>[ ROS 2 // ACTIVE ]</code> &nbsp;•&nbsp;
   <code>[ EDGE INFERENCE: 3.2ms ]</code> &nbsp;•&nbsp;
   <code>[ CUDA 12.4 ]</code> &nbsp;•&nbsp;
   <code>[ BUILD 077 ]</code>
@@ -12,58 +13,66 @@
   <br /><br />
 
   <strong>"Building machines that can perceive, reason, and act."</strong>
+
 </div>
 
 ---
 
-### 📡 THE TRI-LOOP PARADIGM
+### 📡 SENSOR-TO-ACTION PARADIGM
 
 ```
-┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
-│  01 // PERCEPTION       │     │  02 // REASONING        │     │  03 // ACTION           │
-│  Stereo Vision + LiDAR  │ ──► │  Deep RL & World Models │ ──► │  ROS 2 + Real-Time MPC  │
-│  PCL · YOLO · 6-DoF     │     │  TensorRT · CUDA · ONNX │     │  Nav2 · MoveIt2 · C++20 │
-└─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
+  [ 01 // SENSOR PERCEPTION ]          [ 02 // NEURAL REASONING ]          [ 03 // PHYSICAL ACTION ]
+  Stereo Vision · LiDAR · IMU   ───►   World Models · Deep RL       ───►   ROS 2 · Real-Time MPC
+  PCL · 6-DoF Pose · YOLOv11           TensorRT · CUDA · ONNX              Nav2 · MoveIt 2 · C++20
 ```
 
-I engineer end-to-end autonomous systems bridging deep neural networks with real-time physical robotics. My work focuses on sub-5ms perception pipelines, sensor fusion architectures, and high-frequency control loops deployed directly on edge hardware.
+> **Mission**: Engineering deterministic, safety-critical autonomous systems that bridge deep neural perception with real-time robotic actuation on edge hardware.
 
 ---
 
 ### ⚡ SELECTED BUILDS // ACTIVE LOADOUT
 
-<table width="100%">
+<table>
   <tr>
     <td width="33%" valign="top">
-      <h4><code>01 // SENSOR_FUSION_SLAM</code></h4>
-      <p><b>Real-time LiDAR-Visual Odometry & Volumetric Mapping</b></p>
-      <p>Multi-modal SLAM system combining stereoscopic optical flow with 3D LiDAR point cloud registration for GPS-denied environments.</p>
-      <hr />
-      <sub><b>STACK:</b> <code>ROS 2</code> · <code>C++20</code> · <code>PCL</code> · <code>Nav2</code> · <code>Eigen</code></sub><br />
-      <sub><b>STATUS:</b> <font color="#00f0ff">● ACTIVE</font> // ZERO_DRIFT_MODE</sub>
+      <div align="center">
+        <h3><code>01 // SLAM_CORE</code></h3>
+        <sub><b>LiDAR-Visual Spatial Odometry</b></sub>
+      </div>
+      <br />
+      Multi-modal SLAM fusing stereo optical flow with 3D LiDAR point clouds for GPS-denied autonomous navigation and volumetric mapping.
+      <br /><br />
+      <b>Core Stack:</b> <code>ROS 2</code> <code>C++20</code> <code>PCL</code> <code>Nav2</code><br />
+      <b>Status:</b> <code>● ONLINE (Zero-Drift)</code>
     </td>
     <td width="33%" valign="top">
-      <h4><code>02 // EDGE_TENSOR_VISION</code></h4>
-      <p><b>Sub-4ms Zero-Copy Inference Pipeline</b></p>
-      <p>Accelerated perception engine for 3D object detection, 6-DoF pose estimation, and depth fusion optimized with TensorRT engines.</p>
-      <hr />
-      <sub><b>STACK:</b> <code>PyTorch</code> · <code>TensorRT</code> · <code>CUDA</code> · <code>OpenCV</code></sub><br />
-      <sub><b>STATUS:</b> <font color="#00f0ff">● ACTIVE</font> // 120 FPS FP16</sub>
+      <div align="center">
+        <h3><code>02 // EDGE_VISION</code></h3>
+        <sub><b>Zero-Copy Inference Pipeline</b></sub>
+      </div>
+      <br />
+      Hardware-accelerated perception engine for 3D object detection, 6-DoF pose estimation, and depth segmentation at 120 FPS.
+      <br /><br />
+      <b>Core Stack:</b> <code>PyTorch</code> <code>TensorRT</code> <code>CUDA</code> <code>VPI</code><br />
+      <b>Status:</b> <code>● ACTIVE (3.2ms Latency)</code>
     </td>
     <td width="33%" valign="top">
-      <h4><code>03 // AUTONOMOUS_POLICY_MPC</code></h4>
-      <p><b>Reinforcement Learning & Dynamic Trajectory Planner</b></p>
-      <p>Deep policy network paired with nonlinear Model Predictive Control (MPC) for obstacle avoidance in unconstrained environments.</p>
-      <hr />
-      <sub><b>STACK:</b> <code>Python</code> · <code>Isaac Sim</code> · <code>MPC</code> · <code>ROS 2</code></sub><br />
-      <sub><b>STATUS:</b> <font color="#8b5cf6">● TRAINING</font> // SIM2REAL</sub>
+      <div align="center">
+        <h3><code>03 // POLICY_MPC</code></h3>
+        <sub><b>Reinforcement Learning Planner</b></sub>
+      </div>
+      <br />
+      Deep reinforcement learning policy network paired with nonlinear Model Predictive Control for dynamic obstacle avoidance.
+      <br /><br />
+      <b>Core Stack:</b> <code>Python</code> <code>Isaac Sim</code> <code>MPC</code> <code>ROS 2</code><br />
+      <b>Status:</b> <code>◐ TRAINING (Sim2Real)</code>
     </td>
   </tr>
 </table>
 
 ---
 
-### 📝 FIELD NOTES // RESEARCH & WRITEUPS
+### 📝 FIELD NOTES // RESEARCH & LOGS
 
 - `[EDGE AI]` **Sub-4ms Perception on Jetson Orin** · Zero-copy IPC, unified memory optimization, and TensorRT FP16 quantization.
 - `[SENSOR FUSION]` **Extrinsic Calibration of Stereo & LiDAR** · Spatial alignment, timestamp synchronization, and ray-casting projection.
@@ -74,42 +83,32 @@ I engineer end-to-end autonomous systems bridging deep neural networks with real
 
 ### 📊 SYSTEM TELEMETRY // LIVE METRICS
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <code>~/stats $ ./metrics --live</code>
-      <br /><br />
-      <b>PRIMARY COMPUTE FOCUS</b>
-      <pre>
-Python      ████████████████████░░░░  68%
-C++20       ██████████░░░░░░░░░░░░░░  22%
-CUDA / C    ████░░░░░░░░░░░░░░░░░░░░  10%
-      </pre>
-      <b>CORE SUBSYSTEMS</b>
-      <pre>
-Autonomous Systems : [████████████████████] 100%
-Computer Vision    : [██████████████████░░]  90%
-Deep Learning / RL : [████████████████░░░░]  80%
-Embedded / Jetson  : [██████████████░░░░░░]  70%
-      </pre>
-    </td>
-    <td width="50%" valign="top">
-      <code>~/ops $ tail -f telemetry.log</code>
-      <br /><br />
-      <pre>
+```bash
+# ~/telemetry $ ./system_metrics --live
+[COMPUTE DISTRIBUTION]
+Python 3.11+   ████████████████████░░░░░░░░  68%  [Deep Learning / Tensor Pipelines]
+C++20          ██████████░░░░░░░░░░░░░░░░░░  22%  [ROS 2 Nodes / Real-Time Control]
+CUDA C++       ████░░░░░░░░░░░░░░░░░░░░░░░░  10%  [Kernel Optimization / GPU Memory]
+
+[SUBSYSTEM INTEGRITY]
+Autonomous Systems    [████████████████████] 100%  :: LOCKED
+Computer Vision       [██████████████████░░]  92%  :: CALIBRATED
+Deep RL & Planning    [████████████████░░░░]  80%  :: CONVERGING
+Hardware Acceleration [██████████████░░░░░░]  70%  :: OPTIMIZED
+```
+
+```bash
+# ~/ops $ tail -f telemetry.log
 [BOOT] System: Neural Control Lab v2.8.4
-[SYNC] Stereo camera: 120mm baseline @ 1080p60
-[SYNC] LiDAR: 128-beam sensor stream [ACTIVE]
-[CUDA] Allocated device memory: 4.8 GB
-[TRT]  Loaded engine: yolov11_perception.plan
-[PERC] Inference latency: 3.2ms (Zero-Copy)
-[ROS2] Active nodes: /camera /lidar /nav2 /mpc
-[STAT] Perception-Action loop: LOCKED
-[STAT] All subsystems: NOMINAL
-      </pre>
-    </td>
-  </tr>
-</table>
+[SYNC] Stereo camera: 120mm baseline @ 1080p60 [SYNC_OK]
+[SYNC] LiDAR: 128-beam Velodyne sensor stream [ACTIVE]
+[CUDA] Allocated device memory: 4.8 GB // Unified memory active
+[TRT]  Loaded engine: yolov11_perception.plan (FP16 optimized)
+[PERC] Inference latency: 3.2ms (Zero-Copy pinned buffers)
+[ROS2] Active nodes: /camera /lidar /fusion /policy /nav2
+[STAT] Perception-Action loop locked: ZERO_DROPPED_FRAMES
+[STAT] All engineering subsystems: NOMINAL
+```
 
 ---
 
@@ -118,7 +117,7 @@ Embedded / Jetson  : [██████████████░░░░░�
 <table>
   <tr>
     <td width="25%" valign="top">
-      <b>Core Languages</b><br />
+      <b>Languages & Low-Level</b><br />
       • <code>C++20 / C++17</code><br />
       • <code>Python 3.11+</code><br />
       • <code>CUDA C++</code><br />
