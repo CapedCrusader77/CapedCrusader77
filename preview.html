@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neural Control Lab - Visual Identity & Animation Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --panel-bg: #0d111a;
+      --border-color: #1e293b;
+      --accent-cyan: #00f0ff;
+      --accent-violet: #8b5cf6;
+      --accent-magenta: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1080px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 14px;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .indicator-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--accent-cyan);
+      box-shadow: 0 0 10px var(--accent-cyan);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 8px var(--accent-cyan)); }
+    }
+
+    h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .header-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      border-radius: 8px;
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(139, 92, 246, 0.15);
+      overflow: hidden;
+      background: #06080d;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1000 / 420;
+    }
+
+    .controls-panel {
+      width: 100%;
+      max-width: 1000px;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-top: 18px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .timeline-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .timeline-slider {
+      flex: 1;
+      accent-color: var(--accent-cyan);
+      cursor: pointer;
+    }
+
+    .time-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      min-width: 120px;
+    }
+
+    .phase-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      color: #c4b5fd;
+      padding: 4px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .actions-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      background: #1e293b;
+      color: var(--text-main);
+      border: 1px solid #334155;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: #334155;
+      border-color: var(--accent-cyan);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(6, 182, 212, 0.8));
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      font-weight: 600;
+    }
+
+    button.primary:hover {
+      background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.35);
+    }
+
+    .specs-grid {
+      width: 100%;
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .spec-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+
+    .spec-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .spec-card p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+    }
+
+    .status-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid var(--accent-cyan);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title">
+      <div class="indicator-dot"></div>
+      <h1>Neural Control Lab // Visual Engine</h1>
+    </div>
+    <div class="header-meta">PROFILE: CAPEDCRUSADER77 // LOOP: 8.0s</div>
+  </header>
+
+  <div class="canvas-container">
+    <canvas id="neuralCanvas" width="1000" height="420"></canvas>
+  </div>
+
+  <div class="controls-panel">
+    <div class="timeline-row">
+      <button id="playBtn">Pause</button>
+      <input type="range" id="timeSlider" class="timeline-slider" min="0" max="8" step="0.01" value="0">
+      <div class="time-display" id="timeDisplay">0.00s / 8.00s</div>
+      <div class="phase-badge" id="phaseBadge">PHASE 1: CALIBRATION</div>
+    </div>
+    <div class="actions-row">
+      <div class="button-group">
+        <button id="stepBackBtn">◀ Prev Frame</button>
+        <button id="stepFwdBtn">Next Frame ▶</button>
+        <button id="restartBtn">↺ Loop Start</button>
+      </div>
+      <div class="button-group">
+        <button id="exportFrameBtn">📸 Capture PNG Frame</button>
+        <button id="recordVideoBtn" class="primary">🎥 Record 60FPS Video (WebM)</button>
+        <a href="capedcrusader77-neural-lab.gif" download="capedcrusader77-neural-lab.gif" style="text-decoration:none;"><button>💾 Optimized GIF (6MB)</button></a>
+        <a href="capedcrusader77-neural-lab-hq.gif" download="capedcrusader77-neural-lab-hq.gif" style="text-decoration:none;"><button>💎 Master HQ GIF (8MB)</button></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="specs-grid">
+    <div class="spec-card">
+      <h3>Target Frame Size</h3>
+      <p>1000 × 420 px (GitHub Ready)</p>
+    </div>
+    <div class="spec-card">
+      <h3>Loop Duration</h3>
+      <p>8.00 Seconds Seamless Loop</p>
+    </div>
+    <div class="spec-card">
+      <h3>Technical Architecture</h3>
+      <p>AI × Robotics × Computer Vision</p>
+    </div>
+    <div class="spec-card">
+      <h3>Telemetry State</h3>
+      <p>ROS2 / TensorRT / CUDA 12.4</p>
+    </div>
+  </div>
+
+  <div class="status-toast" id="statusToast">Status notification</div>
+
+  <script>
+    const canvas = document.getElementById('neuralCanvas');
+    const ctx = canvas.getContext('2d');
+    const playBtn = document.getElementById('playBtn');
+    const timeSlider = document.getElementById('timeSlider');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const phaseBadge = document.getElementById('phaseBadge');
+    const stepBackBtn = document.getElementById('stepBackBtn');
+    const stepFwdBtn = document.getElementById('stepFwdBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const exportFrameBtn = document.getElementById('exportFrameBtn');
+    const exportGifBtn = document.getElementById('exportGifBtn');
+    const statusToast = document.getElementById('statusToast');
+
+    const TOTAL_DURATION = 8.0; // 8 seconds loop
+    let currentTime = 0.0;
+    let isPlaying = true;
+    let lastTimestamp = performance.now();
+
+    // Show toast message
+    function showToast(msg) {
+      statusToast.textContent = msg;
+      statusToast.style.display = 'block';
+      setTimeout(() => { statusToast.style.display = 'none'; }, 3000);
+    }
+
+    // Pre-generate background particles
+    const PARTICLE_COUNT = 45;
+    const particles = [];
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push({
+        x: Math.random() * 1000,
+        y: Math.random() * 420,
+        speedX: (Math.random() - 0.5) * 15,
+        speedY: (Math.random() - 0.5) * 15,
+        baseSize: 1 + Math.random() * 1.5,
+        seed: Math.random() * 100,
+        color: Math.random() > 0.4 ? '#00f0ff' : '#8b5cf6'
+      });
+    }
+
+    // Pre-generate neural network nodes (Input -> Perception -> Reasoning -> Action)
+    const neuralLayers = [
+      { count: 3, x: 550, ys: [140, 200, 260], label: "SENSOR" },
+      { count: 4, x: 630, ys: [110, 170, 230, 290], label: "PERCEPT" },
+      { count: 5, x: 720, ys: [80, 140, 200, 260, 320], label: "MODEL" },
+      { count: 3, x: 810, ys: [130, 200, 270], label: "POLICY" },
+      { count: 2, x: 890, ys: [160, 240], label: "ACTION" }
+    ];
+
+    // Synaptic connections
+    const synapses = [];
+    for (let l = 0; l < neuralLayers.length - 1; l++) {
+      const current = neuralLayers[l];
+      const next = neuralLayers[l + 1];
+      for (let i = 0; i < current.count; i++) {
+        for (let j = 0; j < next.count; j++) {
+          if (Math.random() > 0.25) {
+            synapses.push({
+              x1: current.x,
+              y1: current.ys[i],
+              x2: next.x,
+              y2: next.ys[j],
+              layerIndex: l,
+              pulseDelay: l * 0.18 + Math.random() * 0.08
+            });
+          }
+        }
+      }
+    }
+
+    // LiDAR 3D simulated point cloud
+    const lidarPoints = [];
+    const LIDAR_CENTER_X = 760;
+    const LIDAR_CENTER_Y = 205;
+    for (let angle = 0; angle < 360; angle += 4.5) {
+      const rad = (angle * Math.PI) / 180;
+      const baseDist = 70 + Math.sin(angle * 0.08) * 35 + Math.cos(angle * 0.15) * 20;
+      lidarPoints.push({
+        angle: angle,
+        rad: rad,
+        dist: baseDist,
+        x: LIDAR_CENTER_X + Math.cos(rad) * baseDist * 1.3,
+        y: LIDAR_CENTER_Y + Math.sin(rad) * baseDist * 0.85,
+        cluster: Math.floor(angle / 60)
+      });
+    }
+
+    // Phase descriptions
+    function getPhaseInfo(t) {
+      if (t < 1.0) return { name: "PHASE 1: BOOT & CALIBRATION", sub: "Grid calibration and sensor nodes initializing" };
+      if (t < 2.2) return { name: "PHASE 2: HORIZONTAL SCAN SWEEP", sub: "Photonic wave illuminating neural architecture" };
+      if (t < 3.4) return { name: "PHASE 3: ROBOTIC VISION SYNTHESIS", sub: "Autonomous sensor pod forming with CV bounding boxes" };
+      if (t < 4.6) return { name: "PHASE 4: TYPOGRAPHY & IDENTITY DECODE", sub: "Decoupling engineering identity: CAPEDCRUSADER77" };
+      if (t < 5.8) return { name: "PHASE 5: NEURAL PROPAGATION", sub: "Sensor -> Perception -> Model -> Decision -> Action" };
+      if (t < 7.0) return { name: "PHASE 6: LIDAR 360° SWEEP & TELEMETRY", sub: "Point cloud scanning with TensorRT real-time inference" };
+      if (t < 7.8) return { name: "PHASE 7: SYSTEM ONLINE (PEAK STABILITY)", sub: "Active perception & autonomous robotics locked" };
+      return { name: "PHASE 8: HARMONIC RESOLUTION & LOOP RESET", sub: "Cycling seamlessly into initial frame" };
+    }
+
+    // Smoothstep utility
+    function smoothstep(min, max, value) {
+      const x = Math.max(0, Math.min(1, (value - min) / (max - min)));
+      return x * x * (3 - 2 * x);
+    }
+
+    // Draw main frame
+    function renderFrame(t) {
+      const W = canvas.width;
+      const H = canvas.height;
+
+      // Clear with obsidian charcoal base
+      ctx.fillStyle = "#07090e";
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle atmospheric radial vignette
+      const bgGrad = ctx.createRadialGradient(W * 0.45, H * 0.5, 50, W * 0.5, H * 0.5, 650);
+      bgGrad.addColorStop(0, "rgba(22, 18, 48, 0.45)");
+      bgGrad.addColorStop(0.6, "rgba(9, 13, 22, 0.85)");
+      bgGrad.addColorStop(1, "rgba(5, 7, 12, 1.0)");
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // ----------------------------------------------------
+      // 1. BACKGROUND TECHNICAL GRID & TICK MARKS
+      // ----------------------------------------------------
+      const gridFade = t < 1.0 ? smoothstep(0.0, 0.9, t) : (t > 7.6 ? smoothstep(8.0, 7.6, t) * 0.6 + 0.4 : 1.0);
+      
+      ctx.save();
+      ctx.globalAlpha = 0.18 * gridFade;
+      ctx.strokeStyle = "#8b5cf6";
+      ctx.lineWidth = 0.5;
+
+      // Coordinate lines
+      const GRID_STEP = 36;
+      for (let x = 0; x <= W; x += GRID_STEP) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= H; y += GRID_STEP) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+
+      // Intersection crosses
+      ctx.strokeStyle = "#00f0ff";
+      ctx.lineWidth = 1;
+      for (let x = GRID_STEP * 2; x < W; x += GRID_STEP * 3) {
+        for (let y = GRID_STEP; y < H; y += GRID_STEP * 2) {
+          ctx.beginPath();
+          ctx.moveTo(x - 3, y);
+          ctx.lineTo(x + 3, y);
+          ctx.moveTo(x, y - 3);
+          ctx.lineTo(x, y + 3);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+
+      // Top/Bottom metric measurement ruler
+      ctx.save();
+      ctx.fillStyle = "rgba(148, 163, 184, 0.35)";
+      ctx.font = "8px 'JetBrains Mono', monospace";
+      for (let x = 40; x < W - 40; x += 80) {
+        ctx.fillRect(x, 6, 1, 4);
+        ctx.fillRect(x, H - 10, 1, 4);
+        ctx.fillText(`+${x.toString().padStart(4, '0')}`, x - 12, 18);
+      }
+      ctx.restore();
+
+      // Ambient floating particles (continuous loop)
+      ctx.save();
+      for (let p of particles) {
+        const px = (p.x + p.speedX * t + W) % W;
+        const py = (p.y + p.speedY * t + H) % H;
+        const pAlpha = 0.3 + 0.4 * Math.sin(t * 3 + p.seed);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = pAlpha * gridFade;
+        ctx.beginPath();
+        ctx.arc(px, py, p.baseSize, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // ----------------------------------------------------
+      // 2. SCANNING BEAM SWEEP (Phase 2 & ambient sweep)
+      // ----------------------------------------------------
+      let scanProgress = 0;
+      if (t >= 1.0 && t <= 2.4) {
+        scanProgress = (t - 1.0) / 1.4;
+        const scanX = scanProgress * (W + 200) - 100;
+        
+        ctx.save();
+        const scanGrad = ctx.createLinearGradient(scanX - 120, 0, scanX + 30, 0);
+        scanGrad.addColorStop(0, "rgba(139, 92, 246, 0)");
+        scanGrad.addColorStop(0.75, "rgba(139, 92, 246, 0.18)");
+        scanGrad.addColorStop(0.95, "rgba(0, 240, 255, 0.45)");
+        scanGrad.addColorStop(1, "rgba(255, 255, 255, 0.8)");
+        ctx.fillStyle = scanGrad;
+        ctx.fillRect(scanX - 120, 0, 150, H);
+
+        // Laser scan line
+        ctx.strokeStyle = "#00f0ff";
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = "#00f0ff";
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.moveTo(scanX + 30, 0);
+        ctx.lineTo(scanX + 30, H);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // ----------------------------------------------------
+      // 3. AUTONOMOUS ROBOTIC PROTOTYPE (RIGHT SIDE)
+      // ----------------------------------------------------
+      const robotAlpha = smoothstep(2.0, 3.4, t);
+      const robotCenter = { x: 740, y: 210 };
+
+      if (robotAlpha > 0.01) {
+        ctx.save();
+        ctx.globalAlpha = robotAlpha;
+
+        // Mechanical Gimbal Ring
+        ctx.strokeStyle = "rgba(139, 92, 246, 0.4)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.ellipse(robotCenter.x, robotCenter.y, 140, 100, 0, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Inner Pitch Ring
+        ctx.strokeStyle = "rgba(0, 240, 255, 0.35)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.ellipse(robotCenter.x, robotCenter.y, 110, 80, -0.15, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Mechanical Chassis Core
+        ctx.fillStyle = "rgba(13, 17, 26, 0.85)";
+        ctx.strokeStyle = "#8b5cf6";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        // Modern hexagonal geometric housing
+        const hexSize = 52;
+        for (let i = 0; i < 6; i++) {
+          const a = (i * 60 * Math.PI) / 180;
+          const hx = robotCenter.x + Math.cos(a) * hexSize;
+          const hy = robotCenter.y + Math.sin(a) * hexSize * 0.9;
+          if (i === 0) ctx.moveTo(hx, hy);
+          else ctx.lineTo(hx, hy);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Triple Camera Sensor Array (Stereo + Depth)
+        // Main Primary Aperture Lens (Center)
+        const mainLensRadius = 26;
+        const lensGrad = ctx.createRadialGradient(robotCenter.x, robotCenter.y, 2, robotCenter.x, robotCenter.y, mainLensRadius);
+        lensGrad.addColorStop(0, "#00f0ff");
+        lensGrad.addColorStop(0.4, "#0f172a");
+        lensGrad.addColorStop(0.8, "#1e1b4b");
+        lensGrad.addColorStop(1, "#38bdf8");
+        ctx.fillStyle = lensGrad;
+        ctx.beginPath();
+        ctx.arc(robotCenter.x, robotCenter.y, mainLensRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Optical Lens Aperture Ring
+        ctx.strokeStyle = "#00f0ff";
+        ctx.lineWidth = 1.8;
+        ctx.shadowColor = "#00f0ff";
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(robotCenter.x, robotCenter.y, mainLensRadius, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Stereo Lens Left
+        ctx.fillStyle = "rgba(6, 182, 212, 0.25)";
+        ctx.strokeStyle = "#06b6d4";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(robotCenter.x - 42, robotCenter.y - 12, 11, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Stereo Lens Right
+        ctx.beginPath();
+        ctx.arc(robotCenter.x + 42, robotCenter.y - 12, 11, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Infrared Depth Dot Matrix Emitter (Bottom)
+        ctx.strokeStyle = "#8b5cf6";
+        ctx.fillStyle = "rgba(139, 92, 246, 0.3)";
+        ctx.beginPath();
+        ctx.rect(robotCenter.x - 20, robotCenter.y + 26, 40, 10);
+        ctx.fill();
+        ctx.stroke();
+
+        // Top Rotating LiDAR Head Housing
+        ctx.fillStyle = "#111827";
+        ctx.strokeStyle = "#a855f7";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.rect(robotCenter.x - 30, robotCenter.y - 68, 60, 22);
+        ctx.fill();
+        ctx.stroke();
+
+        // LiDAR Status Ring
+        ctx.fillStyle = "#00f0ff";
+        ctx.beginPath();
+        ctx.arc(robotCenter.x, robotCenter.y - 57, 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      // ----------------------------------------------------
+      // 4. COMPUTER VISION BOUNDING BOXES & RETICLES (Phase 3+)
+      // ----------------------------------------------------
+      const cvAlpha = smoothstep(2.8, 3.8, t);
+      if (cvAlpha > 0.01) {
+        ctx.save();
+        ctx.globalAlpha = cvAlpha;
+
+        // Bounding Box 1: Sensor Rig Enclosure
+        const box1 = { x: robotCenter.x - 85, y: robotCenter.y - 82, w: 170, h: 145 };
+        drawBoundingBox(box1.x, box1.y, box1.w, box1.h, "SENSOR_RIG_01 // 99.4%", "#00f0ff", t);
+
+        // Bounding Box 2: Optical Gimbal Core
+        const box2 = { x: robotCenter.x - 38, y: robotCenter.y - 38, w: 76, h: 76 };
+        drawBoundingBox(box2.x, box2.y, box2.w, box2.h, "TRACK_ID:#077", "#8b5cf6", t);
+
+        // Target Lock Reticle (Coordinates overlay)
+        ctx.strokeStyle = "rgba(0, 240, 255, 0.6)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(robotCenter.x, robotCenter.y, 44, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Crosshairs
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(robotCenter.x - 65, robotCenter.y);
+        ctx.lineTo(robotCenter.x + 65, robotCenter.y);
+        ctx.moveTo(robotCenter.x, robotCenter.y - 65);
+        ctx.lineTo(robotCenter.x, robotCenter.y + 65);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // CV Depth & Coordinates tag
+        ctx.fillStyle = "#00f0ff";
+        ctx.font = "9px 'JetBrains Mono', monospace";
+        ctx.fillText(`X:${(1.24 + Math.sin(t) * 0.05).toFixed(3)}m  Y:${(-0.18 + Math.cos(t) * 0.03).toFixed(3)}m  Z:0.842m`, box1.x, box1.y + box1.h + 16);
+        ctx.fillText(`CONF: 99.8%  IOU: 0.94  FPS: 120.0`, box1.x, box1.y + box1.h + 28);
+
+        ctx.restore();
+      }
+
+      // ----------------------------------------------------
+      // 5. LIDAR 360° RADAR SWEEP & POINT CLOUD (Phase 6 & continuous)
+      // ----------------------------------------------------
+      const lidarAlpha = smoothstep(5.4, 6.4, t);
+      if (lidarAlpha > 0.01) {
+        ctx.save();
+        ctx.globalAlpha = lidarAlpha;
+
+        // Radar beam rotation angle (loops continuously)
+        const sweepAngle = ((t * 2.2) % (Math.PI * 2));
+
+        // Draw radar sweep gradient cone
+        const coneAngle = 0.55;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(robotCenter.x, robotCenter.y);
+        ctx.arc(robotCenter.x, robotCenter.y, 160, sweepAngle - coneAngle, sweepAngle);
+        ctx.closePath();
+
+        const coneGrad = ctx.createRadialGradient(robotCenter.x, robotCenter.y, 10, robotCenter.x, robotCenter.y, 160);
+        coneGrad.addColorStop(0, "rgba(0, 240, 255, 0.4)");
+        coneGrad.addColorStop(1, "rgba(0, 240, 255, 0.02)");
+        ctx.fillStyle = coneGrad;
+        ctx.fill();
+        ctx.restore();
+
+        // Laser beam line
+        ctx.strokeStyle = "#00f0ff";
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = "#00f0ff";
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.moveTo(robotCenter.x, robotCenter.y);
+        ctx.lineTo(robotCenter.x + Math.cos(sweepAngle) * 160, robotCenter.y + Math.sin(sweepAngle) * 160);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Render point cloud echoes
+        for (let pt of lidarPoints) {
+          const angleDiff = Math.abs((pt.rad - sweepAngle + Math.PI * 4) % (Math.PI * 2));
+          const hitAlpha = angleDiff < 0.6 ? 1.0 - (angleDiff / 0.6) : 0.15;
+
+          ctx.fillStyle = hitAlpha > 0.5 ? "#00f0ff" : "rgba(139, 92, 246, 0.35)";
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, hitAlpha > 0.5 ? 2.0 : 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      // ----------------------------------------------------
+      // 6. SYNAPTIC NEURAL NETWORK & PIPELINE (Phase 5+)
+      // ----------------------------------------------------
+      const neuralAlpha = smoothstep(4.2, 5.2, t);
+      if (neuralAlpha > 0.01) {
+        ctx.save();
+        ctx.globalAlpha = neuralAlpha * 0.75;
+
+        // Draw synapses
+        for (let syn of synapses) {
+          ctx.strokeStyle = "rgba(139, 92, 246, 0.22)";
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(syn.x1, syn.y1);
+          ctx.lineTo(syn.x2, syn.y2);
+          ctx.stroke();
+
+          // Propagating pulse signal in Phase 5
+          if (t >= 4.4 && t <= 6.2) {
+            const pulseTime = (t - 4.4) * 1.8;
+            const progress = (pulseTime - syn.pulseDelay);
+            if (progress >= 0 && progress <= 1) {
+              const px = syn.x1 + (syn.x2 - syn.x1) * progress;
+              const py = syn.y1 + (syn.y2 - syn.y1) * progress;
+              ctx.fillStyle = "#00f0ff";
+              ctx.shadowColor = "#00f0ff";
+              ctx.shadowBlur = 8;
+              ctx.beginPath();
+              ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.shadowBlur = 0;
+            }
+          }
+        }
+
+        // Draw layer nodes
+        for (let layer of neuralLayers) {
+          for (let y of layer.ys) {
+            ctx.fillStyle = "#0f172a";
+            ctx.strokeStyle = "#8b5cf6";
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.arc(layer.x, y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Inner core glow
+            ctx.fillStyle = "#00f0ff";
+            ctx.beginPath();
+            ctx.arc(layer.x, y, 1.8, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        ctx.restore();
+      }
+
+      // ----------------------------------------------------
+      // 7. LEFT HERO TYPOGRAPHY & IDENTITY (Phase 4+)
+      // ----------------------------------------------------
+      const textAlpha = smoothstep(3.2, 4.4, t);
+      if (textAlpha > 0.01) {
+        ctx.save();
+        ctx.globalAlpha = textAlpha;
+
+        // Top subtle lab label
+        ctx.fillStyle = "#8b5cf6";
+        ctx.font = "700 10px 'Orbitron', monospace";
+        ctx.letterSpacing = "2px";
+        ctx.fillText("[ NEURAL CONTROL LAB // BUILD 077 ]", 52, 68);
+
+        // Indicator dot next to label
+        ctx.fillStyle = "#00f0ff";
+        ctx.shadowColor = "#00f0ff";
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(38, 65, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // PRIMARY BRAND NAME: CAPEDCRUSADER77
+        // Bold, futuristic, condensed, ultra readable
+        ctx.font = "900 54px 'Orbitron', 'Space Grotesk', sans-serif";
+        ctx.letterSpacing = "3px";
+
+        // Gradient & electric bloom for main typography
+        const textGrad = ctx.createLinearGradient(50, 100, 500, 160);
+        textGrad.addColorStop(0, "#ffffff");
+        textGrad.addColorStop(0.65, "#e2e8f0");
+        textGrad.addColorStop(1, "#c084fc");
+
+        ctx.shadowColor = "rgba(139, 92, 246, 0.65)";
+        ctx.shadowBlur = 22;
+        ctx.fillStyle = textGrad;
+        ctx.fillText("CAPEDCRUSADER77", 50, 134);
+
+        // Subtle crisp white overlay for ultra-readability
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText("CAPEDCRUSADER77", 50, 134);
+
+        // SECONDARY HEADLINE:
+        // AI ENGINEER // ROBOTICS // COMPUTER VISION
+        ctx.font = "700 13.5px 'JetBrains Mono', monospace";
+        ctx.letterSpacing = "2px";
+        ctx.fillStyle = "#00f0ff";
+        ctx.shadowColor = "rgba(0, 240, 255, 0.5)";
+        ctx.shadowBlur = 8;
+        ctx.fillText("AI ENGINEER // ROBOTICS // COMPUTER VISION", 52, 172);
+        ctx.shadowBlur = 0;
+
+        // PARADIGM PIPELINE LINE:
+        // PERCEPTION → DECISION → ACTION
+        drawPipelineSection(52, 204, t);
+
+        // TECHNICAL BADGES / TAGS ROW
+        // [ ROS2 // ACTIVE ] [ EDGE INFERENCE ] [ AUTONOMOUS SYSTEMS ] [ SENSOR ARRAY ]
+        const badges = [
+          { text: "ROS2 // ACTIVE", color: "#00f0ff" },
+          { text: "EDGE INFERENCE", color: "#8b5cf6" },
+          { text: "AUTONOMOUS SYSTEMS", color: "#38bdf8" },
+          { text: "SENSOR ARRAY", color: "#c084fc" }
+        ];
+
+        let badgeX = 52;
+        const badgeY = 270;
+        for (let b of badges) {
+          ctx.font = "600 10.5px 'JetBrains Mono', monospace";
+          const tw = ctx.measureText(b.text).width;
+          
+          // Badge background
+          ctx.fillStyle = "rgba(13, 17, 26, 0.75)";
+          ctx.strokeStyle = b.color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.roundRect(badgeX, badgeY, tw + 18, 24, 4);
+          ctx.fill();
+          ctx.stroke();
+
+          // Small pip
+          ctx.fillStyle = b.color;
+          ctx.beginPath();
+          ctx.arc(badgeX + 8, badgeY + 12, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Text
+          ctx.fillStyle = "#f8fafc";
+          ctx.fillText(b.text, badgeX + 16, badgeY + 16);
+
+          badgeX += tw + 28;
+        }
+
+        ctx.restore();
+      }
+
+      // ----------------------------------------------------
+      // 8. TELEMETRY & SYSTEM ONLINE STATE (Phase 7 & Footer)
+      // ----------------------------------------------------
+      const sysAlpha = smoothstep(6.6, 7.4, t);
+      
+      // Always show bottom terminal telemetry bar
+      ctx.save();
+      ctx.fillStyle = "rgba(9, 13, 22, 0.85)";
+      ctx.fillRect(0, H - 36, W, 36);
+      ctx.strokeStyle = "rgba(30, 41, 59, 0.8)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, H - 36);
+      ctx.lineTo(W, H - 36);
+      ctx.stroke();
+
+      // Telemetry readouts
+      ctx.font = "10px 'JetBrains Mono', monospace";
+      
+      // Dynamic status badge
+      const isOnline = t >= 6.8 && t <= 7.8;
+      ctx.fillStyle = isOnline ? "#00f0ff" : "rgba(148, 163, 184, 0.85)";
+      ctx.fillText(isOnline ? "● SYSTEM ONLINE" : "◐ RUNNING CALIBRATION", 52, H - 14);
+
+      ctx.fillStyle = "rgba(148, 163, 184, 0.75)";
+      ctx.fillText("|  INFERENCE: 3.2ms (TensorRT)", 210, H - 14);
+      ctx.fillText("|  CUDA: 12.4 ACTIVE", 430, H - 14);
+      ctx.fillText("|  FRAME: 120 FPS", 590, H - 14);
+      ctx.fillText("|  PERCEPTION: ZERO_LATENCY", 730, H - 14);
+
+      // Phase 7 Hero Status Card (Top Right / Center overlay)
+      if (sysAlpha > 0.01) {
+        ctx.globalAlpha = sysAlpha * (t > 7.7 ? smoothstep(8.0, 7.7, t) : 1.0);
+        
+        const cardX = 52;
+        const cardY = 312;
+        ctx.fillStyle = "rgba(13, 17, 26, 0.9)";
+        ctx.strokeStyle = "#00f0ff";
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = "rgba(0, 240, 255, 0.4)";
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.roundRect(cardX, cardY, 440, 38, 4);
+        ctx.fill();
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        ctx.font = "700 11px 'JetBrains Mono', monospace";
+        ctx.fillStyle = "#00f0ff";
+        ctx.fillText("VISION: ACTIVE", cardX + 16, cardY + 23);
+        ctx.fillStyle = "#8b5cf6";
+        ctx.fillText("ROBOTICS: ACTIVE", cardX + 155, cardY + 23);
+        ctx.fillStyle = "#22d3ee";
+        ctx.fillText("AI CORE: ONLINE", cardX + 310, cardY + 23);
+      }
+      ctx.restore();
+
+      // Corner technical HUD brackets
+      drawHudCorners(W, H);
+    }
+
+    // Helper: Draw animated bounding box with technical corner brackets
+    function drawBoundingBox(x, y, w, h, label, color, t) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.2;
+      const cornerLen = 10;
+
+      // Top-Left
+      ctx.beginPath();
+      ctx.moveTo(x, y + cornerLen);
+      ctx.lineTo(x, y);
+      ctx.lineTo(x + cornerLen, y);
+      ctx.stroke();
+
+      // Top-Right
+      ctx.beginPath();
+      ctx.moveTo(x + w - cornerLen, y);
+      ctx.lineTo(x + w, y);
+      ctx.lineTo(x + w, y + cornerLen);
+      ctx.stroke();
+
+      // Bottom-Left
+      ctx.beginPath();
+      ctx.moveTo(x, y + h - cornerLen);
+      ctx.lineTo(x, y + h);
+      ctx.lineTo(x + cornerLen, y + h);
+      ctx.stroke();
+
+      // Bottom-Right
+      ctx.beginPath();
+      ctx.moveTo(x + w - cornerLen, y + h);
+      ctx.lineTo(x + w, y + h);
+      ctx.lineTo(x + w, y + h - cornerLen);
+      ctx.stroke();
+
+      // Faint box border
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = 0.25;
+      ctx.strokeRect(x, y, w, h);
+
+      // Label background & text
+      ctx.globalAlpha = 0.95;
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y - 14, ctx.measureText(label).width + 8, 14);
+      ctx.fillStyle = "#07090e";
+      ctx.font = "bold 8.5px 'JetBrains Mono', monospace";
+      ctx.fillText(label, x + 4, y - 4);
+
+      ctx.restore();
+    }
+
+    // Helper: Draw Pipeline (Perception -> Decision -> Action)
+    function drawPipelineSection(x, y, t) {
+      const nodes = [
+        { name: "PERCEPTION", phase: 4.6 },
+        { name: "DECISION", phase: 5.1 },
+        { name: "ACTION", phase: 5.6 }
+      ];
+
+      ctx.save();
+      let curX = x;
+      ctx.font = "700 11px 'JetBrains Mono', monospace";
+
+      nodes.forEach((n, idx) => {
+        const isActive = t >= n.phase && t <= 7.6;
+        const color = isActive ? "#00f0ff" : "rgba(148, 163, 184, 0.5)";
+        
+        ctx.fillStyle = color;
+        if (isActive) {
+          ctx.shadowColor = "#00f0ff";
+          ctx.shadowBlur = 8;
+        }
+        ctx.fillText(n.name, curX, y);
+        ctx.shadowBlur = 0;
+        curX += ctx.measureText(n.name).width + 8;
+
+        if (idx < nodes.length - 1) {
+          const arrColor = t >= n.phase + 0.25 ? "#8b5cf6" : "rgba(148, 163, 184, 0.35)";
+          ctx.strokeStyle = arrColor;
+          ctx.fillStyle = arrColor;
+          ctx.lineWidth = 1.5;
+
+          const ay = y - 4;
+          ctx.beginPath();
+          ctx.moveTo(curX, ay);
+          ctx.lineTo(curX + 12, ay);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(curX + 12, ay);
+          ctx.lineTo(curX + 8, ay - 3);
+          ctx.lineTo(curX + 8, ay + 3);
+          ctx.closePath();
+          ctx.fill();
+
+          curX += 22;
+        }
+      });
+      ctx.restore();
+    }
+
+    // Helper: HUD corner brackets
+    function drawHudCorners(w, h) {
+      ctx.save();
+      ctx.strokeStyle = "rgba(139, 92, 246, 0.4)";
+      ctx.lineWidth = 1.5;
+      const m = 8;
+      const s = 14;
+
+      // Top-Left
+      ctx.beginPath();
+      ctx.moveTo(m, m + s); ctx.lineTo(m, m); ctx.lineTo(m + s, m); ctx.stroke();
+      // Top-Right
+      ctx.beginPath();
+      ctx.moveTo(w - m - s, m); ctx.lineTo(w - m, m); ctx.lineTo(w - m, m + s); ctx.stroke();
+      // Bottom-Left
+      ctx.beginPath();
+      ctx.moveTo(m, h - m - s); ctx.lineTo(m, h - m); ctx.lineTo(m + s, h - m); ctx.stroke();
+      // Bottom-Right
+      ctx.beginPath();
+      ctx.moveTo(w - m - s, h - m); ctx.lineTo(w - m, h - m); ctx.lineTo(w - m, h - m - s); ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // Main Animation Loop
+    function animate(timestamp) {
+      if (isPlaying) {
+        const dt = (timestamp - lastTimestamp) / 1000;
+        currentTime = (currentTime + dt) % TOTAL_DURATION;
+        timeSlider.value = currentTime;
+        updateUI();
+      }
+      lastTimestamp = timestamp;
+
+      renderFrame(currentTime);
+      requestAnimationFrame(animate);
+    }
+
+    function updateUI() {
+      timeDisplay.textContent = `${currentTime.toFixed(2)}s / ${TOTAL_DURATION.toFixed(2)}s`;
+      const phase = getPhaseInfo(currentTime);
+      phaseBadge.textContent = phase.name;
+    }
+
+    // Controls Event Listeners
+    playBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      playBtn.textContent = isPlaying ? "Pause" : "Play";
+    });
+
+    timeSlider.addEventListener('input', (e) => {
+      currentTime = parseFloat(e.target.value);
+      updateUI();
+      renderFrame(currentTime);
+    });
+
+    stepBackBtn.addEventListener('click', () => {
+      isPlaying = false;
+      playBtn.textContent = "Play";
+      currentTime = Math.max(0, currentTime - 0.1);
+      timeSlider.value = currentTime;
+      updateUI();
+      renderFrame(currentTime);
+    });
+
+    stepFwdBtn.addEventListener('click', () => {
+      isPlaying = false;
+      playBtn.textContent = "Play";
+      currentTime = Math.min(TOTAL_DURATION, currentTime + 0.1);
+      timeSlider.value = currentTime;
+      updateUI();
+      renderFrame(currentTime);
+    });
+
+    restartBtn.addEventListener('click', () => {
+      currentTime = 0;
+      timeSlider.value = 0;
+      updateUI();
+      renderFrame(currentTime);
+    });
+
+    // Capture single frame PNG
+    exportFrameBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = `neural-lab-frame-${currentTime.toFixed(2)}s.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast("Captured PNG Frame at " + currentTime.toFixed(2) + "s");
+    });
+
+    // Record 60FPS Video (WebM)
+    const recordVideoBtn = document.getElementById('recordVideoBtn');
+    let isRecording = false;
+
+    recordVideoBtn.addEventListener('click', () => {
+      if (isRecording) return;
+      if (!canvas.captureStream) {
+        showToast("Browser does not support canvas.captureStream");
+        return;
+      }
+
+      isRecording = true;
+      recordVideoBtn.disabled = true;
+      recordVideoBtn.textContent = "⏺ Recording (0%)...";
+      showToast("Recording 8.0-second 60FPS WebM video...");
+
+      const stream = canvas.captureStream(60);
+      let options = { mimeType: 'video/webm;codecs=vp9' };
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        options = { mimeType: 'video/webm' };
+      }
+
+      const recorder = new MediaRecorder(stream, options);
+      const chunks = [];
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunks.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'capedcrusader77-neural-lab-60fps.webm';
+        a.click();
+        URL.revokeObjectURL(url);
+        isRecording = false;
+        recordVideoBtn.disabled = false;
+        recordVideoBtn.textContent = "🎥 Record 60FPS Video (WebM)";
+        showToast("Video recorded & downloaded successfully!");
+      };
+
+      // Reset to 0 and record one full 8-second cycle
+      currentTime = 0;
+      recorder.start();
+
+      const startTime = performance.now();
+      const checkInterval = setInterval(() => {
+        const elapsed = (performance.now() - startTime) / 1000;
+        const pct = Math.min(100, Math.round((elapsed / TOTAL_DURATION) * 100));
+        recordVideoBtn.textContent = `⏺ Recording (${pct}%)...`;
+
+        if (elapsed >= TOTAL_DURATION) {
+          clearInterval(checkInterval);
+          recorder.stop();
+        }
+      }, 100);
+    });
+
+    // Start
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
