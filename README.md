@@ -1,7 +1,7 @@
 <div align="center">
 
   <!-- HERO BANNER CENTERPIECE: NEURAL CONTROL LAB -->
-  <img src="./capedcrusader77-neural-lab.gif" alt="CapedCrusader77 - Neural Control Lab Interface" width="100%" />
+  <img src="capedcrusader77-neural-lab.gif" alt="CapedCrusader77 - Neural Control Lab Interface" width="100%" />
 
   <br />
 
