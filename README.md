@@ -33,18 +33,24 @@
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
 
 <!-- 02 // AUTONOMOUS SYSTEMS TELEMETRY -->
-<p align="center"><img src="assets/banner_telemetry.gif?v=19" width="840" alt="autonomous systems telemetry"></p>
+<p align="center"><img src="assets/banner_telemetry.gif?v=24" width="840" alt="live telemetry"></p>
 
 <p align="center">
-  <img src="assets/telemetry.gif?v=19" width="840" alt="autonomous architecture diagnostics: perception core (6-DoF/WASM), causal inference DAG (Do-Calculus), zero-trust AST security, and live tensor flux oscilloscope">
-</p>
-<p align="center">
-  <img src="assets/contrib.gif?v=20" width="840" alt="spatial robotics &amp; perception telemetry HUD: 6-DoF attitude indicator, 180° LIDAR depth slice, and actuation nav state">
+  <img src="assets/telemetry.gif?v=24" width="840" alt="Three animated telemetry cards: perception, reasoning, and action">
 </p>
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
 
-<!-- 03 // TECHNICAL ARSENAL -->
+<!-- 03 // CONTRIBUTIONS -->
+<p align="center">
+  <img src="assets/contrib.gif?v=33" width="840" alt="Animated GitHub contribution table for the last 12 months">
+</p>
+
+<p align="center"><sub>Contribution activity over the last 12 months.</sub></p>
+
+<p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
+
+<!-- 04 // TECHNICAL ARSENAL -->
 <p align="center"><img src="assets/banner_stack.gif?v=10" width="840" alt="technical arsenal"></p>
 
 <p align="center">
@@ -53,7 +59,7 @@
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
 
-<!-- 04 // CONTROL UPLINK -->
+<!-- 05 // CONTROL UPLINK -->
 <p align="center"><img src="assets/banner_contact.gif?v=10" width="840" alt="control uplink"></p>
 
 <p align="center">
