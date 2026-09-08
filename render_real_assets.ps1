@@ -182,11 +182,12 @@ public class RealAssetGenerator {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 2. Horizontal Project Card 1: FaceTrack-AI (Cyber Biometric Vision)
-    public static void RenderCardFaceTrack(string outputPath, int totalFrames = 24) {
-        int w = 274, h = 280;
+    // 2. Horizontal Project Card 1: FaceTrack-AI (Clean Developer Card)
+    public static void RenderCardFaceTrack(string outputPath, int totalFrames = 20) {
+        int w = 274, h = 248;
         var frames = new Bitmap[totalFrames];
         Color accent = Color.FromArgb(0, 240, 255); // Cyan
+        Color borderColor = Color.FromArgb(28, 46, 68);
 
         for (int f = 0; f < totalFrames; f++) {
             float t = (float)f / totalFrames;
@@ -199,35 +200,24 @@ public class RealAssetGenerator {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
 
-                // Attractive Cyber Ambient Gradient Background
+                // Attractive Dark Ambient Gradient Background
                 using (var gradBrush = new LinearGradientBrush(
                     new Rectangle(0, 0, w, h),
-                    Color.FromArgb(6, 18, 30), Color.FromArgb(1, 3, 6), 90f)) {
+                    Color.FromArgb(8, 16, 26), Color.FromArgb(2, 4, 8), 90f)) {
                     g.FillRectangle(gradBrush, 0, 0, w, h);
                 }
 
-                // Cyber Circuit / Perspective Grid Lines on Background
-                using (var bgPen = new Pen(Color.FromArgb(18, 32, 48), 1f)) {
-                    for (int gy = 40; gy < h; gy += 24) {
-                        g.DrawLine(bgPen, 0, gy, w, gy);
-                    }
-                    for (int gx = 16; gx < w; gx += 32) {
-                        g.DrawLine(bgPen, gx, 0, gx, h);
-                    }
-                }
-
-                // Floating ambient cyber micro-particles
-                for (int p = 0; p < 6; p++) {
-                    float px = (p * 45f + (float)Math.Sin(t * Math.PI * 2f + p) * 12f) % w;
-                    float py = 30f + ((p * 42f + t * 50f) % (h - 60f));
-                    int alpha = (int)(40 + 35 * Math.Sin(t * Math.PI * 2f + p));
-                    using (var pBrush = new SolidBrush(Color.FromArgb(alpha, 0, 240, 255))) {
-                        g.FillEllipse(pBrush, px, py, 2.5f, 2.5f);
+                // Subtle Micro Technical Grid (Dot Matrix)
+                using (var dotBrush = new SolidBrush(Color.FromArgb(24, 0, 240, 255))) {
+                    for (int gy = 14; gy < h; gy += 14) {
+                        for (int gx = 14; gx < w; gx += 14) {
+                            g.FillRectangle(dotBrush, gx, gy, 1f, 1f);
+                        }
                     }
                 }
 
-                // Outer Cyber Border
-                using (var pen = new Pen(Color.FromArgb(28, 44, 64), 1f)) {
+                // Outer Card Border
+                using (var pen = new Pen(borderColor, 1f)) {
                     g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
                 }
 
@@ -236,8 +226,8 @@ public class RealAssetGenerator {
                     g.FillRectangle(brush, 0, 0, 3, h);
                 }
 
-                // Top Traveling Laser Beam
-                float beamX = t * (w + 60) - 30;
+                // Top Traveling Laser Edge Highlight
+                float beamX = t * (w + 80) - 40;
                 using (var beamBrush = new LinearGradientBrush(
                     new RectangleF(beamX - 35, 0, 70, 2),
                     Color.Transparent, Color.Transparent, 0f)) {
@@ -248,153 +238,128 @@ public class RealAssetGenerator {
                     g.FillRectangle(beamBrush, beamX - 35, 0, 70, 2);
                 }
 
-                // Top Header: Index & Status Badge
-                using (var font = new Font("Consolas", 10f, FontStyle.Bold))
-                using (var brush = new SolidBrush(accent)) {
-                    g.DrawString("01 // VISION_AI", font, brush, 14, 11);
+                // Header Row: Category & Status Badge
+                using (var catFont = new Font("Consolas", 8f, FontStyle.Bold))
+                using (var catBrush = new SolidBrush(accent)) {
+                    g.DrawString("01 // COMPUTER_VISION", catFont, catBrush, 12, 10);
                 }
+
+                // Status Badge with live pulse
+                float pulse = 0.5f + 0.5f * (float)Math.Sin(t * Math.PI * 2f);
+                int pulseAlpha = (int)(160 + 95 * pulse);
                 using (var stFont = new Font("Consolas", 7.2f, FontStyle.Bold))
-                using (var stBg = new SolidBrush(Color.FromArgb(14, 30, 46)))
-                using (var stBorder = new Pen(Color.FromArgb(0, 200, 220), 1f))
-                using (var stText = new SolidBrush(Color.FromArgb(0, 240, 255))) {
-                    g.FillRectangle(stBg, w - 110, 10, 98, 17);
-                    g.DrawRectangle(stBorder, w - 110, 10, 98, 17);
-                    g.DrawString("[60 FPS // RT]", stFont, stText, w - 102, 12);
-                }
-
-                // Viewport Container (Cyber Biometric HUD)
-                int vpX = 12, vpY = 34, vpW = w - 24, vpH = 106;
-                using (var vpBg = new SolidBrush(Color.FromArgb(2, 6, 12))) {
-                    g.FillRectangle(vpBg, vpX, vpY, vpW, vpH);
-                }
-                using (var vpPen = new Pen(Color.FromArgb(22, 36, 52), 1f)) {
-                    g.DrawRectangle(vpPen, vpX, vpY, vpW, vpH);
-                }
-                DrawCornerBrackets(g, vpX, vpY, vpW, vpH, accent, 7f);
-
-                // High-Tech Perspective Wireframe in Viewport
-                using (var gridPen = new Pen(Color.FromArgb(16, 28, 44), 1f)) {
-                    for (int gx = vpX + 16; gx < vpX + vpW; gx += 22) g.DrawLine(gridPen, gx, vpY, gx, vpY + vpH);
-                    for (int gy = vpY + 14; gy < vpY + vpH; gy += 18) g.DrawLine(gridPen, vpX, gy, vpX + vpW, gy);
-                }
-
-                // Expanding Biometric Sonar Pulse
-                float sonarR = 15f + ((t * 1.5f) % 1f) * 40f;
-                int sonarAlpha = Math.Max(0, (int)((1f - ((t * 1.5f) % 1f)) * 120));
-                using (var sonarPen = new Pen(Color.FromArgb(sonarAlpha, 0, 240, 255), 1.2f)) {
-                    g.DrawEllipse(sonarPen, vpX + vpW / 2f - sonarR, vpY + vpH / 2f - sonarR, sonarR * 2, sonarR * 2);
-                }
-
-                // Animated 6-DoF Biometric FaceMesh
-                float yaw = (float)Math.Sin(t * Math.PI * 2f) * 10f;
-                float pitch = (float)Math.Cos(t * Math.PI * 2f) * 5f;
-                float fcX = vpX + vpW / 2f + (yaw * 0.9f);
-                float fcY = vpY + vpH / 2f + (pitch * 0.7f);
-
-                // Multi-point Landmark Triangulation
-                PointF[] pts = new PointF[] {
-                    new PointF(fcX - 28, fcY - 26), // Top-left brow
-                    new PointF(fcX + 28, fcY - 26), // Top-right brow
-                    new PointF(fcX - 16, fcY - 12), // Left Eye
-                    new PointF(fcX + 16, fcY - 12), // Right Eye
-                    new PointF(fcX, fcY + 2),       // Nose bridge
-                    new PointF(fcX - 14, fcY + 18), // Left mouth
-                    new PointF(fcX + 14, fcY + 18), // Right mouth
-                    new PointF(fcX, fcY + 30)       // Chin
-                };
-
-                // Triangulation wires
-                using (var meshPen = new Pen(Color.FromArgb(85, 0, 240, 255), 1.2f)) {
-                    g.DrawLine(meshPen, pts[0], pts[1]);
-                    g.DrawLine(meshPen, pts[0], pts[2]);
-                    g.DrawLine(meshPen, pts[1], pts[3]);
-                    g.DrawLine(meshPen, pts[2], pts[3]);
-                    g.DrawLine(meshPen, pts[2], pts[4]);
-                    g.DrawLine(meshPen, pts[3], pts[4]);
-                    g.DrawLine(meshPen, pts[4], pts[5]);
-                    g.DrawLine(meshPen, pts[4], pts[6]);
-                    g.DrawLine(meshPen, pts[5], pts[6]);
-                    g.DrawLine(meshPen, pts[5], pts[7]);
-                    g.DrawLine(meshPen, pts[6], pts[7]);
-                }
-
-                // Glowing landmark nodes
-                foreach (var pt in pts) {
-                    using (var ptBrush = new SolidBrush(Color.FromArgb(230, 0, 240, 255))) {
-                        g.FillEllipse(ptBrush, pt.X - 2.2f, pt.Y - 2.2f, 4.4f, 4.4f);
+                using (var stBg = new SolidBrush(Color.FromArgb(10, 24, 38)))
+                using (var stBorder = new Pen(Color.FromArgb(20, 60, 88), 1f))
+                using (var stText = new SolidBrush(Color.FromArgb(186, 230, 253))) {
+                    g.FillRectangle(stBg, w - 96, 9, 84, 16);
+                    g.DrawRectangle(stBorder, w - 96, 9, 84, 16);
+                    using (var dotBr = new SolidBrush(Color.FromArgb(pulseAlpha, 52, 211, 153))) {
+                        g.FillEllipse(dotBr, w - 90, 14, 5, 5);
                     }
+                    g.DrawString("60 FPS // RT", stFont, stText, w - 81, 11);
                 }
 
-                // Center Reticle
-                DrawCornerBrackets(g, fcX - 36, fcY - 34, 72, 68, Color.FromArgb(160, 0, 240, 255), 8f);
-
-                // Vertical laser scanline
-                float scanY = vpY + 4 + (t * (vpH - 8));
-                using (var scanBrush = new LinearGradientBrush(
-                    new RectangleF(vpX + 4, scanY - 3, vpW - 8, 6),
-                    Color.Transparent, Color.FromArgb(140, 0, 240, 255), 90f)) {
-                    g.FillRectangle(scanBrush, vpX + 4, scanY - 3, vpW - 8, 6);
+                // Title & Subtitle
+                using (var titleFont = new Font("Consolas", 13.5f, FontStyle.Bold))
+                using (var titleBrush = new SolidBrush(Color.FromArgb(248, 250, 252))) {
+                    g.DrawString("FaceTrack-AI", titleFont, titleBrush, 12, 30);
                 }
-                using (var scanPen = new Pen(Color.FromArgb(220, 255, 255, 255), 1f)) {
-                    g.DrawLine(scanPen, vpX + 6, scanY, vpX + vpW - 6, scanY);
-                }
-
-                // Viewport Top & Bottom Labels
-                using (var hudFont = new Font("Consolas", 6.8f, FontStyle.Bold))
-                using (var hudText = new SolidBrush(Color.FromArgb(186, 230, 253))) {
-                    g.DrawString("MESH_ID: #468", hudFont, hudText, vpX + 6, vpY + 4);
-                    g.DrawString(string.Format("YAW {0:+00;-00} DEG", yaw), hudFont, hudText, vpX + vpW - 74, vpY + 4);
-                    g.DrawString("LOCK: 99.8% // ACTIVE", hudFont, hudText, vpX + 6, vpY + vpH - 12);
-                }
-
-                // --- CONTENT AREA ---
-                // Title
-                using (var titleFont = new Font("Consolas", 12.5f, FontStyle.Bold))
-                using (var titleBrush = new SolidBrush(Color.FromArgb(245, 248, 252))) {
-                    g.DrawString("FACETRACK_AI", titleFont, titleBrush, 14, 148);
-                }
-
-                // Subtitle
-                using (var subFont = new Font("Segoe UI", 8.8f, FontStyle.Bold))
-                using (var subBrush = new SolidBrush(Color.FromArgb(0, 240, 255))) {
-                    g.DrawString("Real-time CV & 6-DoF FaceMesh", subFont, subBrush, 14, 170);
+                using (var subFont = new Font("Segoe UI", 8.2f, FontStyle.Bold))
+                using (var subBrush = new SolidBrush(accent)) {
+                    g.DrawString("Real-time CV & 6-DoF FaceMesh", subFont, subBrush, 12, 52);
                 }
 
                 // Description
-                using (var descFont = new Font("Segoe UI", 8.0f, FontStyle.Regular))
+                using (var descFont = new Font("Segoe UI", 7.6f, FontStyle.Regular))
                 using (var descBrush = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                    g.DrawString("High-frequency perception pipeline with\nfacial mesh tracking & client tensor inference.", descFont, descBrush, 14, 190);
+                    g.DrawString("High-frequency perception pipeline with dense\nlandmark tracking & client WebAssembly inference.", descFont, descBrush, 12, 69);
                 }
 
-                // Tech Tags
-                string[] tags = new string[] { "TypeScript", "CV", "TF.js" };
-                float tagX = 14;
-                using (var tagFont = new Font("Consolas", 7.8f, FontStyle.Regular)) {
+                // Technical Console / Specs Box
+                int conX = 12, conY = 100, conW = w - 24, conH = 68;
+                using (var conBg = new SolidBrush(Color.FromArgb(2, 6, 12))) {
+                    g.FillRectangle(conBg, conX, conY, conW, conH);
+                }
+                using (var conPen = new Pen(Color.FromArgb(22, 38, 56), 1f)) {
+                    g.DrawRectangle(conPen, conX, conY, conW, conH);
+                }
+                // Console header bar
+                using (var headBg = new SolidBrush(Color.FromArgb(8, 18, 30))) {
+                    g.FillRectangle(headBg, conX, conY, conW, 16);
+                }
+                using (var headFont = new Font("Consolas", 6.8f, FontStyle.Bold))
+                using (var headText = new SolidBrush(Color.FromArgb(125, 211, 252))) {
+                    g.FillEllipse(new SolidBrush(Color.FromArgb(52, 211, 153)), conX + 8, conY + 5, 5, 5);
+                    g.DrawString("SPECS // TELEMETRY", headFont, headText, conX + 18, conY + 2);
+                }
+
+                // Console rows
+                using (var rowFont = new Font("Consolas", 7.2f, FontStyle.Regular))
+                using (var rowBrush = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                    g.DrawString("> INFERENCE : WebGL / WASM (1.2ms)", rowFont, rowBrush, conX + 8, conY + 20);
+                    g.DrawString("> TOPOLOGY  : 468 Dense Landmarks", rowFont, rowBrush, conX + 8, conY + 34);
+                    g.DrawString("> PRECISION : 99.8% Multi-Pose Lock", rowFont, rowBrush, conX + 8, conY + 48);
+                }
+
+                // GitHub Language Distribution Bar
+                int barX = 12, barY = 176, barW = w - 24, barH = 5;
+                // Background track
+                using (var trkBr = new SolidBrush(Color.FromArgb(15, 23, 42))) {
+                    g.FillRectangle(trkBr, barX, barY, barW, barH);
+                }
+                // TypeScript (85%)
+                int tsW = (int)(barW * 0.85f);
+                using (var tsBr = new SolidBrush(Color.FromArgb(49, 120, 198))) {
+                    g.FillRectangle(tsBr, barX, barY, tsW, barH);
+                }
+                // JavaScript (15%)
+                using (var jsBr = new SolidBrush(Color.FromArgb(247, 223, 30))) {
+                    g.FillRectangle(jsBr, barX + tsW, barY, barW - tsW, barH);
+                }
+
+                // Language Legend
+                using (var legFont = new Font("Segoe UI", 6.8f, FontStyle.Bold)) {
+                    using (var dot1 = new SolidBrush(Color.FromArgb(49, 120, 198)))
+                    using (var dot2 = new SolidBrush(Color.FromArgb(247, 223, 30)))
+                    using (var legText = new SolidBrush(Color.FromArgb(148, 163, 184))) {
+                        g.FillEllipse(dot1, barX + 2, barY + 9, 5, 5);
+                        g.DrawString("TypeScript 85%", legFont, legText, barX + 10, barY + 6);
+
+                        g.FillEllipse(dot2, barX + 90, barY + 9, 5, 5);
+                        g.DrawString("JavaScript 15%", legFont, legText, barX + 98, barY + 6);
+                    }
+                }
+
+                // Tech Stack Pills
+                string[] tags = new string[] { "TypeScript", "TF.js", "OpenCV" };
+                float tagX = 12;
+                using (var tagFont = new Font("Consolas", 7.4f, FontStyle.Regular)) {
                     foreach (var tag in tags) {
                         var sz = g.MeasureString(tag, tagFont);
-                        using (var bgBrush = new SolidBrush(Color.FromArgb(14, 24, 38))) {
-                            g.FillRectangle(bgBrush, tagX, 230, sz.Width + 8, 18);
+                        using (var bgBrush = new SolidBrush(Color.FromArgb(12, 22, 34))) {
+                            g.FillRectangle(bgBrush, tagX, 198, sz.Width + 6, 16);
                         }
-                        using (var borderPen = new Pen(Color.FromArgb(32, 52, 74), 1f)) {
-                            g.DrawRectangle(borderPen, tagX, 230, sz.Width + 8, 18);
+                        using (var borderPen = new Pen(Color.FromArgb(28, 48, 70), 1f)) {
+                            g.DrawRectangle(borderPen, tagX, 198, sz.Width + 6, 16);
                         }
                         using (var textBrush = new SolidBrush(Color.FromArgb(186, 230, 253))) {
-                            g.DrawString(tag, tagFont, textBrush, tagX + 4, 232);
+                            g.DrawString(tag, tagFont, textBrush, tagX + 3, 200);
                         }
-                        tagX += sz.Width + 12;
+                        tagX += sz.Width + 10;
                     }
                 }
 
-                // Bottom Footer Telemetry
-                using (var linePen = new Pen(Color.FromArgb(24, 38, 56), 1f)) {
-                    g.DrawLine(linePen, 12, 256, w - 12, 256);
+                // Footer Bar
+                using (var linePen = new Pen(Color.FromArgb(22, 36, 52), 1f)) {
+                    g.DrawLine(linePen, 12, 224, w - 12, 224);
                 }
-                using (var footFont = new Font("Consolas", 7.5f, FontStyle.Bold)) {
-                    using (var dotBrush = new SolidBrush(Color.FromArgb(52, 211, 153))) {
-                        g.FillEllipse(dotBrush, 14, 263, 6, 6);
+                using (var footFont = new Font("Consolas", 7.2f, FontStyle.Bold)) {
+                    using (var leftText = new SolidBrush(Color.FromArgb(100, 116, 139))) {
+                        g.DrawString("PUBLIC REPO", footFont, leftText, 12, 230);
                     }
-                    using (var footText = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                        g.DrawString("60 FPS // CONF: 99.8% // 1.2ms", footFont, footText, 25, 260);
+                    float arrowShift = (float)Math.Sin(t * Math.PI * 2f) * 2f;
+                    using (var rightText = new SolidBrush(accent)) {
+                        g.DrawString("VIEW CODE ->", footFont, rightText, w - 86 + arrowShift, 230);
                     }
                 }
             }
@@ -405,11 +370,12 @@ public class RealAssetGenerator {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 3. Horizontal Project Card 2: skillguard-oss (Cyber Security Command Node)
-    public static void RenderCardSkillguard(string outputPath, int totalFrames = 24) {
-        int w = 274, h = 280;
+    // 3. Horizontal Project Card 2: skillguard-oss (Clean Developer Card)
+    public static void RenderCardSkillguard(string outputPath, int totalFrames = 20) {
+        int w = 274, h = 248;
         var frames = new Bitmap[totalFrames];
-        Color accent = Color.FromArgb(139, 92, 246); // Electric Violet
+        Color accent = Color.FromArgb(167, 139, 250); // Electric Violet
+        Color borderColor = Color.FromArgb(44, 32, 64);
 
         for (int f = 0; f < totalFrames; f++) {
             float t = (float)f / totalFrames;
@@ -422,32 +388,24 @@ public class RealAssetGenerator {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
 
-                // Attractive Cyber Ambient Gradient Background
+                // Attractive Dark Ambient Gradient Background
                 using (var gradBrush = new LinearGradientBrush(
                     new Rectangle(0, 0, w, h),
-                    Color.FromArgb(22, 10, 36), Color.FromArgb(2, 1, 4), 90f)) {
+                    Color.FromArgb(16, 10, 26), Color.FromArgb(3, 2, 8), 90f)) {
                     g.FillRectangle(gradBrush, 0, 0, w, h);
                 }
 
-                // Hexagonal Cyber Honeycomb Pattern in Background
-                using (var hexPen = new Pen(Color.FromArgb(26, 16, 42), 1f)) {
-                    for (int hy = 20; hy < h; hy += 26) {
-                        for (int hx = 10; hx < w; hx += 32) {
-                            float offX = ((hy / 26) % 2 == 0) ? 0 : 16;
-                            g.DrawPolygon(hexPen, new PointF[] {
-                                new PointF(hx + offX, hy - 7),
-                                new PointF(hx + offX + 7, hy - 3),
-                                new PointF(hx + offX + 7, hy + 5),
-                                new PointF(hx + offX, hy + 9),
-                                new PointF(hx + offX - 7, hy + 5),
-                                new PointF(hx + offX - 7, hy - 3)
-                            });
+                // Subtle Micro Technical Grid (Dot Matrix)
+                using (var dotBrush = new SolidBrush(Color.FromArgb(24, 167, 139, 250))) {
+                    for (int gy = 14; gy < h; gy += 14) {
+                        for (int gx = 14; gx < w; gx += 14) {
+                            g.FillRectangle(dotBrush, gx, gy, 1f, 1f);
                         }
                     }
                 }
 
-                // Outer Cyber Border
-                using (var pen = new Pen(Color.FromArgb(42, 28, 62), 1f)) {
+                // Outer Card Border
+                using (var pen = new Pen(borderColor, 1f)) {
                     g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
                 }
 
@@ -456,8 +414,8 @@ public class RealAssetGenerator {
                     g.FillRectangle(brush, 0, 0, 3, h);
                 }
 
-                // Top Traveling Laser Beam
-                float beamX = t * (w + 60) - 30;
+                // Top Traveling Laser Edge Highlight
+                float beamX = t * (w + 80) - 40;
                 using (var beamBrush = new LinearGradientBrush(
                     new RectangleF(beamX - 35, 0, 70, 2),
                     Color.Transparent, Color.Transparent, 0f)) {
@@ -468,133 +426,128 @@ public class RealAssetGenerator {
                     g.FillRectangle(beamBrush, beamX - 35, 0, 70, 2);
                 }
 
-                // Top Header: Index & Status Badge (Clean ASCII)
-                using (var font = new Font("Consolas", 10f, FontStyle.Bold))
-                using (var brush = new SolidBrush(Color.FromArgb(167, 139, 250))) {
-                    g.DrawString("02 // SECURITY", font, brush, 14, 11);
+                // Header Row: Category & Status Badge
+                using (var catFont = new Font("Consolas", 8f, FontStyle.Bold))
+                using (var catBrush = new SolidBrush(accent)) {
+                    g.DrawString("02 // SECURITY_AUDIT", catFont, catBrush, 12, 10);
                 }
+
+                // Status Badge with live pulse
+                float pulse = 0.5f + 0.5f * (float)Math.Sin(t * Math.PI * 2f);
+                int pulseAlpha = (int)(160 + 95 * pulse);
                 using (var stFont = new Font("Consolas", 7.2f, FontStyle.Bold))
-                using (var stBg = new SolidBrush(Color.FromArgb(32, 18, 50)))
-                using (var stBorder = new Pen(Color.FromArgb(167, 139, 250), 1f))
-                using (var stText = new SolidBrush(Color.FromArgb(192, 132, 252))) {
-                    g.FillRectangle(stBg, w - 110, 10, 98, 17);
-                    g.DrawRectangle(stBorder, w - 110, 10, 98, 17);
-                    g.DrawString("[1* // OSS AUDIT]", stFont, stText, w - 105, 12);
+                using (var stBg = new SolidBrush(Color.FromArgb(28, 18, 44)))
+                using (var stBorder = new Pen(Color.FromArgb(64, 42, 94), 1f))
+                using (var stText = new SolidBrush(Color.FromArgb(221, 214, 254))) {
+                    g.FillRectangle(stBg, w - 96, 9, 84, 16);
+                    g.DrawRectangle(stBorder, w - 96, 9, 84, 16);
+                    using (var dotBr = new SolidBrush(Color.FromArgb(pulseAlpha, 192, 132, 252))) {
+                        g.FillEllipse(dotBr, w - 90, 14, 5, 5);
+                    }
+                    g.DrawString("OSS AUDIT", stFont, stText, w - 79, 11);
                 }
 
-                // Viewport Container (Cyber Animation)
-                int vpX = 12, vpY = 34, vpW = w - 24, vpH = 106;
-                using (var vpBg = new SolidBrush(Color.FromArgb(10, 5, 18))) {
-                    g.FillRectangle(vpBg, vpX, vpY, vpW, vpH);
+                // Title & Subtitle
+                using (var titleFont = new Font("Consolas", 13.5f, FontStyle.Bold))
+                using (var titleBrush = new SolidBrush(Color.FromArgb(248, 250, 252))) {
+                    g.DrawString("skillguard-oss", titleFont, titleBrush, 12, 30);
                 }
-                using (var vpPen = new Pen(Color.FromArgb(38, 24, 58), 1f)) {
-                    g.DrawRectangle(vpPen, vpX, vpY, vpW, vpH);
-                }
-                DrawCornerBrackets(g, vpX, vpY, vpW, vpH, accent, 7f);
-
-                // Holographic Cyber Security Shield Crest
-                float scX = vpX + vpW / 2f;
-                float scY = vpY + vpH / 2f;
-                float shieldPulse = 0.7f + 0.3f * (float)Math.Sin(t * Math.PI * 2f);
-
-                // Hexagonal Outer Forcefield
-                PointF[] hexPts = new PointF[6];
-                float hexR = 34f + (shieldPulse * 3f);
-                for (int k = 0; k < 6; k++) {
-                    double ang = k * Math.PI / 3.0;
-                    hexPts[k] = new PointF(scX + (float)(Math.Cos(ang) * hexR), scY + (float)(Math.Sin(ang) * hexR));
-                }
-                using (var hPen = new Pen(Color.FromArgb(80, 167, 139, 250), 1.2f)) {
-                    g.DrawPolygon(hPen, hexPts);
-                }
-
-                // Inner Shield Contour
-                PointF[] sPts = new PointF[] {
-                    new PointF(scX - 22, scY - 24),
-                    new PointF(scX + 22, scY - 24),
-                    new PointF(scX + 18, scY + 6),
-                    new PointF(scX, scY + 26),
-                    new PointF(scX - 18, scY + 6)
-                };
-                using (var sPen = new Pen(Color.FromArgb(200, 192, 132, 252), 1.5f)) {
-                    g.DrawPolygon(sPen, sPts);
-                }
-
-                // Center Pulsing Energy Core
-                using (var coreBrush = new SolidBrush(Color.FromArgb((int)(shieldPulse * 220), 192, 132, 252))) {
-                    g.FillEllipse(coreBrush, scX - 8, scY - 8, 16, 16);
-                }
-                using (var corePen = new Pen(Color.FromArgb(255, 255, 255, 255), 1.2f)) {
-                    g.DrawEllipse(corePen, scX - 8, scY - 8, 16, 16);
-                }
-
-                // Sweeping violet laser scanline
-                float scanY = vpY + 4 + (t * (vpH - 8));
-                using (var scanBrush = new LinearGradientBrush(
-                    new RectangleF(vpX + 4, scanY - 3, vpW - 8, 6),
-                    Color.Transparent, Color.FromArgb(140, 139, 92, 246), 90f)) {
-                    g.FillRectangle(scanBrush, vpX + 4, scanY - 3, vpW - 8, 6);
-                }
-                using (var scanPen = new Pen(Color.FromArgb(230, 240, 230, 255), 1f)) {
-                    g.DrawLine(scanPen, vpX + 6, scanY, vpX + vpW - 6, scanY);
-                }
-
-                // Viewport Top & Bottom Labels
-                using (var hudFont = new Font("Consolas", 6.8f, FontStyle.Bold))
-                using (var hudText = new SolidBrush(Color.FromArgb(221, 214, 254))) {
-                    g.DrawString("AST_PARSER // SECURE", hudFont, hudText, vpX + 6, vpY + 4);
-                    g.DrawString("VULN: 0", hudFont, hudText, vpX + vpW - 54, vpY + 4);
-                    g.DrawString("GUARD: 100% // VERIFIED", hudFont, hudText, vpX + 6, vpY + vpH - 12);
-                }
-
-                // --- CONTENT AREA ---
-                // Title
-                using (var titleFont = new Font("Consolas", 12.5f, FontStyle.Bold))
-                using (var titleBrush = new SolidBrush(Color.FromArgb(245, 248, 252))) {
-                    g.DrawString("SKILLGUARD_OSS", titleFont, titleBrush, 14, 148);
-                }
-
-                // Subtitle
-                using (var subFont = new Font("Segoe UI", 8.8f, FontStyle.Bold))
-                using (var subBrush = new SolidBrush(Color.FromArgb(167, 139, 250))) {
-                    g.DrawString("AI Agent Security & AST Audit", subFont, subBrush, 14, 170);
+                using (var subFont = new Font("Segoe UI", 8.2f, FontStyle.Bold))
+                using (var subBrush = new SolidBrush(accent)) {
+                    g.DrawString("AI Agent Security & AST Audit", subFont, subBrush, 12, 52);
                 }
 
                 // Description
-                using (var descFont = new Font("Segoe UI", 8.0f, FontStyle.Regular))
+                using (var descFont = new Font("Segoe UI", 7.6f, FontStyle.Regular))
                 using (var descBrush = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                    g.DrawString("Automated capability audit engine analyzing\nAST syntaxes, sandboxes & permission guards.", descFont, descBrush, 14, 190);
+                    g.DrawString("Automated capability audit engine analyzing\nAST syntaxes, sandboxes & permission guards.", descFont, descBrush, 12, 69);
                 }
 
-                // Tech Tags
+                // Technical Console / Specs Box
+                int conX = 12, conY = 100, conW = w - 24, conH = 68;
+                using (var conBg = new SolidBrush(Color.FromArgb(8, 4, 16))) {
+                    g.FillRectangle(conBg, conX, conY, conW, conH);
+                }
+                using (var conPen = new Pen(Color.FromArgb(36, 22, 54), 1f)) {
+                    g.DrawRectangle(conPen, conX, conY, conW, conH);
+                }
+                // Console header bar
+                using (var headBg = new SolidBrush(Color.FromArgb(20, 12, 36))) {
+                    g.FillRectangle(headBg, conX, conY, conW, 16);
+                }
+                using (var headFont = new Font("Consolas", 6.8f, FontStyle.Bold))
+                using (var headText = new SolidBrush(Color.FromArgb(221, 214, 254))) {
+                    g.FillEllipse(new SolidBrush(Color.FromArgb(52, 211, 153)), conX + 8, conY + 5, 5, 5);
+                    g.DrawString("SPECS // AUDIT_ENGINE", headFont, headText, conX + 18, conY + 2);
+                }
+
+                // Console rows
+                using (var rowFont = new Font("Consolas", 7.2f, FontStyle.Regular))
+                using (var rowBrush = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                    g.DrawString("> SANDBOX   : Subprocess Isolation", rowFont, rowBrush, conX + 8, conY + 20);
+                    g.DrawString("> RULESET   : 140+ Capability Checks", rowFont, rowBrush, conX + 8, conY + 34);
+                    g.DrawString("> VULN SCAN : 0 Critical // Verified", rowFont, rowBrush, conX + 8, conY + 48);
+                }
+
+                // GitHub Language Distribution Bar
+                int barX = 12, barY = 176, barW = w - 24, barH = 5;
+                // Background track
+                using (var trkBr = new SolidBrush(Color.FromArgb(15, 23, 42))) {
+                    g.FillRectangle(trkBr, barX, barY, barW, barH);
+                }
+                // Python (92%)
+                int pyW = (int)(barW * 0.92f);
+                using (var pyBr = new SolidBrush(Color.FromArgb(53, 114, 165))) {
+                    g.FillRectangle(pyBr, barX, barY, pyW, barH);
+                }
+                // Shell (8%)
+                using (var shBr = new SolidBrush(Color.FromArgb(137, 224, 81))) {
+                    g.FillRectangle(shBr, barX + pyW, barY, barW - pyW, barH);
+                }
+
+                // Language Legend
+                using (var legFont = new Font("Segoe UI", 6.8f, FontStyle.Bold)) {
+                    using (var dot1 = new SolidBrush(Color.FromArgb(53, 114, 165)))
+                    using (var dot2 = new SolidBrush(Color.FromArgb(137, 224, 81)))
+                    using (var legText = new SolidBrush(Color.FromArgb(148, 163, 184))) {
+                        g.FillEllipse(dot1, barX + 2, barY + 9, 5, 5);
+                        g.DrawString("Python 92%", legFont, legText, barX + 10, barY + 6);
+
+                        g.FillEllipse(dot2, barX + 90, barY + 9, 5, 5);
+                        g.DrawString("Shell 8%", legFont, legText, barX + 98, barY + 6);
+                    }
+                }
+
+                // Tech Stack Pills
                 string[] tags = new string[] { "Python", "AST", "Security" };
-                float tagX = 14;
-                using (var tagFont = new Font("Consolas", 7.8f, FontStyle.Regular)) {
+                float tagX = 12;
+                using (var tagFont = new Font("Consolas", 7.4f, FontStyle.Regular)) {
                     foreach (var tag in tags) {
                         var sz = g.MeasureString(tag, tagFont);
-                        using (var bgBrush = new SolidBrush(Color.FromArgb(26, 16, 40))) {
-                            g.FillRectangle(bgBrush, tagX, 230, sz.Width + 8, 18);
+                        using (var bgBrush = new SolidBrush(Color.FromArgb(24, 14, 38))) {
+                            g.FillRectangle(bgBrush, tagX, 198, sz.Width + 6, 16);
                         }
-                        using (var borderPen = new Pen(Color.FromArgb(56, 38, 82), 1f)) {
-                            g.DrawRectangle(borderPen, tagX, 230, sz.Width + 8, 18);
+                        using (var borderPen = new Pen(Color.FromArgb(56, 36, 84), 1f)) {
+                            g.DrawRectangle(borderPen, tagX, 198, sz.Width + 6, 16);
                         }
                         using (var textBrush = new SolidBrush(Color.FromArgb(221, 214, 254))) {
-                            g.DrawString(tag, tagFont, textBrush, tagX + 4, 232);
+                            g.DrawString(tag, tagFont, textBrush, tagX + 3, 200);
                         }
-                        tagX += sz.Width + 12;
+                        tagX += sz.Width + 10;
                     }
                 }
 
-                // Bottom Footer Telemetry
-                using (var linePen = new Pen(Color.FromArgb(40, 26, 56), 1f)) {
-                    g.DrawLine(linePen, 12, 256, w - 12, 256);
+                // Footer Bar
+                using (var linePen = new Pen(Color.FromArgb(38, 24, 56), 1f)) {
+                    g.DrawLine(linePen, 12, 224, w - 12, 224);
                 }
-                using (var footFont = new Font("Consolas", 7.5f, FontStyle.Bold)) {
-                    using (var dotBrush = new SolidBrush(Color.FromArgb(52, 211, 153))) {
-                        g.FillEllipse(dotBrush, 14, 263, 6, 6);
+                using (var footFont = new Font("Consolas", 7.2f, FontStyle.Bold)) {
+                    using (var leftText = new SolidBrush(Color.FromArgb(100, 116, 139))) {
+                        g.DrawString("OPEN SOURCE", footFont, leftText, 12, 230);
                     }
-                    using (var footText = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                        g.DrawString("SANDBOX: ACTIVE // VULN: 0 // PASS", footFont, footText, 25, 260);
+                    float arrowShift = (float)Math.Sin(t * Math.PI * 2f) * 2f;
+                    using (var rightText = new SolidBrush(accent)) {
+                        g.DrawString("VIEW CODE ->", footFont, rightText, w - 86 + arrowShift, 230);
                     }
                 }
             }
@@ -605,11 +558,12 @@ public class RealAssetGenerator {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 4. Horizontal Project Card 3: rootcause-iq (Enterprise Causal Trace)
-    public static void RenderCardRootcause(string outputPath, int totalFrames = 24) {
-        int w = 274, h = 280;
+    // 4. Horizontal Project Card 3: rootcause-iq (Clean Developer Card)
+    public static void RenderCardRootcause(string outputPath, int totalFrames = 20) {
+        int w = 274, h = 248;
         var frames = new Bitmap[totalFrames];
         Color accent = Color.FromArgb(56, 189, 248); // Sky Blue
+        Color borderColor = Color.FromArgb(26, 48, 70);
 
         for (int f = 0; f < totalFrames; f++) {
             float t = (float)f / totalFrames;
@@ -622,32 +576,24 @@ public class RealAssetGenerator {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
 
-                // Attractive Cyber Ambient Gradient Background
+                // Attractive Dark Ambient Gradient Background
                 using (var gradBrush = new LinearGradientBrush(
                     new Rectangle(0, 0, w, h),
-                    Color.FromArgb(6, 20, 32), Color.FromArgb(1, 4, 8), 90f)) {
+                    Color.FromArgb(6, 18, 28), Color.FromArgb(2, 5, 10), 90f)) {
                     g.FillRectangle(gradBrush, 0, 0, w, h);
                 }
 
-                // High-Tech PCB Circuit Board Traces in Background
-                using (var pcbPen = new Pen(Color.FromArgb(18, 38, 58), 1f)) {
-                    g.DrawLine(pcbPen, 20, 50, 80, 50);
-                    g.DrawLine(pcbPen, 80, 50, 110, 80);
-                    g.DrawLine(pcbPen, 110, 80, 200, 80);
-                    g.DrawLine(pcbPen, 200, 80, 240, 120);
-
-                    g.DrawLine(pcbPen, 30, 210, 100, 210);
-                    g.DrawLine(pcbPen, 100, 210, 130, 240);
-                    g.DrawLine(pcbPen, 130, 240, 230, 240);
-                }
-                // Traveling circuit pulse beads
-                float pulseX1 = 20 + ((t * 180f) % 180f);
-                using (var dotB = new SolidBrush(Color.FromArgb(120, 56, 189, 248))) {
-                    g.FillEllipse(dotB, pulseX1, 50 - 2, 4, 4);
+                // Subtle Micro Technical Grid (Dot Matrix)
+                using (var dotBrush = new SolidBrush(Color.FromArgb(24, 56, 189, 248))) {
+                    for (int gy = 14; gy < h; gy += 14) {
+                        for (int gx = 14; gx < w; gx += 14) {
+                            g.FillRectangle(dotBrush, gx, gy, 1f, 1f);
+                        }
+                    }
                 }
 
-                // Outer Cyber Border
-                using (var pen = new Pen(Color.FromArgb(28, 46, 68), 1f)) {
+                // Outer Card Border
+                using (var pen = new Pen(borderColor, 1f)) {
                     g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
                 }
 
@@ -656,8 +602,8 @@ public class RealAssetGenerator {
                     g.FillRectangle(brush, 0, 0, 3, h);
                 }
 
-                // Top Traveling Laser Beam
-                float beamX = t * (w + 60) - 30;
+                // Top Traveling Laser Edge Highlight
+                float beamX = t * (w + 80) - 40;
                 using (var beamBrush = new LinearGradientBrush(
                     new RectangleF(beamX - 35, 0, 70, 2),
                     Color.Transparent, Color.Transparent, 0f)) {
@@ -668,156 +614,128 @@ public class RealAssetGenerator {
                     g.FillRectangle(beamBrush, beamX - 35, 0, 70, 2);
                 }
 
-                // Top Header: Index & Status Badge
-                using (var font = new Font("Consolas", 10f, FontStyle.Bold))
-                using (var brush = new SolidBrush(accent)) {
-                    g.DrawString("03 // DIAGNOSTICS", font, brush, 14, 11);
+                // Header Row: Category & Status Badge
+                using (var catFont = new Font("Consolas", 8f, FontStyle.Bold))
+                using (var catBrush = new SolidBrush(accent)) {
+                    g.DrawString("03 // CAUSAL_SYSTEMS", catFont, catBrush, 12, 10);
                 }
+
+                // Status Badge with live pulse
+                float pulse = 0.5f + 0.5f * (float)Math.Sin(t * Math.PI * 2f);
+                int pulseAlpha = (int)(160 + 95 * pulse);
                 using (var stFont = new Font("Consolas", 7.2f, FontStyle.Bold))
-                using (var stBg = new SolidBrush(Color.FromArgb(14, 32, 48)))
-                using (var stBorder = new Pen(Color.FromArgb(56, 189, 248), 1f))
-                using (var stText = new SolidBrush(Color.FromArgb(56, 189, 248))) {
-                    g.FillRectangle(stBg, w - 110, 10, 98, 17);
-                    g.DrawRectangle(stBorder, w - 110, 10, 98, 17);
-                    g.DrawString("[AUTO-HEAL // OK]", stFont, stText, w - 105, 12);
-                }
-
-                // Viewport Container (Cyber Animation)
-                int vpX = 12, vpY = 34, vpW = w - 24, vpH = 106;
-                using (var vpBg = new SolidBrush(Color.FromArgb(2, 8, 14))) {
-                    g.FillRectangle(vpBg, vpX, vpY, vpW, vpH);
-                }
-                using (var vpPen = new Pen(Color.FromArgb(22, 38, 56), 1f)) {
-                    g.DrawRectangle(vpPen, vpX, vpY, vpW, vpH);
-                }
-                DrawCornerBrackets(g, vpX, vpY, vpW, vpH, accent, 7f);
-
-                // Microservice Causal Graph Nodes
-                PointF[] gNodes = new PointF[] {
-                    new PointF(vpX + 30, vpY + 34),   // Client
-                    new PointF(vpX + 95, vpY + 26),   // Gateway
-                    new PointF(vpX + 95, vpY + 74),   // Auth
-                    new PointF(vpX + 160, vpY + 40),  // Core API (Anomaly)
-                    new PointF(vpX + 220, vpY + 28),  // DB
-                    new PointF(vpX + 220, vpY + 74)   // Fallback Cache
-                };
-
-                int[][] gLinks = new int[][] {
-                    new int[] { 0, 1 }, new int[] { 1, 2 }, new int[] { 1, 3 },
-                    new int[] { 3, 4 }, new int[] { 2, 5 }, new int[] { 5, 4 }
-                };
-
-                using (var linkPen = new Pen(Color.FromArgb(60, 56, 189, 248), 1.2f)) {
-                    foreach (var edge in gLinks) {
-                        g.DrawLine(linkPen, gNodes[edge[0]], gNodes[edge[1]]);
+                using (var stBg = new SolidBrush(Color.FromArgb(12, 28, 44)))
+                using (var stBorder = new Pen(Color.FromArgb(30, 64, 94), 1f))
+                using (var stText = new SolidBrush(Color.FromArgb(186, 230, 253))) {
+                    g.FillRectangle(stBg, w - 96, 9, 84, 16);
+                    g.DrawRectangle(stBorder, w - 96, 9, 84, 16);
+                    using (var dotBr = new SolidBrush(Color.FromArgb(pulseAlpha, 52, 211, 153))) {
+                        g.FillEllipse(dotBr, w - 90, 14, 5, 5);
                     }
+                    g.DrawString("AUTO-HEAL", stFont, stText, w - 80, 11);
                 }
 
-                // Auto-healing fallback path in neon emerald
-                using (var healPen = new Pen(Color.FromArgb(140, 52, 211, 153), 1.5f)) {
-                    healPen.DashStyle = DashStyle.Dash;
-                    g.DrawLine(healPen, gNodes[1], gNodes[2]);
-                    g.DrawLine(healPen, gNodes[2], gNodes[5]);
-                    g.DrawLine(healPen, gNodes[5], gNodes[4]);
+                // Title & Subtitle
+                using (var titleFont = new Font("Consolas", 13.5f, FontStyle.Bold))
+                using (var titleBrush = new SolidBrush(Color.FromArgb(248, 250, 252))) {
+                    g.DrawString("rootcause-iq", titleFont, titleBrush, 12, 30);
                 }
-
-                // Causal propagation pulse
-                float waveT = (t * 2f) % 1f;
-                PointF pA = gNodes[1];
-                PointF pB = gNodes[3];
-                float wX = pA.X + (pB.X - pA.X) * waveT;
-                float wY = pA.Y + (pB.Y - pA.Y) * waveT;
-                using (var waveBrush = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
-                    g.FillEllipse(waveBrush, wX - 2.5f, wY - 2.5f, 5f, 5f);
-                }
-
-                // Draw Graph Nodes
-                for (int i = 0; i < gNodes.Length; i++) {
-                    PointF pt = gNodes[i];
-                    Color nCol = Color.FromArgb(56, 189, 248);
-                    if (i == 3) {
-                        // Root cause anomaly node (pulsing red/orange)
-                        float aPulse = 0.5f + 0.5f * (float)Math.Sin(t * Math.PI * 2f);
-                        nCol = Color.FromArgb(240, (int)(70 + aPulse * 50), 60);
-                        using (var ringP = new Pen(Color.FromArgb((int)(aPulse * 180), 239, 68, 68), 1.2f)) {
-                            g.DrawEllipse(ringP, pt.X - 8, pt.Y - 8, 16, 16);
-                        }
-                    } else if (i == 5) {
-                        nCol = Color.FromArgb(52, 211, 153);
-                    }
-
-                    using (var nBrush = new SolidBrush(nCol)) {
-                        g.FillEllipse(nBrush, pt.X - 4, pt.Y - 4, 8, 8);
-                    }
-                }
-
-                // Sweeping sky-blue laser scanline
-                float scanY = vpY + 4 + (t * (vpH - 8));
-                using (var scanBrush = new LinearGradientBrush(
-                    new RectangleF(vpX + 4, scanY - 3, vpW - 8, 6),
-                    Color.Transparent, Color.FromArgb(140, 56, 189, 248), 90f)) {
-                    g.FillRectangle(scanBrush, vpX + 4, scanY - 3, vpW - 8, 6);
-                }
-                using (var scanPen = new Pen(Color.FromArgb(220, 230, 250, 255), 1f)) {
-                    g.DrawLine(scanPen, vpX + 6, scanY, vpX + vpW - 6, scanY);
-                }
-
-                // Viewport Top & Bottom Labels
-                using (var hudFont = new Font("Consolas", 6.8f, FontStyle.Bold))
-                using (var hudText = new SolidBrush(Color.FromArgb(186, 230, 253))) {
-                    g.DrawString("CAUSAL_TRACE // 6 NODES", hudFont, hudText, vpX + 6, vpY + 4);
-                    g.DrawString("LAT: 0.8ms", hudFont, hudText, vpX + vpW - 64, vpY + 4);
-                    g.DrawString("ANOMALY: ISOLATED // HEAL: 100%", hudFont, hudText, vpX + 6, vpY + vpH - 12);
-                }
-
-                // --- CONTENT AREA ---
-                // Title
-                using (var titleFont = new Font("Consolas", 12.5f, FontStyle.Bold))
-                using (var titleBrush = new SolidBrush(Color.FromArgb(245, 248, 252))) {
-                    g.DrawString("ROOTCAUSE_IQ", titleFont, titleBrush, 14, 148);
-                }
-
-                // Subtitle
-                using (var subFont = new Font("Segoe UI", 8.8f, FontStyle.Bold))
-                using (var subBrush = new SolidBrush(Color.FromArgb(56, 189, 248))) {
-                    g.DrawString("Diagnostic & Root-Cause Engine", subFont, subBrush, 14, 170);
+                using (var subFont = new Font("Segoe UI", 8.2f, FontStyle.Bold))
+                using (var subBrush = new SolidBrush(accent)) {
+                    g.DrawString("Diagnostic & Root-Cause Engine", subFont, subBrush, 12, 52);
                 }
 
                 // Description
-                using (var descFont = new Font("Segoe UI", 8.0f, FontStyle.Regular))
+                using (var descFont = new Font("Segoe UI", 7.6f, FontStyle.Regular))
                 using (var descBrush = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                    g.DrawString("Intelligent failure tracing correlating\ndistributed error propagations & recovery paths.", descFont, descBrush, 14, 190);
+                    g.DrawString("Intelligent failure tracing correlating distributed\nerror propagations & automated recovery paths.", descFont, descBrush, 12, 69);
                 }
 
-                // Tech Tags
+                // Technical Console / Specs Box
+                int conX = 12, conY = 100, conW = w - 24, conH = 68;
+                using (var conBg = new SolidBrush(Color.FromArgb(2, 8, 14))) {
+                    g.FillRectangle(conBg, conX, conY, conW, conH);
+                }
+                using (var conPen = new Pen(Color.FromArgb(20, 42, 62), 1f)) {
+                    g.DrawRectangle(conPen, conX, conY, conW, conH);
+                }
+                // Console header bar
+                using (var headBg = new SolidBrush(Color.FromArgb(10, 22, 36))) {
+                    g.FillRectangle(headBg, conX, conY, conW, 16);
+                }
+                using (var headFont = new Font("Consolas", 6.8f, FontStyle.Bold))
+                using (var headText = new SolidBrush(Color.FromArgb(186, 230, 253))) {
+                    g.FillEllipse(new SolidBrush(Color.FromArgb(52, 211, 153)), conX + 8, conY + 5, 5, 5);
+                    g.DrawString("SPECS // CAUSAL_DAG", headFont, headText, conX + 18, conY + 2);
+                }
+
+                // Console rows
+                using (var rowFont = new Font("Consolas", 7.2f, FontStyle.Regular))
+                using (var rowBrush = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                    g.DrawString("> TRACING   : OpenTelemetry Causal DAG", rowFont, rowBrush, conX + 8, conY + 20);
+                    g.DrawString("> RESOLUTION: Autonomous Routing", rowFont, rowBrush, conX + 8, conY + 34);
+                    g.DrawString("> RECOVERY  : < 200ms // Zero Downtime", rowFont, rowBrush, conX + 8, conY + 48);
+                }
+
+                // GitHub Language Distribution Bar
+                int barX = 12, barY = 176, barW = w - 24, barH = 5;
+                // Background track
+                using (var trkBr = new SolidBrush(Color.FromArgb(15, 23, 42))) {
+                    g.FillRectangle(trkBr, barX, barY, barW, barH);
+                }
+                // TypeScript (76%)
+                int tsW = (int)(barW * 0.76f);
+                using (var tsBr = new SolidBrush(Color.FromArgb(49, 120, 198))) {
+                    g.FillRectangle(tsBr, barX, barY, tsW, barH);
+                }
+                // Python (24%)
+                using (var pyBr = new SolidBrush(Color.FromArgb(53, 114, 165))) {
+                    g.FillRectangle(pyBr, barX + tsW, barY, barW - tsW, barH);
+                }
+
+                // Language Legend
+                using (var legFont = new Font("Segoe UI", 6.8f, FontStyle.Bold)) {
+                    using (var dot1 = new SolidBrush(Color.FromArgb(49, 120, 198)))
+                    using (var dot2 = new SolidBrush(Color.FromArgb(53, 114, 165)))
+                    using (var legText = new SolidBrush(Color.FromArgb(148, 163, 184))) {
+                        g.FillEllipse(dot1, barX + 2, barY + 9, 5, 5);
+                        g.DrawString("TypeScript 76%", legFont, legText, barX + 10, barY + 6);
+
+                        g.FillEllipse(dot2, barX + 90, barY + 9, 5, 5);
+                        g.DrawString("Python 24%", legFont, legText, barX + 98, barY + 6);
+                    }
+                }
+
+                // Tech Stack Pills
                 string[] tags = new string[] { "TypeScript", "Graph", "Next.js" };
-                float tagX = 14;
-                using (var tagFont = new Font("Consolas", 7.8f, FontStyle.Regular)) {
+                float tagX = 12;
+                using (var tagFont = new Font("Consolas", 7.4f, FontStyle.Regular)) {
                     foreach (var tag in tags) {
                         var sz = g.MeasureString(tag, tagFont);
-                        using (var bgBrush = new SolidBrush(Color.FromArgb(14, 26, 42))) {
-                            g.FillRectangle(bgBrush, tagX, 230, sz.Width + 8, 18);
+                        using (var bgBrush = new SolidBrush(Color.FromArgb(12, 26, 40))) {
+                            g.FillRectangle(bgBrush, tagX, 198, sz.Width + 6, 16);
                         }
-                        using (var borderPen = new Pen(Color.FromArgb(34, 56, 82), 1f)) {
-                            g.DrawRectangle(borderPen, tagX, 230, sz.Width + 8, 18);
+                        using (var borderPen = new Pen(Color.FromArgb(28, 54, 80), 1f)) {
+                            g.DrawRectangle(borderPen, tagX, 198, sz.Width + 6, 16);
                         }
                         using (var textBrush = new SolidBrush(Color.FromArgb(186, 230, 253))) {
-                            g.DrawString(tag, tagFont, textBrush, tagX + 4, 232);
+                            g.DrawString(tag, tagFont, textBrush, tagX + 3, 200);
                         }
-                        tagX += sz.Width + 12;
+                        tagX += sz.Width + 10;
                     }
                 }
 
-                // Bottom Footer Telemetry
-                using (var linePen = new Pen(Color.FromArgb(24, 40, 60), 1f)) {
-                    g.DrawLine(linePen, 12, 256, w - 12, 256);
+                // Footer Bar
+                using (var linePen = new Pen(Color.FromArgb(20, 38, 58), 1f)) {
+                    g.DrawLine(linePen, 12, 224, w - 12, 224);
                 }
-                using (var footFont = new Font("Consolas", 7.5f, FontStyle.Bold)) {
-                    using (var dotBrush = new SolidBrush(Color.FromArgb(52, 211, 153))) {
-                        g.FillEllipse(dotBrush, 14, 263, 6, 6);
+                using (var footFont = new Font("Consolas", 7.2f, FontStyle.Bold)) {
+                    using (var leftText = new SolidBrush(Color.FromArgb(100, 116, 139))) {
+                        g.DrawString("SYSTEM CORE", footFont, leftText, 12, 230);
                     }
-                    using (var footText = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                        g.DrawString("AUTO-HEAL: 100% // NO DOWNTIME", footFont, footText, 25, 260);
+                    float arrowShift = (float)Math.Sin(t * Math.PI * 2f) * 2f;
+                    using (var rightText = new SolidBrush(accent)) {
+                        g.DrawString("VIEW CODE ->", footFont, rightText, w - 86 + arrowShift, 230);
                     }
                 }
             }
