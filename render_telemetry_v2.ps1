@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Drawing.Imaging;
 
-public class TelemetrySuite {
+public class AutonomousTelemetrySuite {
     public static void SaveGif(string outputPath, Bitmap[] frames, int delayMs) {
         using (var fs = new FileStream(outputPath, FileMode.Create, FileAccess.Write)) {
             int delay100th = delayMs / 10;
@@ -90,7 +90,7 @@ public class TelemetrySuite {
         }
     }
 
-    // 1. Render Banner
+    // 1. Render Banner: 02 // AUTONOMOUS SYSTEMS TELEMETRY
     public static void RenderBanner(string outputPath, int totalFrames = 20) {
         int w = 840, h = 36;
         var frames = new Bitmap[totalFrames];
@@ -101,47 +101,44 @@ public class TelemetrySuite {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                // Background
                 using (var bBg = new SolidBrush(Color.FromArgb(7, 9, 14))) {
                     g.FillRectangle(bBg, 0, 0, w, h);
                 }
-
-                // Outer border
                 using (var pBorder = new Pen(Color.FromArgb(30, 41, 59), 1f)) {
                     g.DrawRectangle(pBorder, 1, 1, w - 2, h - 2);
                 }
 
-                // Left accent bar
-                using (var bBar = new SolidBrush(Color.FromArgb(56, 189, 248))) {
+                // Left accent indicator
+                using (var bBar = new SolidBrush(Color.FromArgb(0, 240, 255))) {
                     g.FillRectangle(bBar, 4, 8, 3, 20);
                 }
 
                 // Title
                 using (var fTitle = new Font("Segoe UI", 10.5f, FontStyle.Bold))
                 using (var bTitle = new SolidBrush(Color.White)) {
-                    g.DrawString("02 // OBSERVABILITY & TELEMETRY", fTitle, bTitle, 16, 7);
+                    g.DrawString("02 // AUTONOMOUS SYSTEMS TELEMETRY", fTitle, bTitle, 16, 7);
                 }
 
                 // Subtitle
-                using (var fSub = new Font("Consolas", 8f, FontStyle.Regular))
+                using (var fSub = new Font("Consolas", 7.8f, FontStyle.Regular))
                 using (var bSub = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    g.DrawString("// REAL-TIME METRICS & AUDIT ENGINE", fSub, bSub, 292, 10);
+                    g.DrawString("// REAL-TIME PERCEPTION, CAUSAL INFERENCE & AST DIAGNOSTICS", fSub, bSub, 320, 10);
                 }
 
-                // Status pill (pulsing emerald)
+                // Status pill (pulsing cyan / emerald)
                 float pulse = 0.65f + 0.35f * (float)Math.Sin(t * Math.PI * 2f);
                 int dotA = (int)(255 * pulse);
                 int pillW = 142, pillH = 20;
                 int pillX = w - pillW - 8, pillY = 8;
                 using (var bPill = new SolidBrush(Color.FromArgb(15, 23, 42)))
                 using (var pPill = new Pen(Color.FromArgb(51, 65, 85), 1f))
-                using (var bDot = new SolidBrush(Color.FromArgb(dotA, 52, 211, 153)))
+                using (var bDot = new SolidBrush(Color.FromArgb(dotA, 0, 240, 255)))
                 using (var fStatus = new Font("Consolas", 7.2f, FontStyle.Bold))
                 using (var bStatusText = new SolidBrush(Color.FromArgb(203, 213, 225))) {
                     g.FillRectangle(bPill, pillX, pillY, pillW, pillH);
                     g.DrawRectangle(pPill, pillX, pillY, pillW, pillH);
                     g.FillEllipse(bDot, pillX + 8, pillY + 6, 7, 7);
-                    g.DrawString("SYSTEMS NOMINAL", fStatus, bStatusText, pillX + 20, pillY + 3);
+                    g.DrawString("ALL NODES SYNCED", fStatus, bStatusText, pillX + 20, pillY + 3);
                 }
             }
             frames[f] = bmp;
@@ -154,9 +151,9 @@ public class TelemetrySuite {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 2. Render Main Observability Dashboard
-    public static void RenderTelemetry(string outputPath, int totalFrames = 30) {
-        int w = 840, h = 260;
+    // 2. Render Autonomous Systems Diagnostic HUD (telemetry.gif)
+    public static void RenderTelemetryHUD(string outputPath, int totalFrames = 30) {
+        int w = 840, h = 280;
         var frames = new Bitmap[totalFrames];
 
         for (int f = 0; f < totalFrames; f++) {
@@ -170,13 +167,13 @@ public class TelemetrySuite {
                     g.FillRectangle(bBg, 0, 0, w, h);
                 }
 
-                // 1. OUTER BORDER & TOP ACCENT BEAM
+                // 1. OUTER BORDER & CORNER ACCENTS
                 using (var pBorder = new Pen(Color.FromArgb(30, 41, 59), 1f)) {
                     g.DrawRectangle(pBorder, 1, 1, w - 2, h - 2);
                 }
-                DrawCornerBrackets(g, 2, 2, w - 4, h - 4, Color.FromArgb(56, 189, 248), 10f);
+                DrawCornerBrackets(g, 2, 2, w - 4, h - 4, Color.FromArgb(0, 240, 255), 10f);
 
-                // Top accent stripe + laser beam sweep
+                // Top accent stripe + continuous laser beam pulse
                 using (var bTop = new SolidBrush(Color.FromArgb(20, 30, 48))) {
                     g.FillRectangle(bTop, 2, 2, w - 4, 2);
                 }
@@ -184,7 +181,7 @@ public class TelemetrySuite {
                 using (var brushBeam = new LinearGradientBrush(
                     new RectangleF(beamX - 30, 2, 60, 2), Color.Transparent, Color.Transparent, 0f)) {
                     var cb = new ColorBlend(3);
-                    cb.Colors = new Color[] { Color.Transparent, Color.FromArgb(220, 56, 189, 248), Color.Transparent };
+                    cb.Colors = new Color[] { Color.Transparent, Color.FromArgb(220, 0, 240, 255), Color.Transparent };
                     cb.Positions = new float[] { 0f, 0.5f, 1f };
                     brushBeam.InterpolationColors = cb;
                     g.FillRectangle(brushBeam, beamX - 30, 2, 60, 2);
@@ -192,228 +189,207 @@ public class TelemetrySuite {
 
                 // 2. CONSOLE HEADER BAR
                 int headY = 8;
-                using (var fHead = new Font("Consolas", 7.5f, FontStyle.Bold))
-                using (var bHead = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                    g.DrawString("METRICS_ENGINE // v2.4.0-PROD", fHead, bHead, 12, headY);
+                using (var fHead = new Font("Consolas", 7.8f, FontStyle.Bold))
+                using (var bHead = new SolidBrush(Color.FromArgb(226, 232, 240))) {
+                    g.DrawString("AUTONOMOUS ARCHITECTURE DIAGNOSTICS", fHead, bHead, 12, headY);
                 }
 
-                // Version badge
+                // Node Badge
                 using (var bBadge = new SolidBrush(Color.FromArgb(15, 23, 42)))
                 using (var pBadge = new Pen(Color.FromArgb(56, 189, 248), 1f))
                 using (var fBadge = new Font("Consolas", 6.8f, FontStyle.Bold))
                 using (var bBadgeT = new SolidBrush(Color.FromArgb(56, 189, 248))) {
-                    g.FillRectangle(bBadge, 184, headY - 1, 46, 16);
-                    g.DrawRectangle(pBadge, 184, headY - 1, 46, 16);
-                    g.DrawString("LIVE", fBadge, bBadgeT, 194, headY + 1);
+                    g.FillRectangle(bBadge, 260, headY - 1, 142, 16);
+                    g.DrawRectangle(pBadge, 260, headY - 1, 142, 16);
+                    g.DrawString("NODE: IIT-MADRAS-LAB", fBadge, bBadgeT, 266, headY + 1);
                 }
 
-                // Right telemetry telemetry readout
-                float lat = 11.2f + 0.4f * (float)Math.Sin(t * Math.PI * 2f);
+                // Right header telemetry
                 float pulse = 0.65f + 0.35f * (float)Math.Sin(t * Math.PI * 2f);
                 using (var fRight = new Font("Consolas", 7.2f, FontStyle.Regular))
                 using (var bRight = new SolidBrush(Color.FromArgb(100, 116, 139)))
                 using (var bDot = new SolidBrush(Color.FromArgb((int)(255 * pulse), 52, 211, 153)))
-                using (var bLat = new SolidBrush(Color.FromArgb(52, 211, 153))) {
-                    g.DrawString("CLUSTER: ASIA-SOUTH1   |   SYS HEALTH: 100%", fRight, bRight, w - 340, headY);
-                    g.FillEllipse(bDot, w - 100, headY + 4, 6, 6);
-                    g.DrawString(String.Format("LAT: {0:0.0}ms", lat), fRight, bLat, w - 90, headY);
+                using (var bStat = new SolidBrush(Color.FromArgb(52, 211, 153))) {
+                    g.DrawString("FREQ: 100Hz   |   FLUX: 1.2M t/s", fRight, bRight, w - 280, headY);
+                    g.FillEllipse(bDot, w - 75, headY + 4, 6, 6);
+                    g.DrawString("ONLINE", fRight, bStat, w - 65, headY);
                 }
 
-                // 3. TOP ROW: 4 KPI CARDS (y: 28 to 92)
-                int cardY = 28, cardH = 64;
-                int[] cardX = new int[] { 12, 218, 424, 630 };
-                int cardW = 196;
+                // 3. TOP SUBSYSTEM CARDS (y: 28 to 166, height: 138px)
+                int cardY = 28, cardH = 138;
+                int cardW = 264;
+                int[] cardXs = new int[] { 12, 288, 564 };
 
-                string[] labels = new string[] { "TOTAL STARS", "REPOSITORIES", "COMMUNITY", "YEARLY COMMITS" };
-                string[] values = new string[] { "5", "15", "25", "264" };
-                string[] subs = new string[] { "TOP OSS REPOSITORIES", "100% PUBLIC // CODE", "NETWORK FOLLOWERS", "PEAK DEV VELOCITY" };
-                Color[] cardAccents = new Color[] {
+                Color[] accents = new Color[] {
                     Color.FromArgb(0, 240, 255),    // Cyan
-                    Color.FromArgb(167, 139, 250),  // Purple
                     Color.FromArgb(56, 189, 248),   // Sky Blue
-                    Color.FromArgb(52, 211, 153)    // Emerald
+                    Color.FromArgb(167, 139, 250)   // Purple
                 };
 
-                for (int k = 0; k < 4; k++) {
-                    int cx = cardX[k];
-                    int cw = (k == 3) ? 198 : cardW;
+                string[] titles = new string[] { "[01] PERCEPTION CORE", "[02] CAUSAL INFERENCE", "[03] ZERO-TRUST AST" };
+                string[] subs = new string[] { "FaceTrack-AI // WASM-SIMD", "RootCause-IQ // Do-Calculus", "SkillGuard-OSS // Security" };
+                string[] badges = new string[] { "60 FPS // PASS", "p < 0.001 // SOLVED", "0 LEAKS // VERIFIED" };
+
+                // Oscillating yaw/pitch angles for Card 1
+                float yaw = (float)Math.Sin(t * Math.PI * 2f) * 4.8f;
+                float pitch = (float)Math.Cos(t * Math.PI * 2f) * 2.4f;
+
+                string[][] cardDetails = new string[][] {
+                    new string[] {
+                        "> MODEL: 468-pt Mesh & Gaze Tensor",
+                        String.Format("> 6-DoF: YAW {0:+0.0;-0.0} deg | PITCH {1:+0.0;-0.0} deg", yaw, pitch),
+                        "> RUNTIME: WebAssembly SIMD (8.2ms)",
+                        "> GAZE TENSOR: [-0.04, +0.12, +0.99]"
+                    },
+                    new string[] {
+                        "> ARCH: Structural Causal Model",
+                        "> VERTICES: 18 Active Causal Nodes",
+                        "> DAG CONFIDENCE: p < 0.001 (Signif)",
+                        "> LOCALIZATION: Lock Contention"
+                    },
+                    new string[] {
+                        "> SCANNER: Static AST Engine",
+                        "> POLICY: Zero-Trust Capability",
+                        "> CHILDPROCESS: RESTRICTED -> PASS",
+                        "> EVAL INTERCEPT: Blocked (0 Escapes)"
+                    }
+                };
+
+                for (int c = 0; c < 3; c++) {
+                    int cx = cardXs[c];
 
                     using (var bCard = new SolidBrush(Color.FromArgb(12, 17, 27)))
                     using (var pCard = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
-                        g.FillRectangle(bCard, cx, cardY, cw, cardH);
-                        g.DrawRectangle(pCard, cx, cardY, cw, cardH);
+                        g.FillRectangle(bCard, cx, cardY, cardW, cardH);
+                        g.DrawRectangle(pCard, cx, cardY, cardW, cardH);
                     }
 
-                    // Top highlight line
-                    using (var pTop = new Pen(Color.FromArgb(180, cardAccents[k]), 1.5f)) {
-                        g.DrawLine(pTop, cx + 4, cardY + 1, cx + cw - 4, cardY + 1);
+                    // Top highlight accent line
+                    using (var pTop = new Pen(Color.FromArgb(200, accents[c]), 1.5f)) {
+                        g.DrawLine(pTop, cx + 4, cardY + 1, cx + cardW - 4, cardY + 1);
                     }
 
-                    // Card Label
-                    using (var fL = new Font("Consolas", 6.8f, FontStyle.Bold))
-                    using (var bL = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                        g.DrawString(labels[k], fL, bL, cx + 10, cardY + 7);
+                    // Subsystem Title
+                    using (var fT = new Font("Consolas", 8.2f, FontStyle.Bold))
+                    using (var bT = new SolidBrush(accents[c])) {
+                        g.DrawString(titles[c], fT, bT, cx + 8, cardY + 7);
                     }
 
-                    // Metric Value
-                    using (var fV = new Font("Consolas", 15.5f, FontStyle.Bold))
-                    using (var bV = new SolidBrush(cardAccents[k])) {
-                        g.DrawString(values[k], fV, bV, cx + 8, cardY + 22);
+                    // Subtitle / Tech pill
+                    using (var fS = new Font("Consolas", 6.8f, FontStyle.Regular))
+                    using (var bS = new SolidBrush(Color.FromArgb(148, 163, 184))) {
+                        g.DrawString(subs[c], fS, bS, cx + 8, cardY + 23);
                     }
 
-                    // Subtitle
-                    using (var fS = new Font("Segoe UI", 6.8f, FontStyle.Regular))
-                    using (var bS = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                        g.DrawString(subs[k], fS, bS, cx + 10, cardY + 46);
+                    // Divider line inside card
+                    using (var pIn = new Pen(Color.FromArgb(24, 32, 46), 1f)) {
+                        g.DrawLine(pIn, cx + 8, cardY + 38, cx + cardW - 8, cardY + 38);
+                    }
+
+                    // Metric Lines
+                    using (var fM = new Font("Consolas", 6.8f, FontStyle.Regular))
+                    using (var bM = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                        for (int m = 0; m < 4; m++) {
+                            g.DrawString(cardDetails[c][m], fM, bM, cx + 8, cardY + 44 + m * 16);
+                        }
+                    }
+
+                    // Status Pill at bottom of card
+                    using (var bPBg = new SolidBrush(Color.FromArgb(16, 24, 38)))
+                    using (var pPB = new Pen(Color.FromArgb(70, accents[c]), 1f))
+                    using (var fStat = new Font("Consolas", 6.5f, FontStyle.Bold))
+                    using (var bStatT = new SolidBrush(accents[c])) {
+                        g.FillRectangle(bPBg, cx + 8, cardY + 112, cardW - 16, 18);
+                        g.DrawRectangle(pPB, cx + 8, cardY + 112, cardW - 16, 18);
+                        g.DrawString(badges[c], fStat, bStatT, cx + 14, cardY + 115);
                     }
                 }
 
-                // 4. DIVIDERS
+                // 4. DIVIDER BEFORE OSCILLOSCOPE
                 using (var pDiv = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
-                    g.DrawLine(pDiv, 12, 100, w - 12, 100);
-                    g.DrawLine(pDiv, 416, 104, 416, h - 8);
+                    g.DrawLine(pDiv, 12, 174, w - 12, 174);
                 }
 
-                // 5. LEFT COLUMN: PRODUCTION LANGUAGE DISTRIBUTION (x: 12, w: 394)
-                int leftX = 12;
-                using (var fLHead = new Font("Consolas", 7.8f, FontStyle.Bold))
-                using (var bLHead = new SolidBrush(Color.FromArgb(226, 232, 240))) {
-                    g.DrawString("PRODUCTION LANGUAGE DISTRIBUTION", fLHead, bLHead, leftX + 4, 108);
-                }
-                using (var fLSub = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bLSub = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    g.DrawString("// VERIFIED REPOSITORY PROFILE", fLSub, bLSub, leftX + 236, 109);
+                // 5. BOTTOM SECTION: LIVE TENSOR STREAM & INFERENCE WAVEFORM (y: 180 to 272)
+                int waveBoxX = 12, waveBoxY = 178, waveBoxW = w - 24;
+
+                // Waveform Header
+                using (var fWHead = new Font("Consolas", 7.8f, FontStyle.Bold))
+                using (var bWHead = new SolidBrush(Color.FromArgb(226, 232, 240))) {
+                    g.DrawString("LIVE TENSOR FLUX & OSCILLOSCOPE", fWHead, bWHead, waveBoxX + 4, waveBoxY);
                 }
 
-                // Multi-Segment Stacked Progress Bar (y: 128, w: 390, h: 14)
-                int barX = leftX + 4, barY = 128, barW = 390, barH = 14;
-                using (var bBarBg = new SolidBrush(Color.FromArgb(15, 23, 42))) {
-                    g.FillRectangle(bBarBg, barX, barY, barW, barH);
+                using (var fWInfo = new Font("Consolas", 6.8f, FontStyle.Regular))
+                using (var bWInfo = new SolidBrush(Color.FromArgb(52, 211, 153))) {
+                    g.DrawString("COMPUTE: 42.8 GFLOP/s   |   WASM FOOTPRINT: 38.4 MB   |   STABILITY: 99.98%", fWInfo, bWInfo, w - 485, waveBoxY);
                 }
 
-                // Segments: TS 45%, PY 30%, JS 15%, SH 10%
-                int wTS = (int)(barW * 0.45f);
-                int wPY = (int)(barW * 0.30f);
-                int wJS = (int)(barW * 0.15f);
-                int wSH = barW - wTS - wPY - wJS;
-
-                int curX = barX;
-                using (var b1 = new SolidBrush(Color.FromArgb(0, 240, 255))) { g.FillRectangle(b1, curX, barY, wTS, barH); curX += wTS; }
-                using (var b2 = new SolidBrush(Color.FromArgb(167, 139, 250))) { g.FillRectangle(b2, curX, barY, wPY, barH); curX += wPY; }
-                using (var b3 = new SolidBrush(Color.FromArgb(56, 189, 248))) { g.FillRectangle(b3, curX, barY, wJS, barH); curX += wJS; }
-                using (var b4 = new SolidBrush(Color.FromArgb(52, 211, 153))) { g.FillRectangle(b4, curX, barY, wSH, barH); }
-
-                // Animated light shimmer sweep across the bar
-                var prevClip = g.Clip;
-                g.SetClip(new Rectangle(barX, barY, barW, barH));
-                float shimX = barX + t * (barW + 80) - 40;
-                using (var shimBrush = new LinearGradientBrush(
-                    new RectangleF(shimX - 25, barY, 50, barH), Color.Transparent, Color.Transparent, 0f)) {
-                    var cb = new ColorBlend(3);
-                    cb.Colors = new Color[] { Color.Transparent, Color.FromArgb(160, 255, 255, 255), Color.Transparent };
-                    cb.Positions = new float[] { 0f, 0.5f, 1f };
-                    shimBrush.InterpolationColors = cb;
-                    g.FillRectangle(shimBrush, shimX - 25, barY, 50, barH);
+                // Inset Waveform Canvas (y: 196 to 254, height: 58px)
+                int cX = waveBoxX, cY = waveBoxY + 17, cW = waveBoxW, cH = 58;
+                using (var bIn = new SolidBrush(Color.FromArgb(5, 8, 13)))
+                using (var pIn = new Pen(Color.FromArgb(24, 34, 48), 1f)) {
+                    g.FillRectangle(bIn, cX, cY, cW, cH);
+                    g.DrawRectangle(pIn, cX, cY, cW, cH);
                 }
-                g.Clip = prevClip;
 
-                // Language Detail Pills (2x2 Grid)
-                string[] langNames = new string[] { "TypeScript", "Python", "JavaScript", "Shell / Other" };
-                string[] langPcts = new string[] { "45.0%", "30.0%", "15.0%", "10.0%" };
-                Color[] langCols = new Color[] {
-                    Color.FromArgb(0, 240, 255),
-                    Color.FromArgb(167, 139, 250),
-                    Color.FromArgb(56, 189, 248),
-                    Color.FromArgb(52, 211, 153)
-                };
-
-                int[] pillXs = new int[] { leftX + 4, leftX + 204, leftX + 4, leftX + 204 };
-                int[] pillYs = new int[] { 152, 152, 180, 180 };
-
-                for (int p = 0; p < 4; p++) {
-                    int px = pillXs[p], py = pillYs[p];
-                    using (var bPBg = new SolidBrush(Color.FromArgb(12, 17, 27)))
-                    using (var pPB = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
-                        g.FillRectangle(bPBg, px, py, 190, 22);
-                        g.DrawRectangle(pPB, px, py, 190, 22);
-                    }
-
-                    // Dot
-                    using (var bDot = new SolidBrush(langCols[p])) {
-                        g.FillEllipse(bDot, px + 8, py + 7, 7, 7);
-                    }
-
-                    // Name
-                    using (var fN = new Font("Consolas", 7.2f, FontStyle.Regular))
-                    using (var bN = new SolidBrush(Color.FromArgb(226, 232, 240))) {
-                        g.DrawString(langNames[p], fN, bN, px + 22, py + 4);
-                    }
-
-                    // Percent
-                    using (var fP = new Font("Consolas", 7.5f, FontStyle.Bold))
-                    using (var bP = new SolidBrush(langCols[p])) {
-                        g.DrawString(langPcts[p], fP, bP, px + 140, py + 4);
+                // Horizontal center grid line + grid dashes
+                using (var pGrid = new Pen(Color.FromArgb(18, 26, 38), 1f)) {
+                    pGrid.DashStyle = DashStyle.Dash;
+                    g.DrawLine(pGrid, cX, cY + cH / 2, cX + cW, cY + cH / 2);
+                    for (int gx = cX + 60; gx < cX + cW; gx += 60) {
+                        g.DrawLine(pGrid, gx, cY, gx, cY + cH);
                     }
                 }
 
-                // Left bottom sync footer
-                using (var fSync = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bSync = new SolidBrush(Color.FromArgb(71, 85, 105))) {
-                    g.DrawString("[SYNC] PRO ACCOUNT  //  15 PUBLIC REPOS  //  264 COMMITS VERIFIED", fSync, bSync, leftX + 4, 214);
+                // Draw Animated Waveforms
+                float midY = cY + cH / 2f;
+                int step = 3;
+                int pointCount = cW / step + 1;
+                PointF[] wave1 = new PointF[pointCount];
+                PointF[] wave2 = new PointF[pointCount];
+                PointF[] wave3 = new PointF[pointCount];
+
+                for (int p = 0; p < pointCount; p++) {
+                    float px = cX + p * step;
+                    float phase1 = (float)(px * 0.038f + t * Math.PI * 2f);
+                    float phase2 = (float)(px * 0.085f - t * Math.PI * 4f);
+                    float phase3 = (float)(px * 0.022f - t * Math.PI * 2f);
+
+                    float y1 = midY + (float)(Math.Sin(phase1) * 15.0f + Math.Sin(phase2) * 6.0f);
+                    float y2 = midY + (float)(Math.Cos(phase3) * 11.0f + Math.Sin(phase1 * 0.7f) * 7.0f);
+                    float y3 = midY + (float)(Math.Sin(phase3 * 1.4f) * 8.0f);
+
+                    wave1[p] = new PointF(px, y1);
+                    wave2[p] = new PointF(px, y2);
+                    wave3[p] = new PointF(px, y3);
                 }
 
-                // 6. RIGHT COLUMN: PIPELINE EVENT STREAM // LIVE (x: 428, w: 400)
-                int rightX = 428;
-                using (var fRHead = new Font("Consolas", 7.8f, FontStyle.Bold))
-                using (var bRHead = new SolidBrush(Color.FromArgb(226, 232, 240))) {
-                    g.DrawString("PIPELINE EVENT STREAM // LIVE", fRHead, bRHead, rightX + 4, 108);
-                }
-                using (var fRSub = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bRSub = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    g.DrawString("// CONTINUOUS INTEGRATION FEED", fRSub, bRSub, rightX + 210, 109);
+                // Draw Wave 3 (Ambient Harmonic Mint)
+                using (var pW3 = new Pen(Color.FromArgb(50, 52, 211, 153), 1f)) {
+                    pW3.DashStyle = DashStyle.Dot;
+                    g.DrawCurve(pW3, wave3, 0.5f);
                 }
 
-                string[] evTypes = new string[] { "PASS", "PASS", "PASS", "INFO", "INFO" };
-                string[] evRepos = new string[] { "FaceTrack-AI", "SkillGuard-OSS", "RootCause-IQ", "ZeroDayHeist", "CarbonX" };
-                string[] evDescs = new string[] {
-                    "// 6-DoF WASM Deployed (60 FPS)",
-                    "// Zero-Trust AST Rules Verified",
-                    "// Causal Inference Engine Online",
-                    "// 17 CTF Flags Captured",
-                    "// Emissions Intelligence Pipeline Active"
-                };
-
-                for (int e = 0; e < 5; e++) {
-                    int ey = 128 + e * 20;
-
-                    // Event Badge
-                    Color typeCol = (evTypes[e] == "PASS") ? Color.FromArgb(52, 211, 153) : Color.FromArgb(56, 189, 248);
-                    using (var bEBg = new SolidBrush(Color.FromArgb(15, 23, 42)))
-                    using (var pEB = new Pen(Color.FromArgb(60, typeCol), 1f))
-                    using (var fType = new Font("Consolas", 6.5f, FontStyle.Bold))
-                    using (var bType = new SolidBrush(typeCol)) {
-                        g.FillRectangle(bEBg, rightX + 4, ey, 38, 16);
-                        g.DrawRectangle(pEB, rightX + 4, ey, 38, 16);
-                        g.DrawString(evTypes[e], fType, bType, rightX + 9, ey + 2);
-                    }
-
-                    // Repo name
-                    using (var fRName = new Font("Consolas", 7.5f, FontStyle.Bold))
-                    using (var bRName = new SolidBrush(Color.White)) {
-                        g.DrawString(evRepos[e], fRName, bRName, rightX + 48, ey + 2);
-                    }
-
-                    // Repo details
-                    using (var fRDesc = new Font("Consolas", 6.8f, FontStyle.Regular))
-                    using (var bRDesc = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                        g.DrawString(evDescs[e], fRDesc, bRDesc, rightX + 154, ey + 3);
-                    }
+                // Draw Wave 2 (Causal Sky Blue)
+                using (var pW2 = new Pen(Color.FromArgb(160, 56, 189, 248), 1.2f)) {
+                    g.DrawCurve(pW2, wave2, 0.5f);
                 }
 
-                // Right bottom stream status
-                using (var fRStat = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bRStat = new SolidBrush(Color.FromArgb(52, 211, 153))) {
-                    g.DrawString("[STATUS] 5/5 PIPELINES ACTIVE  //  0 FAILING RUNS  //  ALL GATES PASSED", fRStat, bRStat, rightX + 4, 236);
+                // Draw Wave 1 (Perception Cyan - Primary)
+                using (var pW1 = new Pen(Color.FromArgb(230, 0, 240, 255), 1.5f)) {
+                    g.DrawCurve(pW1, wave1, 0.5f);
+                }
+
+                // Vertical Frequency Sweep Line
+                float sweepX = cX + t * cW;
+                using (var pSweep = new Pen(Color.FromArgb(200, 0, 240, 255), 1.2f)) {
+                    g.DrawLine(pSweep, sweepX, cY, sweepX, cY + cH);
+                }
+
+                // Bottom Status Footer (y: 261)
+                using (var fFoot = new Font("Consolas", 6.8f, FontStyle.Regular))
+                using (var bFoot = new SolidBrush(Color.FromArgb(52, 211, 153))) {
+                    g.DrawString("[DIAGNOSTICS] ALL 3 SUBSYSTEMS CONVERGED  //  PIPELINE FLUX: ACTIVE  //  0 PACKET LOSS", fFoot, bFoot, waveBoxX + 4, cY + cH + 5);
                 }
             }
             frames[f] = bmp;
@@ -426,7 +402,7 @@ public class TelemetrySuite {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 3. Render Modern Contribution Heatmap
+    // 3. Render Modern Contribution Heatmap (contrib.gif)
     public static void RenderContrib(string outputPath, string matrixFile, int totalFrames = 26) {
         int w = 840, h = 160;
         var frames = new Bitmap[totalFrames];
@@ -462,18 +438,15 @@ public class TelemetrySuite {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                // Deep obsidian background
                 using (var bBg = new SolidBrush(Color.FromArgb(7, 9, 14))) {
                     g.FillRectangle(bBg, 0, 0, w, h);
                 }
 
-                // Outer border & corner accents
                 using (var pBorder = new Pen(Color.FromArgb(30, 41, 59), 1f)) {
                     g.DrawRectangle(pBorder, 1, 1, w - 2, h - 2);
                 }
                 DrawCornerBrackets(g, 2, 2, w - 4, h - 4, Color.FromArgb(52, 211, 153), 8f);
 
-                // Top accent stripe + laser pulse
                 using (var bTop = new SolidBrush(Color.FromArgb(20, 30, 48))) {
                     g.FillRectangle(bTop, 2, 2, w - 4, 2);
                 }
@@ -491,15 +464,15 @@ public class TelemetrySuite {
                 int headY = 8;
                 using (var fHead = new Font("Consolas", 7.8f, FontStyle.Bold))
                 using (var bHead = new SolidBrush(Color.FromArgb(226, 232, 240))) {
-                    g.DrawString("GIT ACTIVITY HEATMAP // 2025 - 2026", fHead, bHead, 12, headY);
+                    g.DrawString("THROUGHPUT & CODE VELOCITY MATRIX // 2025 - 2026", fHead, bHead, 12, headY);
                 }
 
                 using (var fRight = new Font("Consolas", 7.2f, FontStyle.Regular))
                 using (var bRight = new SolidBrush(Color.FromArgb(52, 211, 153))) {
-                    g.DrawString("264 CONTRIBUTIONS IN PAST 365 DAYS   |   STREAK: ACTIVE", fRight, bRight, w - 405, headY);
+                    g.DrawString("264 CONTRIBUTIONS RECORDED   |   STREAK: ACTIVE", fRight, bRight, w - 380, headY);
                 }
 
-                // Month Labels (y: 28)
+                // Months
                 string[] months = new string[] { "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug" };
                 int[] monthWeeks = new int[] { 0, 4, 8, 13, 17, 21, 25, 30, 34, 38, 43, 47 };
                 int gridStartX = 52, gridStartY = 42;
@@ -513,7 +486,7 @@ public class TelemetrySuite {
                     }
                 }
 
-                // Day Labels (y: Mon, Wed, Fri)
+                // Days
                 using (var fD = new Font("Consolas", 6.8f, FontStyle.Regular))
                 using (var bD = new SolidBrush(Color.FromArgb(100, 116, 139))) {
                     g.DrawString("Mon", fD, bD, 18, gridStartY + 1 * pitch);
@@ -521,10 +494,9 @@ public class TelemetrySuite {
                     g.DrawString("Fri", fD, bD, 18, gridStartY + 5 * pitch);
                 }
 
-                // Radar Scan position across the grid
                 float scanX = gridStartX + t * (weeks * pitch);
 
-                // Draw 53x7 Grid
+                // Grid
                 for (int c = 0; c < weeks; c++) {
                     int tx = gridStartX + c * pitch;
                     float dist = Math.Abs(tx - scanX);
@@ -535,7 +507,6 @@ public class TelemetrySuite {
                         if (lvl > 4) lvl = 4;
 
                         Color baseC = tileColors[lvl];
-                        // Ambient radar glow highlight if near scanX
                         if (dist < 32f) {
                             float factor = (1f - dist / 32f) * 0.45f;
                             int nr = Math.Min(255, (int)(baseC.R + 60 * factor));
@@ -550,18 +521,15 @@ public class TelemetrySuite {
                     }
                 }
 
-                // Vertical Radar beam
                 using (var scanPen = new Pen(Color.FromArgb(160, 52, 211, 153), 1.2f)) {
                     g.DrawLine(scanPen, scanX, gridStartY - 2, scanX, gridStartY + 7 * pitch + 2);
                 }
 
-                // Footer (y: 140)
                 using (var fF = new Font("Consolas", 6.8f, FontStyle.Regular))
                 using (var bF = new SolidBrush(Color.FromArgb(71, 85, 105))) {
-                    g.DrawString("[METRIC] AVG 0.72 COMMITS/DAY  //  PEAK: 4 COMMITS/DAY  //  VERIFIED GITHUB GRAPH", fF, bF, gridStartX, 140);
+                    g.DrawString("[VELOCITY] 264 LIFETIME COMMITS VERIFIED  //  CONSISTENT COMMIT FREQUENCY", fF, bF, gridStartX, 140);
                 }
 
-                // Legend: Less ■ ■ ■ ■ More
                 int legX = w - 170, legY = 140;
                 using (var fL = new Font("Consolas", 6.8f, FontStyle.Regular))
                 using (var bL = new SolidBrush(Color.FromArgb(100, 116, 139))) {
@@ -593,17 +561,17 @@ Add-Type -TypeDefinition $source -ReferencedAssemblies "System.Drawing"
 
 $assetsDir = "e:\Projects\Readme\assets"
 
-Write-Host "Rendering modern Linear/Datadog Telemetry suite..."
+Write-Host "Rendering Autonomous Systems Diagnostic Suite..."
 
 Write-Host "1. Rendering banner_telemetry.gif..."
-[TelemetrySuite]::RenderBanner("$assetsDir\banner_telemetry.gif", 20)
+[AutonomousTelemetrySuite]::RenderBanner("$assetsDir\banner_telemetry.gif", 20)
 
-Write-Host "2. Rendering telemetry.gif (Observability Console)..."
-[TelemetrySuite]::RenderTelemetry("$assetsDir\telemetry.gif", 30)
+Write-Host "2. Rendering telemetry.gif (Autonomous Systems Diagnostic HUD)..."
+[AutonomousTelemetrySuite]::RenderTelemetryHUD("$assetsDir\telemetry.gif", 30)
 
-Write-Host "3. Rendering contrib.gif (Modern Git Activity Heatmap)..."
+Write-Host "3. Rendering contrib.gif (Throughput & Code Velocity Matrix)..."
 $matrixFile = "e:\Projects\Readme\real_contrib_matrix.txt"
-[TelemetrySuite]::RenderContrib("$assetsDir\contrib.gif", $matrixFile, 26)
+[AutonomousTelemetrySuite]::RenderContrib("$assetsDir\contrib.gif", $matrixFile, 26)
 
-Write-Host "All modern telemetry assets rendered successfully!"
+Write-Host "All autonomous diagnostic assets rendered successfully!"
 Get-ChildItem $assetsDir\banner_telemetry.*, $assetsDir\telemetry.*, $assetsDir\contrib.* | Select-Object Name, Length

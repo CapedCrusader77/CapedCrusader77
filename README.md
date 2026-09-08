@@ -29,30 +29,17 @@
   <img src="assets/cards_row.gif?v=17" width="840" alt="Selected Projects: FaceTrack-AI, SkillGuard-OSS, RootCause-IQ">
 </p>
 
-<p align="center">
-  <a href="https://github.com/CapedCrusader77/FaceTrack-AI">
-    <img src="https://img.shields.io/badge/01_FaceTrack--AI-Explore_Repository-00f0ff?style=for-the-badge&logo=github&logoColor=07090e" alt="FaceTrack-AI">
-  </a>
-  &nbsp;
-  <a href="https://github.com/CapedCrusader77/skillguard-oss">
-    <img src="https://img.shields.io/badge/02_SkillGuard--OSS-Explore_Repository-8b5cf6?style=for-the-badge&logo=github&logoColor=white" alt="SkillGuard-OSS">
-  </a>
-  &nbsp;
-  <a href="https://github.com/CapedCrusader77/rootcause-iq">
-    <img src="https://img.shields.io/badge/03_RootCause--IQ-Explore_Repository-38bdf8?style=for-the-badge&logo=github&logoColor=07090e" alt="RootCause-IQ">
-  </a>
-</p>
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
 
-<!-- 02 // LIVE TELEMETRY & ACTIVITY -->
-<p align="center"><img src="assets/banner_telemetry.gif?v=18" width="840" alt="observability & telemetry"></p>
+<!-- 02 // AUTONOMOUS SYSTEMS TELEMETRY -->
+<p align="center"><img src="assets/banner_telemetry.gif?v=19" width="840" alt="autonomous systems telemetry"></p>
 
 <p align="center">
-  <img src="assets/telemetry.gif?v=18" width="840" alt="observability engine: 5 stars, 15 repos, 25 followers, 264 contributions, language distribution & live CI/CD pipeline feed">
+  <img src="assets/telemetry.gif?v=19" width="840" alt="autonomous architecture diagnostics: perception core (6-DoF/WASM), causal inference DAG (Do-Calculus), zero-trust AST security, and live tensor flux oscilloscope">
 </p>
 <p align="center">
-  <img src="assets/contrib.gif?v=18" width="840" alt="git activity heatmap - 264 contributions in the last year with radar sweep">
+  <img src="assets/contrib.gif?v=19" width="840" alt="throughput & code velocity matrix: 264 contributions in past year with radar scan">
 </p>
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
