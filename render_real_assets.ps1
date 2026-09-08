@@ -83,6 +83,15 @@ public class RealAssetGenerator {
         g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
     }
 
+    public static void DrawCornerBrackets(Graphics g, float x, float y, float w, float h, Color color, float len = 8f) {
+        using (var p = new Pen(color, 1.4f)) {
+            g.DrawLines(p, new PointF[] { new PointF(x, y + len), new PointF(x, y), new PointF(x + len, y) });
+            g.DrawLines(p, new PointF[] { new PointF(x + w - len, y), new PointF(x + w, y), new PointF(x + w, y + len) });
+            g.DrawLines(p, new PointF[] { new PointF(x, y + h - len), new PointF(x, y + h), new PointF(x + len, y + h) });
+            g.DrawLines(p, new PointF[] { new PointF(x + w - len, y + h), new PointF(x + w, y + h), new PointF(x + w, y + h - len) });
+        }
+    }
+
     // 1. Section Banner Generator
     public static void RenderBanner(string outputPath, string title, string subtitle, string tag, Color accent, int totalFrames = 20) {
         int w = 840, h = 46;
@@ -94,21 +103,21 @@ public class RealAssetGenerator {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                using (var brush = new SolidBrush(Color.FromArgb(10, 14, 22))) {
+                using (var brush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
-                using (var pen = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
+                using (var pen = new Pen(Color.FromArgb(24, 32, 45), 1f)) {
                     g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
                 }
 
-                int chamferW = 180;
+                int chamferW = 185;
                 var pts = new PointF[] {
                     new PointF(0, 0),
                     new PointF(chamferW, 0),
                     new PointF(chamferW - 14, h),
                     new PointF(0, h)
                 };
-                using (var brush = new SolidBrush(Color.FromArgb(18, 26, 40))) {
+                using (var brush = new SolidBrush(Color.FromArgb(10, 15, 24))) {
                     g.FillPolygon(brush, pts);
                 }
                 using (var pen = new Pen(accent, 1.5f)) {
@@ -118,16 +127,17 @@ public class RealAssetGenerator {
                     g.DrawLine(pen, 0, 0, 0, h);
                 }
 
-                using (var font = new Font("Segoe UI", 12f, FontStyle.Bold))
+                using (var font = new Font("Segoe UI", 11.5f, FontStyle.Bold))
                 using (var brush = new SolidBrush(Color.FromArgb(245, 248, 252))) {
-                    g.DrawString(title, font, brush, 18, 11);
+                    g.DrawString(title, font, brush, 18, 12);
                 }
 
-                using (var font = new Font("Consolas", 10f, FontStyle.Regular))
+                using (var font = new Font("Consolas", 9.5f, FontStyle.Regular))
                 using (var brush = new SolidBrush(Color.FromArgb(148, 163, 184))) {
                     g.DrawString(subtitle, font, brush, chamferW + 16, 14);
                 }
 
+                // Laser traveling beam on top edge
                 float beamX = progress * (w + 100) - 50;
                 using (var brush = new LinearGradientBrush(
                     new RectangleF(beamX - 60, 0, 120, 2),
@@ -139,6 +149,7 @@ public class RealAssetGenerator {
                     g.FillRectangle(brush, beamX - 60, 0, 120, 2);
                 }
 
+                // Pulsing Online Status Pip
                 float pulse = 0.6f + 0.4f * (float)Math.Sin(progress * Math.PI * 2);
                 int r = (int)(accent.R * pulse);
                 int gr = (int)(accent.G * pulse);
@@ -146,7 +157,7 @@ public class RealAssetGenerator {
                 using (var dotBrush = new SolidBrush(Color.FromArgb(r, gr, b))) {
                     g.FillEllipse(dotBrush, w - 160, 18, 9, 9);
                 }
-                using (var font = new Font("Consolas", 9.5f, FontStyle.Bold))
+                using (var font = new Font("Consolas", 9.0f, FontStyle.Bold))
                 using (var brush = new SolidBrush(Color.FromArgb(203, 213, 225))) {
                     g.DrawString(tag, font, brush, w - 144, 14);
                 }
@@ -158,7 +169,7 @@ public class RealAssetGenerator {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 2. Real Project Card 1: FaceTrack-AI
+    // 2. Real Project Card 1: FaceTrack-AI (Cyber Biometric Vision HUD)
     public static void RenderCardFaceTrack(string outputPath, int totalFrames = 24) {
         int w = 840, h = 150;
         var frames = new Bitmap[totalFrames];
@@ -170,10 +181,10 @@ public class RealAssetGenerator {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                using (var brush = new SolidBrush(Color.FromArgb(8, 12, 20))) {
+                using (var brush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
-                using (var pen = new Pen(Color.FromArgb(26, 36, 52), 1f)) {
+                using (var pen = new Pen(Color.FromArgb(24, 32, 45), 1f)) {
                     g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
                 }
 
@@ -224,86 +235,113 @@ public class RealAssetGenerator {
                     }
                 }
 
-                // --- RIGHT SIDE: Animated FaceMesh Constellation Viewport ---
+                // --- RIGHT SIDE: Sleek Cyber Biometric Vision HUD ---
                 int vpX = 540, vpY = 12, vpW = 285, vpH = 126;
-                using (var vpBg = new SolidBrush(Color.FromArgb(5, 8, 14))) {
+                using (var vpBg = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(vpBg, vpX, vpY, vpW, vpH);
                 }
                 using (var vpBorder = new Pen(Color.FromArgb(24, 34, 50), 1f)) {
                     g.DrawRectangle(vpBorder, vpX, vpY, vpW, vpH);
                 }
 
-                // Corner ticks
-                using (var p = new Pen(accent, 1.2f)) {
-                    g.DrawLines(p, new Point[] { new Point(vpX, vpY + 8), new Point(vpX, vpY), new Point(vpX + 8, vpY) });
-                    g.DrawLines(p, new Point[] { new Point(vpX + vpW - 9, vpY), new Point(vpX + vpW - 1, vpY), new Point(vpX + vpW - 1, vpY + 8) });
-                    g.DrawLines(p, new Point[] { new Point(vpX, vpY + vpH - 9), new Point(vpX, vpY + vpH - 1), new Point(vpX + 8, vpY + vpH - 1) });
-                    g.DrawLines(p, new Point[] { new Point(vpX + vpW - 9, vpY + vpH - 1), new Point(vpX + vpW - 1, vpY + vpH - 1), new Point(vpX + vpW - 1, vpY + vpH - 9) });
-                }
+                DrawCornerBrackets(g, vpX, vpY, vpW, vpH, accent, 9f);
 
                 // Grid background
                 using (var gridPen = new Pen(Color.FromArgb(14, 22, 34), 1f)) {
-                    for (int gx = vpX + 20; gx < vpX + vpW; gx += 28) g.DrawLine(gridPen, gx, vpY, gx, vpY + vpH);
+                    for (int gx = vpX + 24; gx < vpX + vpW; gx += 28) g.DrawLine(gridPen, gx, vpY, gx, vpY + vpH);
                     for (int gy = vpY + 20; gy < vpY + vpH; gy += 25) g.DrawLine(gridPen, vpX, gy, vpX + vpW, gy);
                 }
 
-                // Facial Mesh 3D constellation
-                float fcX = vpX + vpW / 2f;
-                float fcY = vpY + vpH / 2f + 2f;
-                float headAngle = (float)Math.Sin(t * Math.PI * 2f) * 0.35f;
+                // Biometric Target Tracking Box
+                float fcX = vpX + 90f;
+                float fcY = vpY + vpH / 2f;
+                float yaw = (float)Math.Sin(t * Math.PI * 2f) * 12f;
+                float pitch = (float)Math.Cos(t * Math.PI * 2f) * 6f;
 
-                // Mesh Keypoints
-                PointF[] baseMesh = new PointF[] {
-                    new PointF(-28, -24), new PointF(0, -32), new PointF(28, -24), // forehead
-                    new PointF(-20, -10), new PointF(-8, -10), new PointF(8, -10), new PointF(20, -10), // eyes
-                    new PointF(0, 2), new PointF(-6, 12), new PointF(0, 16), new PointF(6, 12), // nose
-                    new PointF(-14, 26), new PointF(0, 28), new PointF(14, 26), new PointF(0, 34), // mouth
-                    new PointF(-36, 0), new PointF(-28, 22), new PointF(0, 42), new PointF(28, 22), new PointF(36, 0) // jaw
-                };
+                // Center Reticle
+                float boxW = 86f, boxH = 92f;
+                float boxX = fcX - boxW / 2f + (yaw * 0.8f);
+                float boxY = fcY - boxH / 2f + (pitch * 0.6f);
 
-                var projMesh = new PointF[baseMesh.Length];
-                for (int i = 0; i < baseMesh.Length; i++) {
-                    float bx = baseMesh[i].X;
-                    float by = baseMesh[i].Y;
-                    float rotX = (float)(bx * Math.Cos(headAngle) - 10f * Math.Sin(headAngle));
-                    projMesh[i] = new PointF(fcX + rotX, fcY + by);
+                DrawCornerBrackets(g, boxX, boxY, boxW, boxH, Color.FromArgb(200, 0, 240, 255), 12f);
+                using (var fBoxPen = new Pen(Color.FromArgb(40, 0, 240, 255), 1f)) {
+                    fBoxPen.DashStyle = DashStyle.Dash;
+                    g.DrawRectangle(fBoxPen, boxX, boxY, boxW, boxH);
                 }
 
-                // Connect facial mesh triangles
-                int[][] links = new int[][] {
-                    new int[] { 0, 1 }, new int[] { 1, 2 }, new int[] { 0, 3 }, new int[] { 2, 6 },
-                    new int[] { 3, 4 }, new int[] { 5, 6 }, new int[] { 4, 7 }, new int[] { 5, 7 },
-                    new int[] { 7, 8 }, new int[] { 7, 10 }, new int[] { 8, 9 }, new int[] { 10, 9 },
-                    new int[] { 9, 11 }, new int[] { 9, 12 }, new int[] { 9, 13 },
-                    new int[] { 11, 12 }, new int[] { 12, 13 }, new int[] { 11, 14 }, new int[] { 13, 14 },
-                    new int[] { 15, 0 }, new int[] { 15, 16 }, new int[] { 16, 17 }, new int[] { 17, 18 }, new int[] { 18, 19 }, new int[] { 19, 2 }
+                // Biometric Facial Keypoints (Eyes, Nose, Mouth, Chin)
+                PointF[] keypoints = new PointF[] {
+                    new PointF(boxX + 26, boxY + 34), // Left Eye
+                    new PointF(boxX + 60, boxY + 34), // Right Eye
+                    new PointF(boxX + 43, boxY + 48), // Nose Tip
+                    new PointF(boxX + 32, boxY + 66), // Left Mouth
+                    new PointF(boxX + 54, boxY + 66), // Right Mouth
+                    new PointF(boxX + 43, boxY + 80)  // Chin
                 };
 
-                using (var meshPen = new Pen(Color.FromArgb(90, 0, 240, 255), 1.1f)) {
-                    foreach (var link in links) {
-                        g.DrawLine(meshPen, projMesh[link[0]], projMesh[link[1]]);
+                // Connect keypoint triangulation
+                using (var meshPen = new Pen(Color.FromArgb(70, 0, 240, 255), 1f)) {
+                    g.DrawLine(meshPen, keypoints[0], keypoints[1]);
+                    g.DrawLine(meshPen, keypoints[0], keypoints[2]);
+                    g.DrawLine(meshPen, keypoints[1], keypoints[2]);
+                    g.DrawLine(meshPen, keypoints[2], keypoints[3]);
+                    g.DrawLine(meshPen, keypoints[2], keypoints[4]);
+                    g.DrawLine(meshPen, keypoints[3], keypoints[4]);
+                    g.DrawLine(meshPen, keypoints[3], keypoints[5]);
+                    g.DrawLine(meshPen, keypoints[4], keypoints[5]);
+                }
+
+                // Draw Glowing Landmark Nodes
+                foreach (var kp in keypoints) {
+                    using (var ptBrush = new SolidBrush(Color.FromArgb(220, 0, 240, 255))) {
+                        g.FillEllipse(ptBrush, kp.X - 2.5f, kp.Y - 2.5f, 5f, 5f);
                     }
                 }
 
-                // Draw Landmark nodes
-                for (int i = 0; i < projMesh.Length; i++) {
-                    using (var ptBrush = new SolidBrush(Color.FromArgb(200, 0, 240, 255))) {
-                        g.FillEllipse(ptBrush, projMesh[i].X - 2f, projMesh[i].Y - 2f, 4f, 4f);
-                    }
+                // Vertical Biometric Scanline
+                float scanY = boxY + ((t * 1.5f) % 1.0f) * boxH;
+                using (var scanBrush = new LinearGradientBrush(
+                    new RectangleF(boxX, scanY - 4, boxW, 8),
+                    Color.Transparent, Color.Transparent, 0f)) {
+                    var cb = new ColorBlend(3);
+                    cb.Colors = new Color[] { Color.Transparent, Color.FromArgb(140, 0, 240, 255), Color.Transparent };
+                    cb.Positions = new float[] { 0f, 0.5f, 1f };
+                    scanBrush.InterpolationColors = cb;
+                    g.FillRectangle(scanBrush, boxX, scanY - 4, boxW, 8);
+                }
+                using (var scanPen = new Pen(Color.FromArgb(220, 255, 255, 255), 1f)) {
+                    g.DrawLine(scanPen, boxX, scanY, boxX + boxW, scanY);
                 }
 
-                // Target Head Pose Bounding Box
-                float bxMin = fcX - 44f + (float)Math.Sin(headAngle) * 8f;
-                float byMin = fcY - 38f;
-                using (var bBoxPen = new Pen(Color.FromArgb(140, 56, 189, 248), 1.2f)) {
-                    g.DrawRectangle(bBoxPen, bxMin, byMin, 88f, 86f);
+                // Right Subpanel: Real-Time 3-Axis Pose Telemetry
+                float telX = vpX + 175f;
+                float telY = vpY + 28f;
+                using (var hudFont = new Font("Consolas", 7.5f, FontStyle.Bold))
+                using (var hudText = new SolidBrush(Color.FromArgb(186, 230, 253))) {
+                    g.DrawString("6-DoF HEAD POSE", hudFont, hudText, telX, telY);
+
+                    // Yaw bar
+                    g.DrawString(string.Format("YAW   {0:+00.0;-00.0}°", yaw), hudFont, hudText, telX, telY + 16);
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(20, 30, 48)), telX, telY + 28, 90, 6);
+                    float yawW = Math.Abs(yaw) * 3f;
+                    g.FillRectangle(new SolidBrush(accent), telX + 45 + (yaw < 0 ? -yawW : 0), telY + 28, yawW, 6);
+
+                    // Pitch bar
+                    g.DrawString(string.Format("PITCH {0:+00.0;-00.0}°", pitch), hudFont, hudText, telX, telY + 38);
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(20, 30, 48)), telX, telY + 50, 90, 6);
+                    float pitchW = Math.Abs(pitch) * 4f;
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(167, 139, 250)), telX + 45 + (pitch < 0 ? -pitchW : 0), telY + 50, pitchW, 6);
+
+                    // Metrics
+                    g.DrawString("CONF: 99.8%", hudFont, new SolidBrush(Color.FromArgb(52, 211, 153)), telX, telY + 64);
+                    g.DrawString("FPS : 60.0", hudFont, new SolidBrush(Color.FromArgb(56, 189, 248)), telX, telY + 76);
                 }
 
                 // Viewport text overlay
-                using (var hudFont = new Font("Consolas", 7.5f, FontStyle.Bold))
+                using (var hudFont = new Font("Consolas", 7.2f, FontStyle.Bold))
                 using (var hudBrush = new SolidBrush(Color.FromArgb(186, 230, 253))) {
-                    g.DrawString("FACEMESH // 468_LANDMARKS", hudFont, hudBrush, vpX + 8, vpY + 6);
-                    g.DrawString(string.Format("YAW: {0:+00.0;-00.0} deg  PITCH: 02.1 deg", headAngle * 57.3f), hudFont, hudBrush, vpX + 8, vpY + vpH - 15);
+                    g.DrawString("BIOMETRIC_VISION // TENSOR_MESH", hudFont, hudBrush, vpX + 8, vpY + 6);
+                    g.DrawString("TRACK_ID: #077 // STATUS: LOCKED", hudFont, hudBrush, vpX + 8, vpY + vpH - 14);
                 }
             }
             frames[f] = bmp;
@@ -313,7 +351,7 @@ public class RealAssetGenerator {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 3. Real Project Card 2: skillguard-oss
+    // 3. Real Project Card 2: skillguard-oss (Cyber Security Command Node)
     public static void RenderCardSkillguard(string outputPath, int totalFrames = 24) {
         int w = 840, h = 150;
         var frames = new Bitmap[totalFrames];
@@ -325,10 +363,10 @@ public class RealAssetGenerator {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                using (var brush = new SolidBrush(Color.FromArgb(8, 12, 20))) {
+                using (var brush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
-                using (var pen = new Pen(Color.FromArgb(26, 36, 52), 1f)) {
+                using (var pen = new Pen(Color.FromArgb(24, 32, 45), 1f)) {
                     g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
                 }
 
@@ -379,43 +417,37 @@ public class RealAssetGenerator {
                     }
                 }
 
-                // --- RIGHT SIDE: Animated Security Audit Viewport ---
+                // --- RIGHT SIDE: Cyber Security Command Shield & AST Security Tree ---
                 int vpX = 540, vpY = 12, vpW = 285, vpH = 126;
-                using (var vpBg = new SolidBrush(Color.FromArgb(5, 8, 14))) {
+                using (var vpBg = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(vpBg, vpX, vpY, vpW, vpH);
                 }
                 using (var vpBorder = new Pen(Color.FromArgb(34, 26, 54), 1f)) {
                     g.DrawRectangle(vpBorder, vpX, vpY, vpW, vpH);
                 }
 
-                // Corner ticks
-                using (var p = new Pen(accent, 1.2f)) {
-                    g.DrawLines(p, new Point[] { new Point(vpX, vpY + 8), new Point(vpX, vpY), new Point(vpX + 8, vpY) });
-                    g.DrawLines(p, new Point[] { new Point(vpX + vpW - 9, vpY), new Point(vpX + vpW - 1, vpY), new Point(vpX + vpW - 1, vpY + 8) });
-                    g.DrawLines(p, new Point[] { new Point(vpX, vpY + vpH - 9), new Point(vpX, vpY + vpH - 1), new Point(vpX + 8, vpY + vpH - 1) });
-                    g.DrawLines(p, new Point[] { new Point(vpX + vpW - 9, vpY + vpH - 1), new Point(vpX + vpW - 1, vpY + vpH - 1), new Point(vpX + vpW - 1, vpY + vpH - 9) });
-                }
+                DrawCornerBrackets(g, vpX, vpY, vpW, vpH, accent, 9f);
 
                 // AST Node tree visualization
-                float scX = vpX + vpW / 2f;
-                float scY = vpY + 28f;
+                float scX = vpX + 110f;
+                float scY = vpY + 26f;
                 PointF rootNode = new PointF(scX, scY);
                 PointF[] childNodes = new PointF[] {
-                    new PointF(scX - 65, scY + 32),
-                    new PointF(scX, scY + 32),
-                    new PointF(scX + 65, scY + 32)
+                    new PointF(scX - 55, scY + 30),
+                    new PointF(scX, scY + 30),
+                    new PointF(scX + 55, scY + 30)
                 };
                 PointF[] leafNodes = new PointF[] {
-                    new PointF(scX - 85, scY + 58),
-                    new PointF(scX - 45, scY + 58),
-                    new PointF(scX - 18, scY + 58),
-                    new PointF(scX + 18, scY + 58),
-                    new PointF(scX + 45, scY + 58),
-                    new PointF(scX + 85, scY + 58)
+                    new PointF(scX - 75, scY + 56),
+                    new PointF(scX - 35, scY + 56),
+                    new PointF(scX - 15, scY + 56),
+                    new PointF(scX + 15, scY + 56),
+                    new PointF(scX + 35, scY + 56),
+                    new PointF(scX + 75, scY + 56)
                 };
 
                 // Draw branches
-                using (var branchPen = new Pen(Color.FromArgb(100, 167, 139, 250), 1.2f)) {
+                using (var branchPen = new Pen(Color.FromArgb(90, 167, 139, 250), 1.2f)) {
                     for (int c = 0; c < 3; c++) g.DrawLine(branchPen, rootNode, childNodes[c]);
                     g.DrawLine(branchPen, childNodes[0], leafNodes[0]);
                     g.DrawLine(branchPen, childNodes[0], leafNodes[1]);
@@ -435,7 +467,7 @@ public class RealAssetGenerator {
                     }
                 }
                 foreach (var ln in leafNodes) {
-                    using (var lBrush = new SolidBrush(Color.FromArgb(56, 189, 248))) {
+                    using (var lBrush = new SolidBrush(Color.FromArgb(52, 211, 153))) {
                         g.FillEllipse(lBrush, ln.X - 3, ln.Y - 3, 6, 6);
                     }
                 }
@@ -443,23 +475,44 @@ public class RealAssetGenerator {
                 // Scanning laser bar sweeping down AST
                 float scanBarY = vpY + 18 + (t * (vpH - 36));
                 using (var sBrush = new LinearGradientBrush(
-                    new RectangleF(vpX + 10, scanBarY - 6, vpW - 20, 12),
+                    new RectangleF(vpX + 10, scanBarY - 6, 190, 12),
                     Color.Transparent, Color.Transparent, 0f)) {
                     var cb = new ColorBlend(3);
                     cb.Colors = new Color[] { Color.Transparent, Color.FromArgb(120, 192, 132, 252), Color.Transparent };
                     cb.Positions = new float[] { 0f, 0.5f, 1f };
                     sBrush.InterpolationColors = cb;
-                    g.FillRectangle(sBrush, vpX + 10, scanBarY - 6, vpW - 20, 12);
+                    g.FillRectangle(sBrush, vpX + 10, scanBarY - 6, 190, 12);
                 }
                 using (var sLine = new Pen(Color.FromArgb(200, 221, 214, 254), 1.2f)) {
-                    g.DrawLine(sLine, vpX + 12, scanBarY, vpX + vpW - 12, scanBarY);
+                    g.DrawLine(sLine, vpX + 12, scanBarY, vpX + 195, scanBarY);
+                }
+
+                // Right Side: Security Audit Checklist Badge
+                float shX = vpX + 205f;
+                float shY = vpY + 26f;
+                using (var shFont = new Font("Consolas", 7.2f, FontStyle.Bold)) {
+                    using (var bTitle = new SolidBrush(Color.FromArgb(192, 132, 252))) {
+                        g.DrawString("SECURITY AUDIT", shFont, bTitle, shX, shY);
+                    }
+                    string[] checks = new string[] {
+                        "[OK] AST SYNTAX",
+                        "[OK] SANDBOX",
+                        "[OK] PERM GUARD",
+                        "[OK] VULN: 0"
+                    };
+                    for (int k = 0; k < checks.Length; k++) {
+                        Color checkCol = (k == 3) ? Color.FromArgb(52, 211, 153) : Color.FromArgb(186, 230, 253);
+                        using (var bCheck = new SolidBrush(checkCol)) {
+                            g.DrawString(checks[k], shFont, bCheck, shX, shY + 16 + k * 14);
+                        }
+                    }
                 }
 
                 // Viewport text overlay
-                using (var hudFont = new Font("Consolas", 7.5f, FontStyle.Bold))
+                using (var hudFont = new Font("Consolas", 7.2f, FontStyle.Bold))
                 using (var hudBrush = new SolidBrush(Color.FromArgb(221, 214, 254))) {
                     g.DrawString("AST_PARSER // CAPABILITY_AUDIT", hudFont, hudBrush, vpX + 8, vpY + 6);
-                    g.DrawString("AUDIT: PASS  //  VULN: 0  //  SANDBOX: OK", hudFont, hudBrush, vpX + 8, vpY + vpH - 15);
+                    g.DrawString("AUDIT: PASS  //  SANDBOX: ACTIVE", hudFont, hudBrush, vpX + 8, vpY + vpH - 14);
                 }
             }
             frames[f] = bmp;
@@ -469,7 +522,7 @@ public class RealAssetGenerator {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 4. Real Project Card 3: rootcause-iq
+    // 4. Real Project Card 3: rootcause-iq (Enterprise Microservice Causal Trace)
     public static void RenderCardRootcause(string outputPath, int totalFrames = 24) {
         int w = 840, h = 150;
         var frames = new Bitmap[totalFrames];
@@ -481,10 +534,10 @@ public class RealAssetGenerator {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                using (var brush = new SolidBrush(Color.FromArgb(8, 12, 20))) {
+                using (var brush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
-                using (var pen = new Pen(Color.FromArgb(26, 36, 52), 1f)) {
+                using (var pen = new Pen(Color.FromArgb(24, 32, 45), 1f)) {
                     g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
                 }
 
@@ -535,42 +588,44 @@ public class RealAssetGenerator {
                     }
                 }
 
-                // --- RIGHT SIDE: Animated Causal Graph & Anomaly Viewport ---
+                // --- RIGHT SIDE: Enterprise Microservice Causal Trace & Auto-Healing ---
                 int vpX = 540, vpY = 12, vpW = 285, vpH = 126;
-                using (var vpBg = new SolidBrush(Color.FromArgb(5, 8, 14))) {
+                using (var vpBg = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(vpBg, vpX, vpY, vpW, vpH);
                 }
                 using (var vpBorder = new Pen(Color.FromArgb(24, 34, 50), 1f)) {
                     g.DrawRectangle(vpBorder, vpX, vpY, vpW, vpH);
                 }
 
-                // Corner ticks
-                using (var p = new Pen(accent, 1.2f)) {
-                    g.DrawLines(p, new Point[] { new Point(vpX, vpY + 8), new Point(vpX, vpY), new Point(vpX + 8, vpY) });
-                    g.DrawLines(p, new Point[] { new Point(vpX + vpW - 9, vpY), new Point(vpX + vpW - 1, vpY), new Point(vpX + vpW - 1, vpY + 8) });
-                    g.DrawLines(p, new Point[] { new Point(vpX, vpY + vpH - 9), new Point(vpX, vpY + vpH - 1), new Point(vpX + 8, vpY + vpH - 1) });
-                    g.DrawLines(p, new Point[] { new Point(vpX + vpW - 9, vpY + vpH - 1), new Point(vpX + vpW - 1, vpY + vpH - 1), new Point(vpX + vpW - 1, vpY + vpH - 9) });
-                }
+                DrawCornerBrackets(g, vpX, vpY, vpW, vpH, accent, 9f);
 
-                // Graph Nodes
+                // Graph Nodes (Distributed Services)
                 PointF[] gNodes = new PointF[] {
-                    new PointF(vpX + 40, vpY + 38),   // Service A (Client)
-                    new PointF(vpX + 110, vpY + 30),  // Service B (Gateway)
-                    new PointF(vpX + 110, vpY + 75),  // Service C (Auth)
-                    new PointF(vpX + 185, vpY + 45),  // Service D (Core API) - Root Cause
-                    new PointF(vpX + 245, vpY + 35),  // Service E (Database)
-                    new PointF(vpX + 245, vpY + 75)   // Service F (Cache)
+                    new PointF(vpX + 35, vpY + 38),   // Service A (Client)
+                    new PointF(vpX + 100, vpY + 32),  // Service B (Gateway)
+                    new PointF(vpX + 100, vpY + 75),  // Service C (Auth)
+                    new PointF(vpX + 175, vpY + 45),  // Service D (Core API) - Root Cause
+                    new PointF(vpX + 245, vpY + 32),  // Service E (Database)
+                    new PointF(vpX + 245, vpY + 75)   // Service F (Cache Fallback)
                 };
 
                 int[][] gLinks = new int[][] {
                     new int[] { 0, 1 }, new int[] { 1, 2 }, new int[] { 1, 3 },
-                    new int[] { 3, 4 }, new int[] { 3, 5 }
+                    new int[] { 3, 4 }, new int[] { 2, 5 }, new int[] { 5, 4 }
                 };
 
                 using (var linkPen = new Pen(Color.FromArgb(60, 56, 189, 248), 1.4f)) {
                     foreach (var edge in gLinks) {
                         g.DrawLine(linkPen, gNodes[edge[0]], gNodes[edge[1]]);
                     }
+                }
+
+                // Auto-healing fallback path in neon emerald/cyan
+                using (var healPen = new Pen(Color.FromArgb(140, 52, 211, 153), 1.6f)) {
+                    healPen.DashStyle = DashStyle.Dash;
+                    g.DrawLine(healPen, gNodes[1], gNodes[2]);
+                    g.DrawLine(healPen, gNodes[2], gNodes[5]);
+                    g.DrawLine(healPen, gNodes[5], gNodes[4]);
                 }
 
                 // Causal propagation wave along edges
@@ -594,8 +649,10 @@ public class RealAssetGenerator {
                         nCol = Color.FromArgb(red, 68, 68);
 
                         using (var ringP = new Pen(Color.FromArgb((int)(aPulse * 200), 239, 68, 68), 1.5f)) {
-                            g.DrawEllipse(ringP, pt.X - 10, pt.Y - 10, 20, 20);
+                            g.DrawEllipse(ringP, pt.X - 9, pt.Y - 9, 18, 18);
                         }
+                    } else if (i == 5) {
+                        nCol = Color.FromArgb(52, 211, 153); // Fallback node
                     }
 
                     using (var nBrush = new SolidBrush(nCol)) {
@@ -604,10 +661,10 @@ public class RealAssetGenerator {
                 }
 
                 // Viewport text overlay
-                using (var hudFont = new Font("Consolas", 7.5f, FontStyle.Bold))
+                using (var hudFont = new Font("Consolas", 7.2f, FontStyle.Bold))
                 using (var hudBrush = new SolidBrush(Color.FromArgb(186, 230, 253))) {
                     g.DrawString("CAUSAL_GRAPH // FAILURE_TRACE", hudFont, hudBrush, vpX + 8, vpY + 6);
-                    g.DrawString("ANOMALY: ISOLATED [NODE_03: CoreAPI]", hudFont, hudBrush, vpX + 8, vpY + vpH - 15);
+                    g.DrawString("ANOMALY: ISOLATED // AUTO-HEAL: 100%", hudFont, hudBrush, vpX + 8, vpY + vpH - 14);
                 }
             }
             frames[f] = bmp;
@@ -617,7 +674,7 @@ public class RealAssetGenerator {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 5. Divider Generator
+    // 5. Divider Generator: GOKUL A // AUTONOMOUS_CORE
     public static void RenderDivider(string outputPath, int totalFrames = 20) {
         int w = 840, h = 24;
         var frames = new Bitmap[totalFrames];
@@ -632,10 +689,10 @@ public class RealAssetGenerator {
                     g.DrawLine(linePen, 0, h / 2, w, h / 2);
                 }
 
-                int bw = 240, bh = 18;
+                int bw = 260, bh = 18;
                 int bx = (w - bw) / 2;
                 int by = (h - bh) / 2;
-                using (var bgBrush = new SolidBrush(Color.FromArgb(10, 14, 22))) {
+                using (var bgBrush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(bgBrush, bx, by, bw, bh);
                 }
                 using (var borderPen = new Pen(Color.FromArgb(36, 48, 68), 1f)) {
@@ -644,11 +701,12 @@ public class RealAssetGenerator {
 
                 using (var font = new Font("Consolas", 8.5f, FontStyle.Bold))
                 using (var textBrush = new SolidBrush(Color.FromArgb(56, 189, 248))) {
-                    var str = "[ NCC-077 // AUTONOMOUS_CORE ]";
+                    var str = "[ GOKUL A // AUTONOMOUS_CORE ]";
                     var sz = g.MeasureString(str, font);
                     g.DrawString(str, font, textBrush, bx + (bw - sz.Width) / 2, by + 2);
                 }
 
+                // Laser Traveling Beam
                 float beamX = progress * (w + 120) - 60;
                 using (var brush = new LinearGradientBrush(
                     new RectangleF(beamX - 40, h / 2 - 1, 80, 3),
@@ -678,13 +736,13 @@ public class RealAssetGenerator {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                using (var brush = new SolidBrush(Color.FromArgb(7, 9, 14))) {
+                using (var brush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
 
                 // ================= LEFT TERMINAL: STATS =================
                 int t1X = 0, t1Y = 0, t1W = 412, t1H = h;
-                using (var tBg = new SolidBrush(Color.FromArgb(10, 14, 22))) {
+                using (var tBg = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(tBg, t1X, t1Y, t1W, t1H);
                 }
                 using (var tBorder = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
@@ -722,7 +780,7 @@ public class RealAssetGenerator {
                     g.DrawString("// real language breakdown", fSub, bSub, t1X + 24, 96);
                 }
 
-                // REAL Languages: typescript (6 repos), python (4 repos), javascript (2 repos), shell/other (3 repos)
+                // REAL Languages: typescript (45%), python (30%), javascript (15%), shell/other (10%)
                 string[] langs = new string[] { "typescript", "python", "javascript", "shell/other" };
                 int[] pcts = new int[] { 45, 30, 15, 10 };
                 Color[] barColors = new Color[] {
@@ -779,7 +837,7 @@ public class RealAssetGenerator {
 
                 // ================= RIGHT TERMINAL: REAL OPS LOG =================
                 int t2X = 428, t2Y = 0, t2W = 412, t2H = h;
-                using (var tBg = new SolidBrush(Color.FromArgb(10, 14, 22))) {
+                using (var tBg = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(tBg, t2X, t2Y, t2W, t2H);
                 }
                 using (var tBorder = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
@@ -796,12 +854,12 @@ public class RealAssetGenerator {
                 g.FillEllipse(new SolidBrush(Color.FromArgb(39, 201, 63)), t2X + 44, 9, 10, 10);
                 using (var fTitle = new Font("Consolas", 9f, FontStyle.Regular))
                 using (var bTitle = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                    g.DrawString("~/ops $ tail -f activity.log", fTitle, bTitle, t2X + 64, 7);
+                    g.DrawString("gokul@neural-core:~/ops $ tail -f activity.log", fTitle, bTitle, t2X + 64, 7);
                 }
 
-                // REAL REPOSITORY ACTIVITY
+                // REAL REPOSITORY ACTIVITY (featuring Gokul A)
                 string[] logs = new string[] {
-                    "[09-08] repo CapedCrusader77 [main] (README rebuild)",
+                    "[09-08] Gokul A // Neural Core [main] (System Online)",
                     "[08-30] repo FaceTrack-AI (Computer Vision / FaceMesh)",
                     "[08-28] repo rootcause-iq (AI failure diagnostics)",
                     "[08-23] repo skillguard-oss 1* (agent audit engine)",
@@ -815,9 +873,9 @@ public class RealAssetGenerator {
                     for (int m = 0; m < logs.Length; m++) {
                         int ly = 38 + m * 20;
                         Color textC = Color.FromArgb(148, 163, 184);
-                        if (logs[m].Contains("FaceTrack") || logs[m].Contains("skillguard")) textC = Color.FromArgb(0, 240, 255);
+                        if (logs[m].Contains("Gokul A") || logs[m].Contains("FaceTrack")) textC = Color.FromArgb(0, 240, 255);
                         if (logs[m].Contains("rootcause") || logs[m].Contains("CARBONX")) textC = Color.FromArgb(167, 139, 250);
-                        if (logs[m].Contains("1*") || logs[m].Contains("17 flags")) textC = Color.FromArgb(56, 189, 248);
+                        if (logs[m].Contains("1*") || logs[m].Contains("17 flags") || logs[m].Contains("Online")) textC = Color.FromArgb(56, 189, 248);
 
                         using (var bText = new SolidBrush(textC)) {
                             g.DrawString(logs[m], logFont, bText, t2X + 16, ly);
@@ -879,7 +937,7 @@ public class RealAssetGenerator {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                using (var brush = new SolidBrush(Color.FromArgb(10, 14, 22))) {
+                using (var brush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
                 using (var pen = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
@@ -1003,10 +1061,10 @@ public class RealAssetGenerator {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
-                using (var brush = new SolidBrush(Color.FromArgb(8, 12, 20))) {
+                using (var brush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
                     g.FillRectangle(brush, 0, 0, w, h);
                 }
-                using (var pen = new Pen(Color.FromArgb(26, 36, 52), 1f)) {
+                using (var pen = new Pen(Color.FromArgb(24, 32, 45), 1f)) {
                     g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
                 }
 
@@ -1066,28 +1124,28 @@ $assetsDir = "e:\Projects\Readme\assets"
 if (!(Test-Path $assetsDir)) { New-Item -ItemType Directory -Path $assetsDir }
 
 Write-Host "=========================================================="
-Write-Host "Generating REAL DATA Cyber GIF Suite for CapedCrusader77"
+Write-Host "Generating Upgraded Cyber GIF Suite for Gokul A"
 Write-Host "=========================================================="
 
 Write-Host "Rendering banner_work.gif..."
 [RealAssetGenerator]::RenderBanner("$assetsDir\banner_work.gif", ">> SELECTED BUILDS", "// VERIFIED PRODUCTION REPOSITORIES", "[3 ACTIVE BUILDS]", [System.Drawing.Color]::FromArgb(0, 240, 255))
 
-Write-Host "Rendering card_slam.gif (FaceTrack-AI)..."
+Write-Host "Rendering card_slam.gif (FaceTrack-AI Biometric HUD)..."
 [RealAssetGenerator]::RenderCardFaceTrack("$assetsDir\card_slam.gif")
 
-Write-Host "Rendering card_vision.gif (skillguard-oss)..."
+Write-Host "Rendering card_vision.gif (skillguard-oss Security Shield)..."
 [RealAssetGenerator]::RenderCardSkillguard("$assetsDir\card_vision.gif")
 
-Write-Host "Rendering card_mpc.gif (rootcause-iq)..."
+Write-Host "Rendering card_mpc.gif (rootcause-iq Causal Trace)..."
 [RealAssetGenerator]::RenderCardRootcause("$assetsDir\card_mpc.gif")
 
-Write-Host "Rendering divider.gif..."
+Write-Host "Rendering divider.gif (Gokul A // Autonomous Core)..."
 [RealAssetGenerator]::RenderDivider("$assetsDir\divider.gif")
 
 Write-Host "Rendering banner_telemetry.gif..."
 [RealAssetGenerator]::RenderBanner("$assetsDir\banner_telemetry.gif", ">> LIVE TELEMETRY", "// REAL-TIME GITHUB AUDIT & ACTIVITY FEED", "[ONLINE]", [System.Drawing.Color]::FromArgb(56, 189, 248))
 
-Write-Host "Rendering telemetry.gif (Real Stats & Repo Log)..."
+Write-Host "Rendering telemetry.gif (Gokul A Real Stats & Repo Log)..."
 [RealAssetGenerator]::RenderTelemetry("$assetsDir\telemetry.gif")
 
 Write-Host "Rendering contrib.gif (Real 264 Contributions & Matrix)..."
@@ -1103,5 +1161,5 @@ Write-Host "Rendering banner_contact.gif..."
 [RealAssetGenerator]::RenderBanner("$assetsDir\banner_contact.gif", ">> CONTROL UPLINK", "// SECURE COMMS & TRANSMISSION CHANNELS", "[ACTIVE]", [System.Drawing.Color]::FromArgb(0, 240, 255))
 
 Write-Host "=========================================================="
-Write-Host "All REAL DATA Cyber GIF assets rendered successfully!"
+Write-Host "All Cyber GIF assets for Gokul A rendered successfully!"
 Get-ChildItem $assetsDir\*.gif | Select-Object Name, Length

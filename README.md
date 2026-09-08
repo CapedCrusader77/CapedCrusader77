@@ -1,11 +1,11 @@
 <!--
-  github.com/CapedCrusader77 - profile readme
+  github.com/CapedCrusader77 - Gokul A - Profile README
   Neural Control Lab interface architecture
   All components rendered as high-performance, modular cyber animated GIFs with 100% real data
 -->
 
 <p align="center">
-  <img src="assets/hero.gif" width="840" alt="CapedCrusader77 - Neural Control Lab Interface">
+  <img src="assets/hero.gif" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
 </p>
 
 <p align="center">
@@ -63,7 +63,7 @@
 
 <p align="center">
   <a href="https://github.com/CapedCrusader77">
-    <img src="https://img.shields.io/badge/GitHub-CapedCrusader77-00f0ff?style=for-the-badge&logo=github&logoColor=07090e" alt="GitHub">
+    <img src="https://img.shields.io/badge/GitHub-Gokul_A-00f0ff?style=for-the-badge&logo=github&logoColor=07090e" alt="GitHub">
   </a>
   &nbsp;
   <a href="https://www.linkedin.com/in/gokul-a-2726a4391/">
