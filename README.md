@@ -36,7 +36,7 @@
 <p align="center"><img src="assets/banner_telemetry.gif?v=24" width="840" alt="live telemetry"></p>
 
 <p align="center">
-  <img src="assets/telemetry.gif?v=24" width="840" alt="Three animated telemetry cards: perception, reasoning, and action">
+  <img src="assets/telemetry.gif?v=26" width="840" alt="Three animated telemetry cards: perception, reasoning, and action">
 </p>
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>

@@ -98,15 +98,15 @@ public class TelemetryCards {
 
     static void Dot(Graphics g, float x, float y, float r, Color color, float phase) {
         float spread = 2.5f + phase;
-        using (var b = new SolidBrush(C(24, color.R, color.G, color.B))) g.FillEllipse(b, x - r * spread, y - r * spread, r * spread * 2, r * spread * 2);
-        using (var b = new SolidBrush(C(220, color.R, color.G, color.B))) g.FillEllipse(b, x - r, y - r, r * 2, r * 2);
+        using (var b = new SolidBrush(C(16, color.R, color.G, color.B))) g.FillEllipse(b, x - r * spread, y - r * spread, r * spread * 2, r * spread * 2);
+        using (var b = new SolidBrush(C(235, color.R, color.G, color.B))) g.FillEllipse(b, x - r, y - r, r * 2, r * 2);
     }
 
     static void Flow(Graphics g, float t, PointF a, PointF b, PointF c, PointF d, Color color) {
         using (var path = new GraphicsPath()) {
             path.AddBezier(a, b, c, d);
-            using (var p = new Pen(C(42, color.R, color.G, color.B), 4f)) g.DrawPath(p, path);
-            using (var p = new Pen(C(180, color.R, color.G, color.B), 1.1f)) g.DrawPath(p, path);
+            using (var p = new Pen(C(28, color.R, color.G, color.B), 3f)) g.DrawPath(p, path);
+            using (var p = new Pen(C(205, color.R, color.G, color.B), 1.1f)) g.DrawPath(p, path);
             float p1 = (t * 0.7f) % 1f;
             float q = 1f - p1;
             float x = q*q*q*a.X + 3*q*q*p1*b.X + 3*q*p1*p1*c.X + p1*p1*p1*d.X;
@@ -165,7 +165,8 @@ public class TelemetryCards {
         Color[] accents = new Color[] { C(255, 76, 231, 255), C(255, 172, 127, 255), C(255, 183, 241, 106) };
         string[] tags = new string[] { "PERCEPTION", "REASONING", "ACTION" };
         string[] subtitles = new string[] { "SENSOR FUSION", "CAUSAL MODEL", "SPATIAL CONTROL" };
-        string[] descriptions = new string[] { "Turns camera and depth input into\nstable landmarks.", "Traces cause and effect across\na changing system.", "Maps distance, heading, and\nthe next safe move." };
+        string[] micro = new string[] { "INPUT / CAMERA + DEPTH", "MODEL / NODES + EDGES", "OUTPUT / RANGE + HEADING" };
+        string[] descriptions = new string[] { "Stable landmarks from camera and depth.", "A usable policy from cause and effect.", "A safe move from distance and heading." };
         string[][] chips = new string[][] { new string[] { "Vision", "WASM", "6-DoF" }, new string[] { "Graph", "Policy", "Trace" }, new string[] { "LiDAR", "Nav", "Control" } };
         for (int f = 0; f < totalFrames; f++) {
             float t = (float)f / totalFrames;
@@ -184,12 +185,12 @@ public class TelemetryCards {
                 Text(g, "LIVE", "Consolas", 6.8f, FontStyle.Bold, C(230, 226, 232, 235), w - 57, 12);
                 using (var p = new Pen(C(35, 53, 69, 80), 1f)) g.DrawLine(p, 12, 173, w - 12, 173);
                 using (var b = new SolidBrush(accent)) g.FillRectangle(b, 12, 184, 3, 16);
-                Text(g, tags[kind - 1], "Segoe UI", 12.2f, FontStyle.Bold, C(250, 248, 252, 255), 20, 181);
-                Text(g, subtitles[kind - 1], "Consolas", 7.2f, FontStyle.Bold, accent, 13, 207);
+                Text(g, subtitles[kind - 1], "Segoe UI", 11.5f, FontStyle.Bold, C(250, 248, 252, 255), 20, 181);
+                Text(g, micro[kind - 1], "Consolas", 6.8f, FontStyle.Bold, accent, 13, 207);
                 Text(g, descriptions[kind - 1], "Segoe UI", 8.2f, FontStyle.Regular, C(205, 213, 225, 245), 13, 231);
                 float px = 13f;
                 using (var fChip = new Font("Consolas", 6.7f, FontStyle.Regular)) foreach (var chip in chips[kind - 1]) { var sz = g.MeasureString(chip, fChip); float pw = sz.Width + 10; using (var b = new SolidBrush(C(190, 8, 14, 24))) g.FillRectangle(b, px, 296, pw, 20); using (var p = new Pen(C(80, 100, 116, 139), 1f)) g.DrawRectangle(p, px, 296, pw, 20); using (var bt = new SolidBrush(C(230, 242, 254, 240))) g.DrawString(chip, fChip, bt, px + 5, 300); px += pw + 5; }
-                Text(g, "VIEW ->", "Consolas", 7.8f, FontStyle.Bold, accent, w - 61, 300);
+                Text(g, "READOUT", "Consolas", 7.2f, FontStyle.Bold, accent, w - 66, 300);
             }
             frames[f] = bmp;
         }
@@ -218,18 +219,18 @@ public class TelemetryCards {
 
 Add-Type -TypeDefinition $source -ReferencedAssemblies "System.Drawing"
 $assetsDir = "E:\Projects\Readme\assets"
-$perception = [TelemetryCards]::Generate(1, 36)
-$reasoning = [TelemetryCards]::Generate(2, 36)
-$action = [TelemetryCards]::Generate(3, 36)
+$perception = [TelemetryCards]::Generate(1, 48)
+$reasoning = [TelemetryCards]::Generate(2, 48)
+$action = [TelemetryCards]::Generate(3, 48)
 
-[TelemetryCards]::SaveGif("$assetsDir\telemetry_perception.gif", $perception, 40)
-[TelemetryCards]::SaveGif("$assetsDir\telemetry_reasoning.gif", $reasoning, 40)
-[TelemetryCards]::SaveGif("$assetsDir\telemetry_action.gif", $action, 40)
+[TelemetryCards]::SaveGif("$assetsDir\telemetry_perception.gif", $perception, 55)
+[TelemetryCards]::SaveGif("$assetsDir\telemetry_reasoning.gif", $reasoning, 55)
+[TelemetryCards]::SaveGif("$assetsDir\telemetry_action.gif", $action, 55)
 $perception[0].Save("$assetsDir\telemetry_perception.png", [System.Drawing.Imaging.ImageFormat]::Png)
 $reasoning[0].Save("$assetsDir\telemetry_reasoning.png", [System.Drawing.Imaging.ImageFormat]::Png)
 $action[0].Save("$assetsDir\telemetry_action.png", [System.Drawing.Imaging.ImageFormat]::Png)
 
-[TelemetryCards]::SaveRow("$assetsDir\telemetry_cards.gif", @($perception, $reasoning, $action), 40)
+[TelemetryCards]::SaveRow("$assetsDir\telemetry_cards.gif", @($perception, $reasoning, $action), 55)
 Copy-Item "$assetsDir\telemetry_cards.gif" "$assetsDir\telemetry.gif" -Force
 Copy-Item "$assetsDir\telemetry_cards.png" "$assetsDir\telemetry.png" -Force
 
