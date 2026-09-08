@@ -46,13 +46,13 @@
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
 
 <!-- 02 // LIVE TELEMETRY & ACTIVITY -->
-<p align="center"><img src="assets/banner_telemetry.gif?v=10" width="840" alt="live telemetry"></p>
+<p align="center"><img src="assets/banner_telemetry.gif?v=18" width="840" alt="observability & telemetry"></p>
 
 <p align="center">
-  <img src="assets/telemetry.gif?v=10" width="840" alt="live stats console &amp; autonomous telemetry log feed: 5 stars, 15 repos, 25 followers">
+  <img src="assets/telemetry.gif?v=18" width="840" alt="observability engine: 5 stars, 15 repos, 25 followers, 264 contributions, language distribution & live CI/CD pipeline feed">
 </p>
 <p align="center">
-  <img src="assets/contrib.gif?v=10" width="840" alt="yearly contribution scanner - 264 contributions in the last year with laser sweep">
+  <img src="assets/contrib.gif?v=18" width="840" alt="git activity heatmap - 264 contributions in the last year with radar sweep">
 </p>
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
