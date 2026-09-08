@@ -29,8 +29,7 @@
   <img src="assets/cards_row.gif?v=17" width="840" alt="Selected Projects: FaceTrack-AI, SkillGuard-OSS, RootCause-IQ">
 </p>
 
-
-<p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
+<br>
 
 <!-- 02 // AUTONOMOUS SYSTEMS TELEMETRY -->
 <p align="center"><img src="assets/banner_telemetry.gif?v=24" width="840" alt="live telemetry"></p>
@@ -39,7 +38,7 @@
   <img src="assets/telemetry.gif?v=26" width="840" alt="Three animated telemetry cards: perception, reasoning, and action">
 </p>
 
-<p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
+<br>
 
 <!-- 03 // CONTRIBUTIONS -->
 <p align="center">
@@ -48,7 +47,7 @@
 
 <p align="center"><sub>Contribution activity over the last 12 months.</sub></p>
 
-<p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
+<br>
 
 <!-- 04 // TECHNICAL ARSENAL -->
 <p align="center"><img src="assets/banner_stack.gif?v=10" width="840" alt="technical arsenal"></p>
@@ -57,7 +56,7 @@
   <img src="assets/stack.gif?v=10" width="840" alt="tech stack: Python 3.11+, TypeScript, JavaScript, TensorFlow, PyTorch, Computer Vision, Security AST, Next.js, Node.js">
 </p>
 
-<p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>
+<br>
 
 <!-- 05 // CONTROL UPLINK -->
 <p align="center"><img src="assets/banner_contact.gif?v=10" width="840" alt="control uplink"></p>
