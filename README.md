@@ -26,7 +26,7 @@
 <p align="center"><img src="assets/banner_work.gif?v=13" width="840" alt="featured architectures"></p>
 
 <p align="center">
-  <img src="assets/cards_row.gif?v=14" width="840" alt="Selected Projects: FaceTrack-AI, SkillGuard-OSS, RootCause-IQ">
+  <img src="assets/cards_row.gif?v=17" width="840" alt="Selected Projects: FaceTrack-AI, SkillGuard-OSS, RootCause-IQ">
 </p>
 
 <p align="center">

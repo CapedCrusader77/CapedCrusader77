@@ -155,13 +155,6 @@ public class NewCardsSuite {
                         scrim.InterpolationColors = cb;
                         g.FillRectangle(scrim, 2, 2, w - 4, targetArtH + 6);
                     }
-
-                    // Gentle ambient holographic scanline with smooth sine fade
-                    float scanY = 25f + t * (targetArtH - 45f);
-                    float scanAlpha = (float)Math.Sin(t * Math.PI) * 45f;
-                    using (var scanPen = new Pen(Color.FromArgb((int)scanAlpha, accent), 1.2f)) {
-                        g.DrawLine(scanPen, 10, scanY, w - 10, scanY);
-                    }
                 }
 
                 // 3. CARD OUTER BORDER & CORNER ACCENTS
@@ -211,40 +204,7 @@ public class NewCardsSuite {
                     g.DrawString(statusText, fStatus, bStatusText, pillX + 16, pillY + 3);
                 }
 
-                // Subtle visual HUD Reticle over the 3D art (Custom per card)
-                float crossX = w / 2f;
-                float crossY = 94f;
-                if (cardIndex == 1) {
-                    using (var pReticle = new Pen(Color.FromArgb(42, accent), 1f)) {
-                        pReticle.DashStyle = DashStyle.Dot;
-                        g.DrawEllipse(pReticle, crossX - 42, crossY - 42, 84, 84);
-                        g.DrawLine(pReticle, crossX - 50, crossY, crossX - 44, crossY);
-                        g.DrawLine(pReticle, crossX + 44, crossY, crossX + 50, crossY);
-                        g.DrawLine(pReticle, crossX, crossY - 50, crossX, crossY - 44);
-                        g.DrawLine(pReticle, crossX, crossY + 44, crossX, crossY + 50);
-                    }
-                } else if (cardIndex == 2) {
-                    using (var pReticle = new Pen(Color.FromArgb(42, accent), 1f)) {
-                        pReticle.DashStyle = DashStyle.Dot;
-                        PointF[] hex = new PointF[6];
-                        for (int k = 0; k < 6; k++) {
-                            float ang = k * 60f * (float)Math.PI / 180f;
-                            hex[k] = new PointF(crossX + 46f * (float)Math.Cos(ang), crossY + 46f * (float)Math.Sin(ang));
-                        }
-                        g.DrawPolygon(pReticle, hex);
-                    }
-                } else {
-                    using (var pReticle = new Pen(Color.FromArgb(42, accent), 1f)) {
-                        pReticle.DashStyle = DashStyle.Dot;
-                        g.DrawEllipse(pReticle, crossX - 48, crossY - 48, 96, 96);
-                        float rot = t * (float)Math.PI * 2f;
-                        float node1X = crossX + 48f * (float)Math.Cos(rot);
-                        float node1Y = crossY + 48f * (float)Math.Sin(rot);
-                        using (var bNode = new SolidBrush(Color.FromArgb(130, accent))) {
-                            g.FillEllipse(bNode, node1X - 3, node1Y - 3, 6, 6);
-                        }
-                    }
-                }
+
 
                 // 5. PROJECT DETAILS SECTION (Permanently Stagnant & Crisp)
                 // Left accent vertical bar next to title
@@ -407,11 +367,9 @@ Write-Host "Rendering Combined 840px Showcase Row (cards_row.gif)..."
 [NewCardsSuite]::CombineAndSaveRow("$assetsDir\cards_row.gif", $ftFrames, $sgFrames, $rcFrames, 40)
 Copy-Item "$assetsDir\cards_row.png" "e:\Projects\Readme\cards_row_preview.png" -Force
 
-for ($i = 0; $i -lt 30; $i++) {
-    $ftFrames[$i].Dispose()
-    $sgFrames[$i].Dispose()
-    $rcFrames[$i].Dispose()
-}
+if ($null -ne $ftFrames) { foreach ($b in $ftFrames) { if ($b) { $b.Dispose() } } }
+if ($null -ne $sgFrames) { foreach ($b in $sgFrames) { if ($b) { $b.Dispose() } } }
+if ($null -ne $rcFrames) { foreach ($b in $rcFrames) { if ($b) { $b.Dispose() } } }
 
 Write-Host "All cards and combined showcase row generated and saved successfully!"
 Get-ChildItem $assetsDir\card*.gif | Select-Object Name, Length
