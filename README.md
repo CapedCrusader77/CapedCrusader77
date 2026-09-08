@@ -23,12 +23,24 @@
 <br>
 
 <!-- 01 // SELECTED BUILDS -->
-<p align="center"><img src="assets/banner_work.gif?v=10" width="840" alt="featured architectures"></p>
+<p align="center"><img src="assets/banner_work.gif?v=13" width="840" alt="featured architectures"></p>
 
 <p align="center">
-  <a href="https://github.com/CapedCrusader77/FaceTrack-AI"><img src="assets/card_slam.gif?v=13" width="274" alt="FaceTrack-AI - Real-time Computer Vision &amp; 6-DoF FaceMesh"></a>
-  <a href="https://github.com/CapedCrusader77/skillguard-oss"><img src="assets/card_vision.gif?v=13" width="274" alt="SkillGuard-OSS - Zero-Trust AST Security Audit Engine"></a>
-  <a href="https://github.com/CapedCrusader77/rootcause-iq"><img src="assets/card_mpc.gif?v=13" width="274" alt="RootCause-IQ - Automated Diagnostic &amp; Causal Trace Engine"></a>
+  <img src="assets/cards_row.gif?v=13" width="840" alt="Selected Projects: FaceTrack-AI, SkillGuard-OSS, RootCause-IQ">
+</p>
+
+<p align="center">
+  <a href="https://github.com/CapedCrusader77/FaceTrack-AI">
+    <img src="https://img.shields.io/badge/01_FaceTrack--AI-Explore_Repository-00f0ff?style=for-the-badge&logo=github&logoColor=07090e" alt="FaceTrack-AI">
+  </a>
+  &nbsp;
+  <a href="https://github.com/CapedCrusader77/skillguard-oss">
+    <img src="https://img.shields.io/badge/02_SkillGuard--OSS-Explore_Repository-8b5cf6?style=for-the-badge&logo=github&logoColor=white" alt="SkillGuard-OSS">
+  </a>
+  &nbsp;
+  <a href="https://github.com/CapedCrusader77/rootcause-iq">
+    <img src="https://img.shields.io/badge/03_RootCause--IQ-Explore_Repository-38bdf8?style=for-the-badge&logo=github&logoColor=07090e" alt="RootCause-IQ">
+  </a>
 </p>
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>

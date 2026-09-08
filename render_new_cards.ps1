@@ -348,6 +348,35 @@ public class NewCardsSuite {
         if (bgImg != null) bgImg.Dispose();
         return frames;
     }
+
+    public static void CombineAndSaveRow(string outputGifPath, Bitmap[] f1, Bitmap[] f2, Bitmap[] f3, int delayMs) {
+        int w = 840, h = 360;
+        int totalFrames = f1.Length;
+        var rowFrames = new Bitmap[totalFrames];
+
+        for (int f = 0; f < totalFrames; f++) {
+            var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb);
+            using (var g = Graphics.FromImage(bmp)) {
+                g.Clear(Color.FromArgb(7, 9, 14));
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+
+                g.DrawImage(f1[f], 4, 10, 274, 340);
+                g.DrawImage(f2[f], 284, 10, 274, 340);
+                g.DrawImage(f3[f], 564, 10, 274, 340);
+            }
+            rowFrames[f] = bmp;
+        }
+
+        Console.WriteLine("Encoding Combined Row GIF: " + outputGifPath);
+        SaveGif(outputGifPath, rowFrames, delayMs);
+
+        string outputPngPath = outputGifPath.Replace(".gif", ".png");
+        rowFrames[0].Save(outputPngPath, ImageFormat.Png);
+        Console.WriteLine("Saved Row Preview PNG: " + outputPngPath);
+
+        for (int f = 0; f < totalFrames; f++) rowFrames[f].Dispose();
+    }
 }
 "@
 
@@ -376,7 +405,6 @@ $ftFrames = [NewCardsSuite]::GenerateCardFrames(
 )
 $ftFrames[0].Save("e:\Projects\Readme\card_1_preview.png", [System.Drawing.Imaging.ImageFormat]::Png)
 [NewCardsSuite]::SaveGif("$assetsDir\card_slam.gif", $ftFrames, 40)
-for ($i = 0; $i -lt 30; $i++) { $ftFrames[$i].Dispose() }
 Write-Host "Card 1 done."
 
 # Card 2: SkillGuard-OSS
@@ -398,7 +426,6 @@ $sgFrames = [NewCardsSuite]::GenerateCardFrames(
 )
 $sgFrames[0].Save("e:\Projects\Readme\card_2_preview.png", [System.Drawing.Imaging.ImageFormat]::Png)
 [NewCardsSuite]::SaveGif("$assetsDir\card_vision.gif", $sgFrames, 40)
-for ($i = 0; $i -lt 30; $i++) { $sgFrames[$i].Dispose() }
 Write-Host "Card 2 done."
 
 # Card 3: RootCause-IQ
@@ -420,8 +447,18 @@ $rcFrames = [NewCardsSuite]::GenerateCardFrames(
 )
 $rcFrames[0].Save("e:\Projects\Readme\card_3_preview.png", [System.Drawing.Imaging.ImageFormat]::Png)
 [NewCardsSuite]::SaveGif("$assetsDir\card_mpc.gif", $rcFrames, 40)
-for ($i = 0; $i -lt 30; $i++) { $rcFrames[$i].Dispose() }
 Write-Host "Card 3 done."
 
-Write-Host "All 3 cards generated and saved successfully!"
-Get-ChildItem $assetsDir\card_*.gif | Select-Object Name, Length
+# Combined 840px Showcase Row
+Write-Host "Rendering Combined 840px Showcase Row (cards_row.gif)..."
+[NewCardsSuite]::CombineAndSaveRow("$assetsDir\cards_row.gif", $ftFrames, $sgFrames, $rcFrames, 40)
+Copy-Item "$assetsDir\cards_row.png" "e:\Projects\Readme\cards_row_preview.png" -Force
+
+for ($i = 0; $i -lt 30; $i++) {
+    $ftFrames[$i].Dispose()
+    $sgFrames[$i].Dispose()
+    $rcFrames[$i].Dispose()
+}
+
+Write-Host "All cards and combined showcase row generated and saved successfully!"
+Get-ChildItem $assetsDir\card*.gif | Select-Object Name, Length
