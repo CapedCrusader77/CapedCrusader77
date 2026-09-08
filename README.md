@@ -39,7 +39,7 @@
   <img src="assets/telemetry.gif?v=19" width="840" alt="autonomous architecture diagnostics: perception core (6-DoF/WASM), causal inference DAG (Do-Calculus), zero-trust AST security, and live tensor flux oscilloscope">
 </p>
 <p align="center">
-  <img src="assets/contrib.gif?v=19" width="840" alt="throughput & code velocity matrix: 264 contributions in past year with radar scan">
+  <img src="assets/contrib.gif?v=20" width="840" alt="spatial robotics &amp; perception telemetry HUD: 6-DoF attitude indicator, 180° LIDAR depth slice, and actuation nav state">
 </p>
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>

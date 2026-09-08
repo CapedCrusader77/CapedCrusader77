@@ -402,35 +402,10 @@ public class AutonomousTelemetrySuite {
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 
-    // 3. Render Modern Contribution Heatmap (contrib.gif)
-    public static void RenderContrib(string outputPath, string matrixFile, int totalFrames = 26) {
+    // 3. Render Robotics & Perception State HUD (contrib.gif)
+    public static void RenderRoboticsHUD(string outputPath, int totalFrames = 30) {
         int w = 840, h = 160;
         var frames = new Bitmap[totalFrames];
-
-        // Load real matrix
-        int weeks = 53, days = 7;
-        int[,] grid = new int[weeks, days];
-        if (File.Exists(matrixFile)) {
-            string content = File.ReadAllText(matrixFile);
-            string[] cols = content.Split(';');
-            for (int c = 0; c < Math.Min(weeks, cols.Length); c++) {
-                string[] vals = cols[c].Split(',');
-                for (int r = 0; r < Math.Min(days, vals.Length); r++) {
-                    int val;
-                    if (int.TryParse(vals[r], out val)) {
-                        grid[c, r] = val;
-                    }
-                }
-            }
-        }
-
-        Color[] tileColors = new Color[] {
-            Color.FromArgb(17, 24, 39),   // 0: no commits
-            Color.FromArgb(6, 78, 59),    // 1: low
-            Color.FromArgb(4, 120, 87),   // 2: med
-            Color.FromArgb(16, 185, 129), // 3: high
-            Color.FromArgb(52, 211, 153)  // 4: max
-        };
 
         for (int f = 0; f < totalFrames; f++) {
             float t = (float)f / totalFrames;
@@ -438,15 +413,18 @@ public class AutonomousTelemetrySuite {
             using (var g = Graphics.FromImage(bmp)) {
                 SetHighQuality(g);
 
+                // Deep obsidian background
                 using (var bBg = new SolidBrush(Color.FromArgb(7, 9, 14))) {
                     g.FillRectangle(bBg, 0, 0, w, h);
                 }
 
+                // Outer border & corner accents
                 using (var pBorder = new Pen(Color.FromArgb(30, 41, 59), 1f)) {
                     g.DrawRectangle(pBorder, 1, 1, w - 2, h - 2);
                 }
                 DrawCornerBrackets(g, 2, 2, w - 4, h - 4, Color.FromArgb(52, 211, 153), 8f);
 
+                // Top accent stripe + laser pulse
                 using (var bTop = new SolidBrush(Color.FromArgb(20, 30, 48))) {
                     g.FillRectangle(bTop, 2, 2, w - 4, 2);
                 }
@@ -461,88 +439,270 @@ public class AutonomousTelemetrySuite {
                 }
 
                 // Header Bar
-                int headY = 8;
+                int headY = 7;
                 using (var fHead = new Font("Consolas", 7.8f, FontStyle.Bold))
                 using (var bHead = new SolidBrush(Color.FromArgb(226, 232, 240))) {
-                    g.DrawString("THROUGHPUT & CODE VELOCITY MATRIX // 2025 - 2026", fHead, bHead, 12, headY);
+                    g.DrawString("ROBOTICS & SPATIAL PERCEPTION TELEMETRY", fHead, bHead, 12, headY);
+                }
+                using (var fHSub = new Font("Consolas", 6.8f, FontStyle.Regular))
+                using (var bHSub = new SolidBrush(Color.FromArgb(100, 116, 139))) {
+                    g.DrawString("// 6-DoF ATTITUDE & 180 DEG LIDAR DEPTH SLICE", fHSub, bHSub, 296, headY + 1);
                 }
 
+                float pulse = 0.65f + 0.35f * (float)Math.Sin(t * Math.PI * 2f);
                 using (var fRight = new Font("Consolas", 7.2f, FontStyle.Regular))
+                using (var bDot = new SolidBrush(Color.FromArgb((int)(255 * pulse), 52, 211, 153)))
                 using (var bRight = new SolidBrush(Color.FromArgb(52, 211, 153))) {
-                    g.DrawString("264 CONTRIBUTIONS RECORDED   |   STREAK: ACTIVE", fRight, bRight, w - 380, headY);
+                    g.DrawString("STATE: AUTONOMOUS", fRight, bRight, w - 240, headY);
+                    g.FillEllipse(bDot, w - 105, headY + 4, 6, 6);
+                    g.DrawString("[IITM-CAMPUS]", fRight, bRight, w - 95, headY);
                 }
 
-                // Months
-                string[] months = new string[] { "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug" };
-                int[] monthWeeks = new int[] { 0, 4, 8, 13, 17, 21, 25, 30, 34, 38, 43, 47 };
-                int gridStartX = 52, gridStartY = 42;
-                int pitch = 13, tileSize = 10;
+                // ================= ZONE 1: ATTITUDE INDICATOR (x: 10, y: 24, w: 264, h: 128) =================
+                int z1X = 10, z1Y = 24, z1W = 264, z1H = 128;
+                using (var bZ = new SolidBrush(Color.FromArgb(12, 17, 27)))
+                using (var pZ = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
+                    g.FillRectangle(bZ, z1X, z1Y, z1W, z1H);
+                    g.DrawRectangle(pZ, z1X, z1Y, z1W, z1H);
+                }
+                using (var pTop = new Pen(Color.FromArgb(200, 0, 240, 255), 1.5f)) {
+                    g.DrawLine(pTop, z1X + 4, z1Y + 1, z1X + z1W - 4, z1Y + 1);
+                }
+                using (var fZ1 = new Font("Consolas", 7.2f, FontStyle.Bold))
+                using (var bZ1 = new SolidBrush(Color.FromArgb(0, 240, 255))) {
+                    g.DrawString("[01] ATTITUDE INDICATOR // 6-DoF", fZ1, bZ1, z1X + 8, z1Y + 6);
+                }
 
-                using (var fM = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bM = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    for (int m = 0; m < months.Length; m++) {
-                        int mx = gridStartX + monthWeeks[m] * pitch;
-                        g.DrawString(months[m], fM, bM, mx, 28);
+                // Artificial Horizon Sub-Canvas (x: 18, y: 46, w: 114, h: 74)
+                int ahX = z1X + 8, ahY = z1Y + 22, ahW = 114, ahH = 74;
+                using (var bAh = new SolidBrush(Color.FromArgb(6, 10, 16)))
+                using (var pAh = new Pen(Color.FromArgb(22, 30, 44), 1f)) {
+                    g.FillRectangle(bAh, ahX, ahY, ahW, ahH);
+                    g.DrawRectangle(pAh, ahX, ahY, ahW, ahH);
+                }
+
+                // Horizon Math
+                float ahMidX = ahX + ahW / 2f;
+                float ahMidY = ahY + ahH / 2f;
+                float pitchDeg = (float)(Math.Sin(t * Math.PI * 2f) * 3.6f);
+                float rollDeg = (float)(Math.Cos(t * Math.PI * 2f) * 4.8f);
+
+                var prevTrans = g.Transform;
+                var clipPrev = g.Clip;
+                g.SetClip(new Rectangle(ahX + 1, ahY + 1, ahW - 2, ahH - 2));
+
+                // Rotate and translate for horizon
+                g.TranslateTransform(ahMidX, ahMidY);
+                g.RotateTransform(rollDeg);
+                g.TranslateTransform(0, pitchDeg * 1.8f);
+
+                // Sky / Ground subtle divide
+                using (var bSky = new SolidBrush(Color.FromArgb(25, 14, 40, 70))) {
+                    g.FillRectangle(bSky, -ahW, -ahH, ahW * 2, ahH);
+                }
+                using (var bGnd = new SolidBrush(Color.FromArgb(25, 40, 30, 20))) {
+                    g.FillRectangle(bGnd, -ahW, 0, ahW * 2, ahH);
+                }
+
+                // Horizon Center Line
+                using (var pHoriz = new Pen(Color.FromArgb(0, 240, 255), 1.4f)) {
+                    g.DrawLine(pHoriz, -45, 0, 45, 0);
+                }
+                // Pitch ladder bars
+                using (var pLad = new Pen(Color.FromArgb(140, 0, 240, 255), 1f))
+                using (var fLad = new Font("Consolas", 5.8f, FontStyle.Regular))
+                using (var bLad = new SolidBrush(Color.FromArgb(148, 163, 184))) {
+                    g.DrawLine(pLad, -16, -16, 16, -16);
+                    g.DrawString("+10", fLad, bLad, 18, -20);
+                    g.DrawLine(pLad, -16, 16, 16, 16);
+                    g.DrawString("-10", fLad, bLad, 18, 12);
+                }
+
+                g.Transform = prevTrans;
+                g.Clip = clipPrev;
+
+                // Center fixed aircraft reticle (stationary)
+                using (var pRet = new Pen(Color.FromArgb(255, 255, 255), 1.5f)) {
+                    g.DrawLine(pRet, ahMidX - 18, ahMidY, ahMidX - 5, ahMidY);
+                    g.DrawLine(pRet, ahMidX + 5, ahMidY, ahMidX + 18, ahMidY);
+                    g.DrawLine(pRet, ahMidX, ahMidY - 5, ahMidX, ahMidY - 2);
+                    g.FillEllipse(new SolidBrush(Color.FromArgb(0, 240, 255)), ahMidX - 2, ahMidY - 2, 4, 4);
+                }
+
+                // Attitude Readouts (x: 132 to 264)
+                int atX = z1X + 130, atY = z1Y + 24;
+                using (var fA = new Font("Consolas", 6.8f, FontStyle.Regular))
+                using (var bA = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                    g.DrawString(String.Format("PITCH: {0:+0.0;-0.0} deg", pitchDeg), fA, bA, atX, atY);
+                    g.DrawString(String.Format("ROLL:  {0:+0.0;-0.0} deg", rollDeg), fA, bA, atX, atY + 16);
+                    g.DrawString("YAW:   042.8 deg", fA, bA, atX, atY + 32);
+                }
+
+                // Gyro status pill
+                using (var bGP = new SolidBrush(Color.FromArgb(16, 24, 38)))
+                using (var pGP = new Pen(Color.FromArgb(70, 0, 240, 255), 1f))
+                using (var fG = new Font("Consolas", 6.5f, FontStyle.Bold))
+                using (var bG = new SolidBrush(Color.FromArgb(0, 240, 255))) {
+                    g.FillRectangle(bGP, atX, atY + 54, 118, 18);
+                    g.DrawRectangle(pGP, atX, atY + 54, 118, 18);
+                    g.DrawString("GYRO: STABLE", fG, bG, atX + 8, atY + 57);
+                }
+
+                // Bottom strip of Zone 1
+                using (var fZ1Foot = new Font("Consolas", 6.2f, FontStyle.Regular))
+                using (var bZ1Foot = new SolidBrush(Color.FromArgb(71, 85, 105))) {
+                    g.DrawString("IMU: 100Hz KALMAN FILTERED", fZ1Foot, bZ1Foot, z1X + 8, z1Y + 108);
+                }
+
+                // ================= ZONE 2: 180 DEG SPATIAL LIDAR (x: 282, y: 24, w: 290, h: 128) =================
+                int z2X = 282, z2Y = 24, z2W = 290, z2H = 128;
+                using (var bZ = new SolidBrush(Color.FromArgb(12, 17, 27)))
+                using (var pZ = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
+                    g.FillRectangle(bZ, z2X, z2Y, z2W, z2H);
+                    g.DrawRectangle(pZ, z2X, z2Y, z2W, z2H);
+                }
+                using (var pTop = new Pen(Color.FromArgb(200, 56, 189, 248), 1.5f)) {
+                    g.DrawLine(pTop, z2X + 4, z2Y + 1, z2X + z2W - 4, z2Y + 1);
+                }
+                using (var fZ2 = new Font("Consolas", 7.2f, FontStyle.Bold))
+                using (var bZ2 = new SolidBrush(Color.FromArgb(56, 189, 248))) {
+                    g.DrawString("[02] 180 DEG SPATIAL LIDAR // 30m", fZ2, bZ2, z2X + 8, z2Y + 6);
+                }
+
+                // LIDAR Arc Display
+                int lx = z2X + 115, ly = z2Y + 114; // Apex origin
+                using (var pArc = new Pen(Color.FromArgb(26, 38, 56), 1f)) {
+                    pArc.DashStyle = DashStyle.Dot;
+                    g.DrawArc(pArc, lx - 28, ly - 28, 56, 56, 180, 180); // 10m
+                    g.DrawArc(pArc, lx - 56, ly - 56, 112, 112, 180, 180); // 20m
+                    g.DrawArc(pArc, lx - 84, ly - 84, 168, 168, 180, 180); // 30m
+                    // Radial lines
+                    g.DrawLine(pArc, lx, ly, lx - 84, ly);
+                    g.DrawLine(pArc, lx, ly, lx + 84, ly);
+                    g.DrawLine(pArc, lx, ly, lx, ly - 84);
+                }
+
+                // Range markers
+                using (var fR = new Font("Consolas", 5.8f, FontStyle.Regular))
+                using (var bR = new SolidBrush(Color.FromArgb(100, 116, 139))) {
+                    g.DrawString("10m", fR, bR, lx - 10, ly - 30);
+                    g.DrawString("20m", fR, bR, lx - 10, ly - 58);
+                    g.DrawString("30m", fR, bR, lx - 10, ly - 86);
+                }
+
+                // Sweep Ray Angle (oscillates from -72 deg to +72 deg)
+                float sweepDeg = -72f + (float)(Math.Sin(t * Math.PI * 2f) * 72f);
+                float sweepRad = (float)((sweepDeg - 90f) * Math.PI / 180f);
+                float sEndX = lx + 84f * (float)Math.Cos(sweepRad);
+                float sEndY = ly + 84f * (float)Math.Sin(sweepRad);
+
+                // Draw Sweep Ray
+                using (var pRay = new Pen(Color.FromArgb(220, 56, 189, 248), 1.4f)) {
+                    g.DrawLine(pRay, lx, ly, sEndX, sEndY);
+                }
+
+                // Obstacle Targets in point cloud
+                float[] tgtAngles = new float[] { -38f, +22f, +52f };
+                float[] tgtDist = new float[] { 50f, 72f, 40f };
+
+                for (int ob = 0; ob < 3; ob++) {
+                    float obRad = (float)((tgtAngles[ob] - 90f) * Math.PI / 180f);
+                    float obX = lx + tgtDist[ob] * (float)Math.Cos(obRad);
+                    float obY = ly + tgtDist[ob] * (float)Math.Sin(obRad);
+
+                    float diff = Math.Abs(sweepDeg - tgtAngles[ob]);
+                    Color dotColor = Color.FromArgb(100, 56, 189, 248);
+                    if (diff < 18f) {
+                        dotColor = Color.FromArgb(255, 52, 211, 153);
+                        using (var bBloom = new SolidBrush(Color.FromArgb(40, 52, 211, 153))) {
+                            g.FillEllipse(bBloom, obX - 5, obY - 5, 10, 10);
+                        }
+                    }
+
+                    using (var bDot = new SolidBrush(dotColor)) {
+                        g.FillEllipse(bDot, obX - 2.5f, obY - 2.5f, 5, 5);
                     }
                 }
 
-                // Days
-                using (var fD = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bD = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    g.DrawString("Mon", fD, bD, 18, gridStartY + 1 * pitch);
-                    g.DrawString("Wed", fD, bD, 18, gridStartY + 3 * pitch);
-                    g.DrawString("Fri", fD, bD, 18, gridStartY + 5 * pitch);
-                }
-
-                float scanX = gridStartX + t * (weeks * pitch);
-
-                // Grid
-                for (int c = 0; c < weeks; c++) {
-                    int tx = gridStartX + c * pitch;
-                    float dist = Math.Abs(tx - scanX);
-
-                    for (int r = 0; r < days; r++) {
-                        int ty = gridStartY + r * pitch;
-                        int lvl = grid[c, r];
-                        if (lvl > 4) lvl = 4;
-
-                        Color baseC = tileColors[lvl];
-                        if (dist < 32f) {
-                            float factor = (1f - dist / 32f) * 0.45f;
-                            int nr = Math.Min(255, (int)(baseC.R + 60 * factor));
-                            int ng = Math.Min(255, (int)(baseC.G + 140 * factor));
-                            int nb = Math.Min(255, (int)(baseC.B + 90 * factor));
-                            baseC = Color.FromArgb(nr, ng, nb);
-                        }
-
-                        using (var bTile = new SolidBrush(baseC)) {
-                            g.FillRectangle(bTile, tx, ty, tileSize, tileSize);
-                        }
-                    }
-                }
-
-                using (var scanPen = new Pen(Color.FromArgb(160, 52, 211, 153), 1.2f)) {
-                    g.DrawLine(scanPen, scanX, gridStartY - 2, scanX, gridStartY + 7 * pitch + 2);
-                }
-
-                using (var fF = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bF = new SolidBrush(Color.FromArgb(71, 85, 105))) {
-                    g.DrawString("[VELOCITY] 264 LIFETIME COMMITS VERIFIED  //  CONSISTENT COMMIT FREQUENCY", fF, bF, gridStartX, 140);
-                }
-
-                int legX = w - 170, legY = 140;
+                // LIDAR Telemetry side notes (x: z2X + 205)
+                int ltx = z2X + 208, lty = z2Y + 26;
                 using (var fL = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bL = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    g.DrawString("Less", fL, bL, legX, legY);
+                using (var bL = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                    g.DrawString("FOV: 180 deg", fL, bL, ltx, lty);
+                    g.DrawString("48k pts/s", fL, bL, ltx, lty + 16);
+                    g.DrawString("T1: 18m @-38", fL, bL, ltx, lty + 32);
                 }
-                for (int l = 0; l < 5; l++) {
-                    using (var bLBox = new SolidBrush(tileColors[l])) {
-                        g.FillRectangle(bLBox, legX + 32 + l * 14, legY + 1, 9, 9);
+                using (var bSP = new SolidBrush(Color.FromArgb(16, 24, 38)))
+                using (var pSP = new Pen(Color.FromArgb(70, 52, 211, 153), 1f))
+                using (var fS = new Font("Consolas", 6.2f, FontStyle.Bold))
+                using (var bS = new SolidBrush(Color.FromArgb(52, 211, 153))) {
+                    g.FillRectangle(bSP, ltx, lty + 52, 74, 18);
+                    g.DrawRectangle(pSP, ltx, lty + 52, 74, 18);
+                    g.DrawString("100% CLEAR", fS, bS, ltx + 5, lty + 55);
+                }
+
+                // Bottom strip of Zone 2
+                using (var fZ2Foot = new Font("Consolas", 6.2f, FontStyle.Regular))
+                using (var bZ2Foot = new SolidBrush(Color.FromArgb(71, 85, 105))) {
+                    g.DrawString("RANGE CONE: 30m ZERO OCCLUSION", fZ2Foot, bZ2Foot, z2X + 8, z2Y + 108);
+                }
+
+                // ================= ZONE 3: ACTUATION & NAV STATE (x: 580, y: 24, w: 250, h: 128) =================
+                int z3X = 580, z3Y = 24, z3W = 250, z3H = 128;
+                using (var bZ = new SolidBrush(Color.FromArgb(12, 17, 27)))
+                using (var pZ = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
+                    g.FillRectangle(bZ, z3X, z3Y, z3W, z3H);
+                    g.DrawRectangle(pZ, z3X, z3Y, z3W, z3H);
+                }
+                using (var pTop = new Pen(Color.FromArgb(200, 167, 139, 250), 1.5f)) {
+                    g.DrawLine(pTop, z3X + 4, z3Y + 1, z3X + z3W - 4, z3Y + 1);
+                }
+                using (var fZ3 = new Font("Consolas", 7.2f, FontStyle.Bold))
+                using (var bZ3 = new SolidBrush(Color.FromArgb(167, 139, 250))) {
+                    g.DrawString("[03] ACTUATION & NAV STATE", fZ3, bZ3, z3X + 8, z3Y + 6);
+                }
+
+                // 2 Control Bars
+                string[] barLabels = new string[] { "LINEAR VEL", "ANGULAR RATE" };
+                string[] barVals = new string[] { "1.85 m/s", "0.12 rad/s" };
+                float[] barRatios = new float[] { 0.65f, 0.32f };
+                Color[] barColors = new Color[] { Color.FromArgb(0, 240, 255), Color.FromArgb(56, 189, 248) };
+
+                for (int b = 0; b < 2; b++) {
+                    int by = z3Y + 22 + b * 24;
+                    using (var fBL = new Font("Consolas", 6.8f, FontStyle.Regular))
+                    using (var bBL = new SolidBrush(Color.FromArgb(148, 163, 184))) {
+                        g.DrawString(barLabels[b], fBL, bBL, z3X + 8, by);
+                    }
+                    using (var fBV = new Font("Consolas", 6.8f, FontStyle.Bold))
+                    using (var bBV = new SolidBrush(barColors[b])) {
+                        g.DrawString(barVals[b], fBV, bBV, z3X + 172, by);
+                    }
+                    // Progress Bar
+                    using (var bBgB = new SolidBrush(Color.FromArgb(16, 24, 38))) {
+                        g.FillRectangle(bBgB, z3X + 8, by + 11, 230, 5);
+                    }
+                    using (var bFill = new SolidBrush(barColors[b])) {
+                        g.FillRectangle(bFill, z3X + 8, by + 11, (int)(230 * barRatios[b]), 5);
                     }
                 }
-                using (var fM = new Font("Consolas", 6.8f, FontStyle.Regular))
-                using (var bM = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    g.DrawString("More", fM, bM, legX + 108, legY);
+
+                // Waypoint info
+                int wy = z3Y + 70;
+                using (var fW = new Font("Consolas", 6.8f, FontStyle.Regular))
+                using (var bW = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                    g.DrawString("> WAYPOINT: WP-04 [IITM-CAMPUS]", fW, bW, z3X + 8, wy);
+                    g.DrawString("> PLANNER CONFIDENCE: 99.8%", fW, bW, z3X + 8, wy + 14);
+                }
+
+                // Status pill
+                using (var bFP = new SolidBrush(Color.FromArgb(16, 24, 38)))
+                using (var pFP = new Pen(Color.FromArgb(70, 52, 211, 153), 1f))
+                using (var fF = new Font("Consolas", 6.5f, FontStyle.Bold))
+                using (var bF = new SolidBrush(Color.FromArgb(52, 211, 153))) {
+                    g.FillRectangle(bFP, z3X + 8, z3Y + 102, 232, 18);
+                    g.DrawRectangle(pFP, z3X + 8, z3Y + 102, 232, 18);
+                    g.DrawString("FAILSAFE: ZERO-FAULT ONLINE", fF, bF, z3X + 28, z3Y + 105);
                 }
             }
             frames[f] = bmp;
@@ -569,9 +729,9 @@ Write-Host "1. Rendering banner_telemetry.gif..."
 Write-Host "2. Rendering telemetry.gif (Autonomous Systems Diagnostic HUD)..."
 [AutonomousTelemetrySuite]::RenderTelemetryHUD("$assetsDir\telemetry.gif", 30)
 
-Write-Host "3. Rendering contrib.gif (Throughput & Code Velocity Matrix)..."
-$matrixFile = "e:\Projects\Readme\real_contrib_matrix.txt"
-[AutonomousTelemetrySuite]::RenderContrib("$assetsDir\contrib.gif", $matrixFile, 26)
+Write-Host "3. Rendering contrib.gif (Robotics & Perception State HUD)..."
+[AutonomousTelemetrySuite]::RenderRoboticsHUD("$assetsDir\contrib.gif", 30)
 
 Write-Host "All autonomous diagnostic assets rendered successfully!"
 Get-ChildItem $assetsDir\banner_telemetry.*, $assetsDir\telemetry.*, $assetsDir\contrib.* | Select-Object Name, Length
+
