@@ -5,7 +5,7 @@
 -->
 
 <p align="center">
-  <img src="assets/hero.gif" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
+  <img src="assets/hero.gif?v=2" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
 </p>
 
 <p align="center">
@@ -23,43 +23,43 @@
 <br>
 
 <!-- 01 // SELECTED BUILDS -->
-<p align="center"><img src="assets/banner_work.gif" width="840" alt="selected builds"></p>
+<p align="center"><img src="assets/banner_work.gif?v=2" width="840" alt="selected builds"></p>
 
 <p align="center">
-  <a href="https://github.com/CapedCrusader77/FaceTrack-AI"><img src="assets/card_slam.gif" width="840" alt="FaceTrack-AI - Real-time Computer Vision &amp; 6-DoF Facial Landmark Tracking"></a>
+  <a href="https://github.com/CapedCrusader77/FaceTrack-AI"><img src="assets/card_slam.gif?v=2" width="840" alt="FaceTrack-AI - Real-time Computer Vision &amp; 6-DoF Facial Landmark Tracking"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/CapedCrusader77/skillguard-oss"><img src="assets/card_vision.gif" width="840" alt="skillguard-oss - Open-Source Skill Verification &amp; Security Inspection Engine"></a>
+  <a href="https://github.com/CapedCrusader77/skillguard-oss"><img src="assets/card_vision.gif?v=2" width="840" alt="skillguard-oss - Open-Source Skill Verification &amp; Security Inspection Engine"></a>
 </p>
 <p align="center">
-  <a href="https://github.com/CapedCrusader77/rootcause-iq"><img src="assets/card_mpc.gif" width="840" alt="rootcause-iq - Automated Diagnostic &amp; Root-Cause Failure Analysis Engine"></a>
+  <a href="https://github.com/CapedCrusader77/rootcause-iq"><img src="assets/card_mpc.gif?v=2" width="840" alt="rootcause-iq - Automated Diagnostic &amp; Root-Cause Failure Analysis Engine"></a>
 </p>
 
-<p align="center"><img src="assets/divider.gif" width="840" alt="divider"></p>
+<p align="center"><img src="assets/divider.gif?v=2" width="840" alt="divider"></p>
 
 <!-- 02 // LIVE TELEMETRY & ACTIVITY -->
-<p align="center"><img src="assets/banner_telemetry.gif" width="840" alt="live telemetry"></p>
+<p align="center"><img src="assets/banner_telemetry.gif?v=2" width="840" alt="live telemetry"></p>
 
 <p align="center">
-  <img src="assets/telemetry.gif" width="840" alt="live stats console &amp; autonomous telemetry log feed: 5 stars, 15 repos, 25 followers">
+  <img src="assets/telemetry.gif?v=2" width="840" alt="live stats console &amp; autonomous telemetry log feed: 5 stars, 15 repos, 25 followers">
 </p>
 <p align="center">
-  <img src="assets/contrib.gif" width="840" alt="yearly contribution scanner - 264 contributions in the last year with laser sweep">
+  <img src="assets/contrib.gif?v=2" width="840" alt="yearly contribution scanner - 264 contributions in the last year with laser sweep">
 </p>
 
-<p align="center"><img src="assets/divider.gif" width="840" alt="divider"></p>
+<p align="center"><img src="assets/divider.gif?v=2" width="840" alt="divider"></p>
 
 <!-- 03 // TECHNICAL ARSENAL -->
-<p align="center"><img src="assets/banner_stack.gif" width="840" alt="technical arsenal"></p>
+<p align="center"><img src="assets/banner_stack.gif?v=2" width="840" alt="technical arsenal"></p>
 
 <p align="center">
-  <img src="assets/stack.gif" width="840" alt="tech stack: Python 3.11+, TypeScript, JavaScript, TensorFlow, PyTorch, Computer Vision, Security AST, Next.js, Node.js">
+  <img src="assets/stack.gif?v=2" width="840" alt="tech stack: Python 3.11+, TypeScript, JavaScript, TensorFlow, PyTorch, Computer Vision, Security AST, Next.js, Node.js">
 </p>
 
-<p align="center"><img src="assets/divider.gif" width="840" alt="divider"></p>
+<p align="center"><img src="assets/divider.gif?v=2" width="840" alt="divider"></p>
 
 <!-- 04 // CONTROL UPLINK -->
-<p align="center"><img src="assets/banner_contact.gif" width="840" alt="control uplink"></p>
+<p align="center"><img src="assets/banner_contact.gif?v=2" width="840" alt="control uplink"></p>
 
 <p align="center">
   <a href="https://github.com/CapedCrusader77">
