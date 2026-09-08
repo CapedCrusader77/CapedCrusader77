@@ -265,66 +265,19 @@ public class NewCardsSuite {
                 }
 
                 // Clean Concise Description
-                using (var fDesc = new Font("Segoe UI", 7.8f, FontStyle.Regular))
+                using (var fDesc = new Font("Segoe UI", 8.4f, FontStyle.Regular))
                 using (var bDesc = new SolidBrush(Color.FromArgb(203, 213, 225))) {
-                    g.DrawString(description, fDesc, bDesc, new RectangleF(12, 213, w - 24, 34));
+                    g.DrawString(description, fDesc, bDesc, new RectangleF(12, 218, w - 24, 60));
                 }
 
-                // 6. LIVE MICRO-TELEMETRY HUD BAR
-                int hudX = 12, hudY = 252, hudW = w - 24, hudH = 34;
-                using (var bHud = new SolidBrush(Color.FromArgb(225, 6, 10, 18)))
-                using (var pHud = new Pen(Color.FromArgb(80, accent), 1f)) {
-                    g.FillRectangle(bHud, hudX, hudY, hudW, hudH);
-                    g.DrawRectangle(pHud, hudX, hudY, hudW, hudH);
-                    DrawCornerBrackets(g, hudX, hudY, hudW, hudH, accent, 4f);
-                }
-
-                using (var fHudHead = new Font("Consolas", 6.8f, FontStyle.Bold))
-                using (var bHudHead = new SolidBrush(accent)) {
-                    g.DrawString(telemetryHeader, fHudHead, bHudHead, hudX + 7, hudY + 4);
-                }
-                using (var fHudVal = new Font("Consolas", 7.0f, FontStyle.Regular))
-                using (var bHudVal = new SolidBrush(Color.FromArgb(226, 232, 240))) {
-                    g.DrawString(getTelemetryValue(t), fHudVal, bHudVal, hudX + 7, hudY + 18);
-                }
-
-                // Mini animated indicator inside telemetry bar (2 full cycles per GIF loop for seamless transition)
-                float indX = hudX + hudW - 16;
-                float indY = hudY + hudH / 2f;
-                float ringR = 3f + 6f * ((t * 2f) % 1.0f);
-                int ringA = (int)(255 * (1f - ((t * 2f) % 1.0f)));
-
-                if (cardIndex == 1) {
-                    using (var pRing = new Pen(Color.FromArgb(ringA, accent), 1f))
-                    using (var bCore = new SolidBrush(accent)) {
-                        g.DrawEllipse(pRing, indX - ringR, indY - ringR, ringR * 2, ringR * 2);
-                        g.FillEllipse(bCore, indX - 2, indY - 2, 4, 4);
-                    }
-                } else if (cardIndex == 2) {
-                    PointF[] sPts = new PointF[] {
-                        new PointF(indX - 6, indY - 6), new PointF(indX + 6, indY - 6),
-                        new PointF(indX + 6, indY + 1), new PointF(indX, indY + 7), new PointF(indX - 6, indY + 1)
-                    };
-                    using (var pShield = new Pen(accent, 1.2f)) g.DrawPolygon(pShield, sPts);
-                    using (var pRing = new Pen(Color.FromArgb(ringA, accent), 1f)) {
-                        g.DrawEllipse(pRing, indX - ringR, indY - ringR, ringR * 2, ringR * 2);
-                    }
-                } else {
-                    using (var pRing = new Pen(Color.FromArgb(ringA, accent), 1f))
-                    using (var bCore = new SolidBrush(accent)) {
-                        g.DrawRectangle(pRing, indX - ringR, indY - ringR, ringR * 2, ringR * 2);
-                        g.FillRectangle(bCore, indX - 2, indY - 2, 4, 4);
-                    }
-                }
-
-                // 7. FOOTER PILLS & UPLINK
+                // 6. FOOTER PILLS & UPLINK
                 float px = 12f;
-                int py = 298;
-                using (var fTagPill = new Font("Consolas", 6.8f, FontStyle.Regular)) {
+                int py = 296;
+                using (var fTagPill = new Font("Consolas", 7.0f, FontStyle.Regular)) {
                     foreach (var tag in tags) {
                         var sz = g.MeasureString(tag, fTagPill);
                         int pw = (int)sz.Width + 8;
-                        int ph = 18;
+                        int ph = 20;
                         using (var bP = new SolidBrush(Color.FromArgb(180, 8, 14, 24)))
                         using (var pP = new Pen(Color.FromArgb(80, 100, 116, 139), 1f))
                         using (var bT = new SolidBrush(Color.FromArgb(224, 242, 254))) {
@@ -339,7 +292,7 @@ public class NewCardsSuite {
                 // Right arrow / link indicator
                 using (var fArrow = new Font("Consolas", 9f, FontStyle.Bold))
                 using (var bArrow = new SolidBrush(accent)) {
-                    g.DrawString("VIEW ->", fArrow, bArrow, w - 62, py + 2);
+                    g.DrawString("VIEW ->", fArrow, bArrow, w - 62, py + 3);
                 }
             }
             frames[f] = bmp;
