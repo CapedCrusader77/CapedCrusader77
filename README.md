@@ -5,7 +5,7 @@
 -->
 
 <p align="center">
-  <img src="assets/hero.gif?v=10" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
+  <img src="assets/hero.gif?v=13" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
 </p>
 
 <p align="center">
@@ -26,9 +26,9 @@
 <p align="center"><img src="assets/banner_work.gif?v=10" width="840" alt="featured architectures"></p>
 
 <p align="center">
-  <a href="https://github.com/CapedCrusader77/FaceTrack-AI"><img src="assets/card_slam.gif?v=10" width="274" alt="FaceTrack-AI - Real-time Computer Vision &amp; 6-DoF FaceMesh"></a>
-  <a href="https://github.com/CapedCrusader77/skillguard-oss"><img src="assets/card_vision.gif?v=10" width="274" alt="skillguard-oss - Open-Source Security Inspection Engine"></a>
-  <a href="https://github.com/CapedCrusader77/rootcause-iq"><img src="assets/card_mpc.gif?v=10" width="274" alt="rootcause-iq - Automated Diagnostic &amp; Causal Trace Engine"></a>
+  <a href="https://github.com/CapedCrusader77/FaceTrack-AI"><img src="assets/card_slam.gif?v=13" width="274" alt="FaceTrack-AI - Real-time Computer Vision &amp; 6-DoF FaceMesh"></a>
+  <a href="https://github.com/CapedCrusader77/skillguard-oss"><img src="assets/card_vision.gif?v=13" width="274" alt="SkillGuard-OSS - Zero-Trust AST Security Audit Engine"></a>
+  <a href="https://github.com/CapedCrusader77/rootcause-iq"><img src="assets/card_mpc.gif?v=13" width="274" alt="RootCause-IQ - Automated Diagnostic &amp; Causal Trace Engine"></a>
 </p>
 
 <p align="center"><img src="assets/divider.gif?v=10" width="840" alt="divider"></p>

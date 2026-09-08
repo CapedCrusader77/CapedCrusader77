@@ -1,6 +1,6 @@
 Add-Type -AssemblyName System.Drawing
 
-$files = @("card_slam.gif", "card_vision.gif", "card_mpc.gif", "telemetry.gif", "contrib.gif", "stack.gif")
+$files = @("hero.gif", "card_slam.gif", "card_vision.gif", "card_mpc.gif", "telemetry.gif", "contrib.gif", "stack.gif")
 foreach ($f in $files) {
     $src = "e:\Projects\Readme\assets\$f"
     $dst = "e:\Projects\Readme\assets\" + $f.Replace(".gif", "_frame.png")

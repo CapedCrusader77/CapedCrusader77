@@ -391,7 +391,7 @@
       if (t < 1.0) return { name: "PHASE 1: BOOT & CALIBRATION", sub: "Grid calibration and sensor nodes initializing" };
       if (t < 2.2) return { name: "PHASE 2: HORIZONTAL SCAN SWEEP", sub: "Photonic wave illuminating neural architecture" };
       if (t < 3.4) return { name: "PHASE 3: ROBOTIC VISION SYNTHESIS", sub: "Autonomous sensor pod forming with CV bounding boxes" };
-      if (t < 4.6) return { name: "PHASE 4: TYPOGRAPHY & IDENTITY DECODE", sub: "Decoupling engineering identity: GOKUL A" };
+      if (t < 4.6) return { name: "PHASE 4: NEURAL CORE SYNCHRONIZATION", sub: "Autonomous engineering identity locked: GOKUL A" };
       if (t < 5.8) return { name: "PHASE 5: NEURAL PROPAGATION", sub: "Sensor -> Perception -> Model -> Decision -> Action" };
       if (t < 7.0) return { name: "PHASE 6: LIDAR 360° SWEEP & TELEMETRY", sub: "Point cloud scanning with TensorRT real-time inference" };
       if (t < 7.8) return { name: "PHASE 7: SYSTEM ONLINE (PEAK STABILITY)", sub: "Active perception & autonomous robotics locked" };
@@ -770,102 +770,99 @@
       }
 
       // ----------------------------------------------------
-      // 7. LEFT HERO TYPOGRAPHY & IDENTITY (Phase 4+)
+      // 7. LEFT HERO TYPOGRAPHY & IDENTITY (100% Stagnant Throughout)
       // ----------------------------------------------------
-      const textAlpha = smoothstep(3.2, 4.4, t);
-      if (textAlpha > 0.01) {
-        ctx.save();
-        ctx.globalAlpha = textAlpha;
+      ctx.save();
+      ctx.globalAlpha = 1.0;
 
-        // Top subtle lab label
-        ctx.fillStyle = "#8b5cf6";
-        ctx.font = "700 10px 'Orbitron', monospace";
-        ctx.letterSpacing = "2px";
-        ctx.fillText("[ NEURAL CONTROL LAB // BUILD 077 ]", 52, 68);
+      // Top subtle lab label
+      ctx.fillStyle = "#8b5cf6";
+      ctx.font = "700 10px 'Orbitron', monospace";
+      ctx.letterSpacing = "2px";
+      ctx.fillText("[ NEURAL CONTROL LAB // BUILD 077 ]", 52, 68);
 
-        // Indicator dot next to label
-        ctx.fillStyle = "#00f0ff";
-        ctx.shadowColor = "#00f0ff";
-        ctx.shadowBlur = 6;
+      // Indicator dot next to label
+      ctx.fillStyle = "#00f0ff";
+      ctx.shadowColor = "#00f0ff";
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.arc(38, 65, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // PRIMARY BRAND NAME: GOKUL A
+      // Bold, futuristic, condensed, ultra readable
+      ctx.font = "900 56px 'Orbitron', 'Space Grotesk', sans-serif";
+      ctx.letterSpacing = "4px";
+
+      // Gradient & electric bloom for main typography
+      const textGrad = ctx.createLinearGradient(50, 100, 500, 160);
+      textGrad.addColorStop(0, "#ffffff");
+      textGrad.addColorStop(0.65, "#e2e8f0");
+      textGrad.addColorStop(1, "#c084fc");
+
+      ctx.shadowColor = "rgba(139, 92, 246, 0.65)";
+      ctx.shadowBlur = 22;
+      ctx.fillStyle = textGrad;
+      ctx.fillText("GOKUL A", 50, 134);
+
+      // Subtle crisp white overlay for ultra-readability
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText("GOKUL A", 50, 134);
+
+      // SECONDARY HEADLINE:
+      // AI ENGINEER // ROBOTICS // COMPUTER VISION
+      ctx.font = "700 13.5px 'JetBrains Mono', monospace";
+      ctx.letterSpacing = "2px";
+      ctx.fillStyle = "#00f0ff";
+      ctx.shadowColor = "rgba(0, 240, 255, 0.5)";
+      ctx.shadowBlur = 8;
+      ctx.fillText("AI ENGINEER // ROBOTICS // COMPUTER VISION", 52, 172);
+      ctx.shadowBlur = 0;
+
+      // PARADIGM PIPELINE LINE:
+      // PERCEPTION → DECISION → ACTION
+      drawPipelineSection(52, 204, t);
+
+      // TECHNICAL BADGES / TAGS ROW
+      // [ ROS2 // ACTIVE ] [ EDGE INFERENCE ] [ AUTONOMOUS SYSTEMS ] [ SENSOR ARRAY ]
+      const badges = [
+        { text: "ROS2 // ACTIVE", color: "#00f0ff" },
+        { text: "EDGE INFERENCE", color: "#8b5cf6" },
+        { text: "AUTONOMOUS SYSTEMS", color: "#38bdf8" },
+        { text: "SENSOR ARRAY", color: "#c084fc" }
+      ];
+
+      let badgeX = 52;
+      const badgeY = 270;
+      for (let b of badges) {
+        ctx.font = "600 10.5px 'JetBrains Mono', monospace";
+        const tw = ctx.measureText(b.text).width;
+        
+        // Badge background
+        ctx.fillStyle = "rgba(13, 17, 26, 0.75)";
+        ctx.strokeStyle = b.color;
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(38, 65, 3.5, 0, Math.PI * 2);
+        ctx.roundRect(badgeX, badgeY, tw + 18, 24, 4);
         ctx.fill();
-        ctx.shadowBlur = 0;
+        ctx.stroke();
 
-        // PRIMARY BRAND NAME: GOKUL A
-        // Bold, futuristic, condensed, ultra readable
-        ctx.font = "900 56px 'Orbitron', 'Space Grotesk', sans-serif";
-        ctx.letterSpacing = "4px";
+        // Small pip
+        ctx.fillStyle = b.color;
+        ctx.beginPath();
+        ctx.arc(badgeX + 8, badgeY + 12, 2.5, 0, Math.PI * 2);
+        ctx.fill();
 
-        // Gradient & electric bloom for main typography
-        const textGrad = ctx.createLinearGradient(50, 100, 500, 160);
-        textGrad.addColorStop(0, "#ffffff");
-        textGrad.addColorStop(0.65, "#e2e8f0");
-        textGrad.addColorStop(1, "#c084fc");
+        // Text
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillText(b.text, badgeX + 16, badgeY + 16);
 
-        ctx.shadowColor = "rgba(139, 92, 246, 0.65)";
-        ctx.shadowBlur = 22;
-        ctx.fillStyle = textGrad;
-        ctx.fillText("GOKUL A", 50, 134);
-
-        // Subtle crisp white overlay for ultra-readability
-        ctx.shadowBlur = 0;
-        ctx.fillStyle = "#ffffff";
-        ctx.fillText("GOKUL A", 50, 134);
-
-        // SECONDARY HEADLINE:
-        // AI ENGINEER // ROBOTICS // COMPUTER VISION
-        ctx.font = "700 13.5px 'JetBrains Mono', monospace";
-        ctx.letterSpacing = "2px";
-        ctx.fillStyle = "#00f0ff";
-        ctx.shadowColor = "rgba(0, 240, 255, 0.5)";
-        ctx.shadowBlur = 8;
-        ctx.fillText("AI ENGINEER // ROBOTICS // COMPUTER VISION", 52, 172);
-        ctx.shadowBlur = 0;
-
-        // PARADIGM PIPELINE LINE:
-        // PERCEPTION → DECISION → ACTION
-        drawPipelineSection(52, 204, t);
-
-        // TECHNICAL BADGES / TAGS ROW
-        // [ ROS2 // ACTIVE ] [ EDGE INFERENCE ] [ AUTONOMOUS SYSTEMS ] [ SENSOR ARRAY ]
-        const badges = [
-          { text: "ROS2 // ACTIVE", color: "#00f0ff" },
-          { text: "EDGE INFERENCE", color: "#8b5cf6" },
-          { text: "AUTONOMOUS SYSTEMS", color: "#38bdf8" },
-          { text: "SENSOR ARRAY", color: "#c084fc" }
-        ];
-
-        let badgeX = 52;
-        const badgeY = 270;
-        for (let b of badges) {
-          ctx.font = "600 10.5px 'JetBrains Mono', monospace";
-          const tw = ctx.measureText(b.text).width;
-          
-          // Badge background
-          ctx.fillStyle = "rgba(13, 17, 26, 0.75)";
-          ctx.strokeStyle = b.color;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.roundRect(badgeX, badgeY, tw + 18, 24, 4);
-          ctx.fill();
-          ctx.stroke();
-
-          // Small pip
-          ctx.fillStyle = b.color;
-          ctx.beginPath();
-          ctx.arc(badgeX + 8, badgeY + 12, 2.5, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Text
-          ctx.fillStyle = "#f8fafc";
-          ctx.fillText(b.text, badgeX + 16, badgeY + 16);
-
-          badgeX += tw + 28;
-        }
-
-        ctx.restore();
+        badgeX += tw + 28;
       }
+
+      ctx.restore();
 
       // ----------------------------------------------------
       // 8. TELEMETRY & SYSTEM ONLINE STATE (Phase 7 & Footer)
@@ -886,10 +883,9 @@
       // Telemetry readouts
       ctx.font = "10px 'JetBrains Mono', monospace";
       
-      // Dynamic status badge
-      const isOnline = t >= 6.8 && t <= 7.8;
-      ctx.fillStyle = isOnline ? "#00f0ff" : "rgba(148, 163, 184, 0.85)";
-      ctx.fillText(isOnline ? "● SYSTEM ONLINE" : "◐ RUNNING CALIBRATION", 52, H - 14);
+      // Dynamic status badge (Always online and visible)
+      ctx.fillStyle = "#00f0ff";
+      ctx.fillText("● SYSTEM ONLINE", 52, H - 14);
 
       ctx.fillStyle = "rgba(148, 163, 184, 0.75)";
       ctx.fillText("|  INFERENCE: 3.2ms (TensorRT)", 210, H - 14);
@@ -897,9 +893,9 @@
       ctx.fillText("|  FRAME: 120 FPS", 590, H - 14);
       ctx.fillText("|  PERCEPTION: ZERO_LATENCY", 730, H - 14);
 
-      // Phase 7 Hero Status Card (Top Right / Center overlay)
-      if (sysAlpha > 0.01) {
-        ctx.globalAlpha = sysAlpha * (t > 7.7 ? smoothstep(8.0, 7.7, t) : 1.0);
+      // Hero Status Card (Permanently visible & stagnant)
+      {
+        ctx.globalAlpha = 1.0;
         
         const cardX = 52;
         const cardY = 312;

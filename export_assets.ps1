@@ -359,9 +359,9 @@ public class KeyframeExporter {
                 }
             }
 
-            // Typography & Branding
-            float textAlpha = SmoothStep(3.2f, 4.2f, t);
-            if (textAlpha > 0.01f) {
+            // Typography & Branding (100% Stagnant Throughout)
+            float textAlpha = 1.0f;
+            if (true) {
                 int ta = (int)(255 * textAlpha);
 
                 using (var brushTag = new SolidBrush(Color.FromArgb(ta, 139, 92, 246))) {
