@@ -106,79 +106,97 @@ public class RealAssetGenerator {
     }
 
     // 1. Section Banner Generator
-    public static void RenderBanner(string outputPath, string title, string subtitle, string tag, Color accent, int totalFrames = 20) {
-        int w = 840, h = 46;
+    public static void RenderBanner(string outputPath, string title, string subtitle, string tag, Color accent, int totalFrames = 24) {
+        int w = 840, h = 42;
         var frames = new Bitmap[totalFrames];
 
         for (int f = 0; f < totalFrames; f++) {
             float progress = (float)f / totalFrames;
             var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb);
             using (var g = Graphics.FromImage(bmp)) {
-                SetHighQuality(g);
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-                using (var brush = new SolidBrush(Color.FromArgb(0, 0, 0))) {
-                    g.FillRectangle(brush, 0, 0, w, h);
+                using (var brushBg = new SolidBrush(Color.FromArgb(7, 9, 15))) {
+                    g.FillRectangle(brushBg, 0, 0, w, h);
                 }
-                using (var pen = new Pen(Color.FromArgb(24, 32, 45), 1f)) {
-                    g.DrawRectangle(pen, 0, 0, w - 1, h - 1);
-                }
-
-                int chamferW = 185;
-                var pts = new PointF[] {
-                    new PointF(0, 0),
-                    new PointF(chamferW, 0),
-                    new PointF(chamferW - 14, h),
-                    new PointF(0, h)
-                };
-                using (var brush = new SolidBrush(Color.FromArgb(10, 15, 24))) {
-                    g.FillPolygon(brush, pts);
-                }
-                using (var pen = new Pen(accent, 1.5f)) {
-                    g.DrawLine(pen, 0, 0, chamferW, 0);
-                    g.DrawLine(pen, chamferW, 0, chamferW - 14, h);
-                    g.DrawLine(pen, 0, h - 1, chamferW - 14, h - 1);
-                    g.DrawLine(pen, 0, 0, 0, h);
+                using (var penBorder = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
+                    g.DrawRectangle(penBorder, 0, 0, w - 1, h - 1);
                 }
 
-                using (var font = new Font("Segoe UI", 11.5f, FontStyle.Bold))
-                using (var brush = new SolidBrush(Color.FromArgb(245, 248, 252))) {
-                    g.DrawString(title, font, brush, 18, 12);
-                }
+                using (var fontTitle = new Font("Segoe UI", 11.0f, FontStyle.Bold))
+                using (var fontSub = new Font("Consolas", 8.8f, FontStyle.Regular))
+                using (var fontTag = new Font("Consolas", 8.5f, FontStyle.Bold)) {
 
-                using (var font = new Font("Consolas", 9.5f, FontStyle.Regular))
-                using (var brush = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                    g.DrawString(subtitle, font, brush, chamferW + 16, 14);
-                }
+                    var szTitle = g.MeasureString(title, fontTitle);
+                    int chamferW = (int)szTitle.Width + 28;
+                    int slant = 14;
 
-                // Laser traveling beam on top edge
-                float beamX = progress * (w + 100) - 50;
-                using (var brush = new LinearGradientBrush(
-                    new RectangleF(beamX - 60, 0, 120, 2),
-                    Color.Transparent, Color.Transparent, 0f)) {
-                    var cb = new ColorBlend(3);
-                    cb.Colors = new Color[] { Color.Transparent, accent, Color.Transparent };
-                    cb.Positions = new float[] { 0f, 0.5f, 1f };
-                    brush.InterpolationColors = cb;
-                    g.FillRectangle(brush, beamX - 60, 0, 120, 2);
-                }
+                    var pts = new PointF[] {
+                        new PointF(0, 0),
+                        new PointF(chamferW, 0),
+                        new PointF(chamferW - slant, h),
+                        new PointF(0, h)
+                    };
 
-                // Pulsing Online Status Pip
-                float pulse = 0.6f + 0.4f * (float)Math.Sin(progress * Math.PI * 2);
-                int r = (int)(accent.R * pulse);
-                int gr = (int)(accent.G * pulse);
-                int b = (int)(accent.B * pulse);
-                using (var dotBrush = new SolidBrush(Color.FromArgb(r, gr, b))) {
-                    g.FillEllipse(dotBrush, w - 160, 18, 9, 9);
-                }
-                using (var font = new Font("Consolas", 9.0f, FontStyle.Bold))
-                using (var brush = new SolidBrush(Color.FromArgb(203, 213, 225))) {
-                    g.DrawString(tag, font, brush, w - 144, 14);
+                    using (var brushBadge = new SolidBrush(Color.FromArgb(13, 18, 28))) {
+                        g.FillPolygon(brushBadge, pts);
+                    }
+
+                    using (var penAccent = new Pen(accent, 1.4f)) {
+                        g.DrawLine(penAccent, 0, 0, chamferW, 0);
+                        g.DrawLine(penAccent, chamferW, 0, chamferW - slant, h);
+                        g.DrawLine(penAccent, 0, h - 1, chamferW - slant, h - 1);
+                        g.DrawLine(penAccent, 0, 0, 0, h);
+                    }
+
+                    float titleY = (h - szTitle.Height) / 2.0f;
+                    using (var brushTitle = new SolidBrush(Color.FromArgb(248, 250, 252))) {
+                        g.DrawString(title, fontTitle, brushTitle, 16, titleY);
+                    }
+
+                    var szSub = g.MeasureString(subtitle, fontSub);
+                    float subX = chamferW + 16;
+                    float subY = (h - szSub.Height) / 2.0f + 0.5f;
+                    using (var brushSub = new SolidBrush(Color.FromArgb(148, 163, 184))) {
+                        g.DrawString(subtitle, fontSub, brushSub, subX, subY);
+                    }
+
+                    float beamX = progress * (w + 140) - 70;
+                    using (var beamBrush = new LinearGradientBrush(
+                        new RectangleF(beamX - 60, 0, 120, 2),
+                        Color.Transparent, Color.Transparent, 0f)) {
+                        var cb = new ColorBlend(3);
+                        cb.Colors = new Color[] { Color.Transparent, accent, Color.Transparent };
+                        cb.Positions = new float[] { 0f, 0.5f, 1f };
+                        beamBrush.InterpolationColors = cb;
+                        g.FillRectangle(beamBrush, beamX - 60, 0, 120, 2);
+                    }
+
+                    var szTag = g.MeasureString(tag, fontTag);
+                    float tagX = w - szTag.Width - 18;
+                    float tagY = (h - szTag.Height) / 2.0f;
+                    float dotX = tagX - 14;
+                    float dotY = h / 2.0f - 4;
+
+                    float pulse = 0.65f + 0.35f * (float)Math.Sin(progress * Math.PI * 2);
+                    int dotA = (int)(255 * pulse);
+                    using (var brushDotGlow = new SolidBrush(Color.FromArgb((int)(dotA * 0.4f), accent.R, accent.G, accent.B)))
+                    using (var brushDot = new SolidBrush(Color.FromArgb(dotA, accent.R, accent.G, accent.B))) {
+                        g.FillEllipse(brushDotGlow, dotX - 2, dotY - 2, 12, 12);
+                        g.FillEllipse(brushDot, dotX, dotY, 8, 8);
+                    }
+
+                    using (var brushTag = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                        g.DrawString(tag, fontTag, brushTag, tagX, tagY);
+                    }
                 }
             }
             frames[f] = bmp;
         }
 
-        GifMaker.SaveGif(outputPath, frames, 80);
+        GifMaker.SaveGif(outputPath, frames, 60);
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
     }
 

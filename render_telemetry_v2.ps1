@@ -91,60 +91,102 @@ public class AutonomousTelemetrySuite {
     }
 
     // 1. Render Banner: 02 // AUTONOMOUS SYSTEMS TELEMETRY
-    public static void RenderBanner(string outputPath, int totalFrames = 20) {
-        int w = 840, h = 36;
+    // 1. Render Banner: >> CORE DOMAINS
+    public static void RenderBanner(string outputPath, int totalFrames = 24) {
+        int w = 840, h = 42;
         var frames = new Bitmap[totalFrames];
+        string title = ">> CORE DOMAINS";
+        string subtitle = "// COMPUTER VISION, AI AGENTS & SYSTEMS SECURITY";
+        string tag = "[ACTIVE RESEARCH]";
+        Color accent = Color.FromArgb(0, 240, 255);
 
         for (int f = 0; f < totalFrames; f++) {
-            float t = (float)f / totalFrames;
+            float progress = (float)f / totalFrames;
             var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb);
             using (var g = Graphics.FromImage(bmp)) {
-                SetHighQuality(g);
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-                using (var bBg = new SolidBrush(Color.FromArgb(7, 9, 14))) {
-                    g.FillRectangle(bBg, 0, 0, w, h);
+                using (var brushBg = new SolidBrush(Color.FromArgb(7, 9, 15))) {
+                    g.FillRectangle(brushBg, 0, 0, w, h);
                 }
-                using (var pBorder = new Pen(Color.FromArgb(30, 41, 59), 1f)) {
-                    g.DrawRectangle(pBorder, 1, 1, w - 2, h - 2);
-                }
-
-                // Left accent indicator
-                using (var bBar = new SolidBrush(Color.FromArgb(0, 240, 255))) {
-                    g.FillRectangle(bBar, 4, 8, 3, 20);
+                using (var penBorder = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
+                    g.DrawRectangle(penBorder, 0, 0, w - 1, h - 1);
                 }
 
-                // Title
-                using (var fTitle = new Font("Segoe UI", 10.5f, FontStyle.Bold))
-                using (var bTitle = new SolidBrush(Color.White)) {
-                    g.DrawString("02 // CORE DOMAINS & SPECIALIZATIONS", fTitle, bTitle, 16, 7);
-                }
+                using (var fontTitle = new Font("Segoe UI", 11.0f, FontStyle.Bold))
+                using (var fontSub = new Font("Consolas", 8.8f, FontStyle.Regular))
+                using (var fontTag = new Font("Consolas", 8.5f, FontStyle.Bold)) {
 
-                // Subtitle
-                using (var fSub = new Font("Consolas", 7.8f, FontStyle.Regular))
-                using (var bSub = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    g.DrawString("// COMPUTER VISION, INTELLIGENT AGENTS & SYSTEMS SECURITY", fSub, bSub, 320, 10);
-                }
+                    var szTitle = g.MeasureString(title, fontTitle);
+                    int chamferW = (int)szTitle.Width + 28;
+                    int slant = 14;
 
-                // Status pill
-                float pulse = 0.65f + 0.35f * (float)Math.Sin(t * Math.PI * 2f);
-                int dotA = (int)(255 * pulse);
-                int pillW = 142, pillH = 20;
-                int pillX = w - pillW - 8, pillY = 8;
-                using (var bPill = new SolidBrush(Color.FromArgb(15, 23, 42)))
-                using (var pPill = new Pen(Color.FromArgb(51, 65, 85), 1f))
-                using (var bDot = new SolidBrush(Color.FromArgb(dotA, 52, 211, 153)))
-                using (var fStatus = new Font("Consolas", 7.2f, FontStyle.Bold))
-                using (var bStatusText = new SolidBrush(Color.FromArgb(203, 213, 225))) {
-                    g.FillRectangle(bPill, pillX, pillY, pillW, pillH);
-                    g.DrawRectangle(pPill, pillX, pillY, pillW, pillH);
-                    g.FillEllipse(bDot, pillX + 8, pillY + 6, 7, 7);
-                    g.DrawString("ACTIVE RESEARCH", fStatus, bStatusText, pillX + 22, pillY + 3);
+                    var pts = new PointF[] {
+                        new PointF(0, 0),
+                        new PointF(chamferW, 0),
+                        new PointF(chamferW - slant, h),
+                        new PointF(0, h)
+                    };
+
+                    using (var brushBadge = new SolidBrush(Color.FromArgb(13, 18, 28))) {
+                        g.FillPolygon(brushBadge, pts);
+                    }
+
+                    using (var penAccent = new Pen(accent, 1.4f)) {
+                        g.DrawLine(penAccent, 0, 0, chamferW, 0);
+                        g.DrawLine(penAccent, chamferW, 0, chamferW - slant, h);
+                        g.DrawLine(penAccent, 0, h - 1, chamferW - slant, h - 1);
+                        g.DrawLine(penAccent, 0, 0, 0, h);
+                    }
+
+                    float titleY = (h - szTitle.Height) / 2.0f;
+                    using (var brushTitle = new SolidBrush(Color.FromArgb(248, 250, 252))) {
+                        g.DrawString(title, fontTitle, brushTitle, 16, titleY);
+                    }
+
+                    var szSub = g.MeasureString(subtitle, fontSub);
+                    float subX = chamferW + 16;
+                    float subY = (h - szSub.Height) / 2.0f + 0.5f;
+                    using (var brushSub = new SolidBrush(Color.FromArgb(148, 163, 184))) {
+                        g.DrawString(subtitle, fontSub, brushSub, subX, subY);
+                    }
+
+                    float beamX = progress * (w + 140) - 70;
+                    using (var beamBrush = new LinearGradientBrush(
+                        new RectangleF(beamX - 60, 0, 120, 2),
+                        Color.Transparent, Color.Transparent, 0f)) {
+                        var cb = new ColorBlend(3);
+                        cb.Colors = new Color[] { Color.Transparent, accent, Color.Transparent };
+                        cb.Positions = new float[] { 0f, 0.5f, 1f };
+                        beamBrush.InterpolationColors = cb;
+                        g.FillRectangle(beamBrush, beamX - 60, 0, 120, 2);
+                    }
+
+                    var szTag = g.MeasureString(tag, fontTag);
+                    float tagX = w - szTag.Width - 18;
+                    float tagY = (h - szTag.Height) / 2.0f;
+                    float dotX = tagX - 14;
+                    float dotY = h / 2.0f - 4;
+
+                    float pulse = 0.65f + 0.35f * (float)Math.Sin(progress * Math.PI * 2);
+                    int dotA = (int)(255 * pulse);
+                    using (var brushDotGlow = new SolidBrush(Color.FromArgb((int)(dotA * 0.4f), accent.R, accent.G, accent.B)))
+                    using (var brushDot = new SolidBrush(Color.FromArgb(dotA, accent.R, accent.G, accent.B))) {
+                        g.FillEllipse(brushDotGlow, dotX - 2, dotY - 2, 12, 12);
+                        g.FillEllipse(brushDot, dotX, dotY, 8, 8);
+                    }
+
+                    using (var brushTag = new SolidBrush(Color.FromArgb(203, 213, 225))) {
+                        g.DrawString(tag, fontTag, brushTag, tagX, tagY);
+                    }
                 }
             }
             frames[f] = bmp;
         }
 
-        SaveGif(outputPath, frames, 50);
+        SaveGif(outputPath, frames, 60);
         string pngPath = outputPath.Replace(".gif", ".png");
         frames[0].Save(pngPath, ImageFormat.Png);
 
