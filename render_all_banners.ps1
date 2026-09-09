@@ -78,6 +78,214 @@ public class FastGifEncoder {
 }
 
 public class UnifiedBannerRenderer {
+    public static void RenderLuxuryBanner(Graphics g, int w, int h, string title, string subtitle, string tag, Color accent, float progress) {
+        g.SmoothingMode = SmoothingMode.HighQuality;
+        g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+        // 1. Deep atmospheric gradient background
+        using (var bgBrush = new LinearGradientBrush(
+            new RectangleF(0, 0, w, h),
+            Color.FromArgb(10, 14, 22), Color.FromArgb(6, 8, 14), 0f)) {
+            g.FillRectangle(bgBrush, 0, 0, w, h);
+        }
+
+        // Faint ambient glow behind the left badge
+        using (var glowPather = new GraphicsPath()) {
+            glowPather.AddEllipse(-30, -15, 260, h + 30);
+            using (var pgb = new PathGradientBrush(glowPather)) {
+                pgb.CenterColor = Color.FromArgb(30, accent.R, accent.G, accent.B);
+                pgb.SurroundColors = new Color[] { Color.Transparent };
+                g.FillPath(pgb, glowPather);
+            }
+        }
+
+        // Outer sleek container border
+        using (var penBorder = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
+            g.DrawRectangle(penBorder, 0, 0, w - 1, h - 1);
+        }
+
+        // Corner framing micro-accents on the right
+        using (var penFrame = new Pen(Color.FromArgb(90, accent.R, accent.G, accent.B), 1.2f)) {
+            g.DrawLine(penFrame, w - 1, 0, w - 1, 6);
+            g.DrawLine(penFrame, w - 7, 0, w - 1, 0);
+            g.DrawLine(penFrame, w - 1, h - 7, w - 1, h - 1);
+            g.DrawLine(penFrame, w - 7, h - 1, w - 1, h - 1);
+        }
+
+        using (var fontTitle = new Font("Segoe UI", 11.0f, FontStyle.Bold))
+        using (var fontSub = new Font("Consolas", 8.8f, FontStyle.Regular))
+        using (var fontTag = new Font("Consolas", 8.2f, FontStyle.Bold)) {
+
+            // Measure title for dynamic chamfer badge width
+            var szTitle = g.MeasureString(title, fontTitle);
+            int chamferW = (int)szTitle.Width + 34;
+            int slant = 14;
+
+            // Angled chamfer polygon
+            var pts = new PointF[] {
+                new PointF(0, 0),
+                new PointF(chamferW, 0),
+                new PointF(chamferW - slant, h),
+                new PointF(0, h)
+            };
+
+            // Badge fill with dark gradient
+            using (var badgeBrush = new LinearGradientBrush(
+                new RectangleF(0, 0, chamferW, h),
+                Color.FromArgb(20, 26, 40), Color.FromArgb(12, 16, 26), 0f)) {
+                g.FillPolygon(badgeBrush, pts);
+            }
+
+            // Cyber diagonal hash texture inside the badge
+            using (var penHash = new Pen(Color.FromArgb(16, accent.R, accent.G, accent.B), 1f)) {
+                for (int hx = -h; hx < chamferW; hx += 10) {
+                    float x1 = Math.Max(0, hx);
+                    float y1 = hx < 0 ? -hx : 0;
+                    float x2 = hx + h;
+                    float y2 = h;
+                    if (x2 < chamferW - slant) {
+                        g.DrawLine(penHash, x1, y1, x2, y2);
+                    }
+                }
+            }
+
+            // Left anchor block (3px solid accent)
+            using (var brushAnchor = new SolidBrush(accent)) {
+                g.FillRectangle(brushAnchor, 0, 0, 3, h);
+            }
+
+            // Badge outline
+            using (var penAccent = new Pen(accent, 1.4f)) {
+                g.DrawLine(penAccent, 0, 0, chamferW, 0);
+                g.DrawLine(penAccent, 0, h - 1, chamferW - slant, h - 1);
+            }
+
+            // Neon glow bloom along the slant edge
+            using (var penSlantGlow = new Pen(Color.FromArgb(80, accent.R, accent.G, accent.B), 3.5f)) {
+                g.DrawLine(penSlantGlow, chamferW, 0, chamferW - slant, h);
+            }
+            using (var penSlant = new Pen(Color.FromArgb(255, accent.R, accent.G, accent.B), 1.6f)) {
+                g.DrawLine(penSlant, chamferW, 0, chamferW - slant, h);
+            }
+
+            // Secondary parallel micro-accent tick along the slant
+            using (var penSlantTick = new Pen(Color.FromArgb(140, accent.R, accent.G, accent.B), 1f)) {
+                g.DrawLine(penSlantTick, chamferW + 4, 0, chamferW + 4 - (slant * 0.45f), h * 0.45f);
+            }
+
+            // Title Text: Separate ">>" in accent color with glowing aura, followed by title in bright white
+            float titleY = (h - szTitle.Height) / 2.0f;
+            string prefix = ">> ";
+            string mainTitle = title.StartsWith(prefix) ? title.Substring(prefix.Length) : title;
+            var szPrefix = g.MeasureString(prefix, fontTitle);
+
+            float startX = 16f;
+            // Draw prefix with accent glow
+            using (var brushPrefixGlow = new SolidBrush(Color.FromArgb(140, accent.R, accent.G, accent.B)))
+            using (var brushPrefix = new SolidBrush(accent)) {
+                g.DrawString(prefix, fontTitle, brushPrefixGlow, startX - 0.5f, titleY);
+                g.DrawString(prefix, fontTitle, brushPrefix, startX, titleY);
+            }
+
+            // Draw main title text in crisp white with subtle aura
+            float textX = startX + szPrefix.Width - 4;
+            using (var brushTitleGlow = new SolidBrush(Color.FromArgb(60, accent.R, accent.G, accent.B)))
+            using (var brushTitle = new SolidBrush(Color.FromArgb(250, 252, 255))) {
+                g.DrawString(mainTitle, fontTitle, brushTitleGlow, textX + 0.5f, titleY + 0.5f);
+                g.DrawString(mainTitle, fontTitle, brushTitle, textX, titleY);
+            }
+
+            // Subtitle Text: cleanly separated with colored "//"
+            var szSub = g.MeasureString(subtitle, fontSub);
+            float subX = chamferW + 18;
+            float subY = (h - szSub.Height) / 2.0f + 0.5f;
+
+            string cleanSub = subtitle;
+            if (cleanSub.StartsWith("// ")) {
+                cleanSub = cleanSub.Substring(3);
+            } else if (cleanSub.StartsWith("//")) {
+                cleanSub = cleanSub.Substring(2).TrimStart();
+            }
+
+            using (var brushSlashGlow = new SolidBrush(Color.FromArgb(120, accent.R, accent.G, accent.B)))
+            using (var brushSlash = new SolidBrush(accent))
+            using (var brushSub = new SolidBrush(Color.FromArgb(170, 185, 205))) {
+                g.DrawString("//", fontSub, brushSlashGlow, subX - 0.5f, subY);
+                g.DrawString("//", fontSub, brushSlash, subX, subY);
+                float slashW = g.MeasureString("//", fontSub).Width;
+                g.DrawString(cleanSub, fontSub, brushSub, subX + slashW, subY);
+            }
+
+            // Top Traveling Laser Light Beam with radiant flare
+            float beamX = progress * (w + 160) - 80;
+            using (var beamBrush = new LinearGradientBrush(
+                new RectangleF(beamX - 75, 0, 150, 2),
+                Color.Transparent, Color.Transparent, 0f)) {
+                var cb = new ColorBlend(3);
+                cb.Colors = new Color[] { Color.Transparent, accent, Color.Transparent };
+                cb.Positions = new float[] { 0f, 0.5f, 1f };
+                beamBrush.InterpolationColors = cb;
+                g.FillRectangle(beamBrush, beamX - 75, 0, 150, 2);
+            }
+            // Radiant white spark flare at the beam center
+            using (var brushSpark = new SolidBrush(Color.FromArgb(240, 255, 255, 255))) {
+                g.FillRectangle(brushSpark, beamX - 4, 0, 8, 2);
+            }
+
+            // Right Status Capsule Pill Badge
+            var szTag = g.MeasureString(tag, fontTag);
+            float pillW = szTag.Width + 28;
+            float pillH = 22;
+            float pillX = w - pillW - 16;
+            float pillY = (h - pillH) / 2.0f;
+
+            // Cut-corner chamfered cyber capsule path
+            float cCut = 4f;
+            var capsulePath = new GraphicsPath();
+            capsulePath.AddLine(pillX + cCut, pillY, pillX + pillW - cCut, pillY);
+            capsulePath.AddLine(pillX + pillW, pillY + cCut, pillX + pillW, pillY + pillH - cCut);
+            capsulePath.AddLine(pillX + pillW - cCut, pillY + pillH, pillX + cCut, pillY + pillH);
+            capsulePath.AddLine(pillX, pillY + pillH - cCut, pillX, pillY + cCut);
+            capsulePath.CloseFigure();
+
+            // Capsule background & subtle accent border
+            using (var brushPill = new SolidBrush(Color.FromArgb(16, 22, 34)))
+            using (var penPill = new Pen(Color.FromArgb(80, accent.R, accent.G, accent.B), 1.1f)) {
+                g.FillPath(brushPill, capsulePath);
+                g.DrawPath(penPill, capsulePath);
+            }
+
+            // Pulsing status dot with animated radar ping ring
+            float pulse = (float)(0.65f + 0.35f * Math.Sin(progress * Math.PI * 2));
+            int dotA = (int)(255 * pulse);
+            float dotCenterX = pillX + 11.5f;
+            float dotCenterY = pillY + (pillH / 2.0f);
+
+            // Expanding radar ripple ring
+            float ripplePhase = (progress * 2) % 1.0f;
+            float rippleR = 4f + ripplePhase * 6.5f;
+            int rippleA = (int)(110 * (1f - ripplePhase));
+            if (rippleA > 0) {
+                using (var penRipple = new Pen(Color.FromArgb(rippleA, accent.R, accent.G, accent.B), 1f)) {
+                    g.DrawEllipse(penRipple, dotCenterX - rippleR, dotCenterY - rippleR, rippleR * 2, rippleR * 2);
+                }
+            }
+
+            // Core dot & halo
+            using (var brushDotGlow = new SolidBrush(Color.FromArgb((int)(dotA * 0.45f), accent.R, accent.G, accent.B)))
+            using (var brushDot = new SolidBrush(Color.FromArgb(dotA, accent.R, accent.G, accent.B))) {
+                g.FillEllipse(brushDotGlow, dotCenterX - 5.5f, dotCenterY - 5.5f, 11, 11);
+                g.FillEllipse(brushDot, dotCenterX - 3.5f, dotCenterY - 3.5f, 7, 7);
+            }
+
+            // Status tag text
+            using (var brushTag = new SolidBrush(Color.FromArgb(235, 242, 250))) {
+                g.DrawString(tag, fontTag, brushTag, pillX + 21, pillY + (pillH - szTag.Height) / 2.0f + 0.5f);
+            }
+        }
+    }
+
     public static void RenderBanner(string outputPath, string title, string subtitle, string tag, Color accent, int totalFrames = 24, int delayMs = 60) {
         int w = 840, h = 42;
         var frames = new Bitmap[totalFrames];
@@ -86,94 +294,7 @@ public class UnifiedBannerRenderer {
             float progress = (float)f / totalFrames;
             var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb);
             using (var g = Graphics.FromImage(bmp)) {
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-                // 1. Solid deep background
-                using (var brushBg = new SolidBrush(Color.FromArgb(7, 9, 15))) {
-                    g.FillRectangle(brushBg, 0, 0, w, h);
-                }
-                // Subtle dark outer border
-                using (var penBorder = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
-                    g.DrawRectangle(penBorder, 0, 0, w - 1, h - 1);
-                }
-
-                using (var fontTitle = new Font("Segoe UI", 11.0f, FontStyle.Bold))
-                using (var fontSub = new Font("Consolas", 8.8f, FontStyle.Regular))
-                using (var fontTag = new Font("Consolas", 8.5f, FontStyle.Bold)) {
-
-                    // Measure title for dynamic, perfect chamfer badge width
-                    var szTitle = g.MeasureString(title, fontTitle);
-                    int chamferW = (int)szTitle.Width + 28;
-                    int slant = 14;
-
-                    // Angled chamfer polygon
-                    var pts = new PointF[] {
-                        new PointF(0, 0),
-                        new PointF(chamferW, 0),
-                        new PointF(chamferW - slant, h),
-                        new PointF(0, h)
-                    };
-
-                    // Badge fill
-                    using (var brushBadge = new SolidBrush(Color.FromArgb(13, 18, 28))) {
-                        g.FillPolygon(brushBadge, pts);
-                    }
-
-                    // Badge outline
-                    using (var penAccent = new Pen(accent, 1.4f)) {
-                        g.DrawLine(penAccent, 0, 0, chamferW, 0);
-                        g.DrawLine(penAccent, chamferW, 0, chamferW - slant, h);
-                        g.DrawLine(penAccent, 0, h - 1, chamferW - slant, h - 1);
-                        g.DrawLine(penAccent, 0, 0, 0, h);
-                    }
-
-                    // Title Text inside badge
-                    float titleY = (h - szTitle.Height) / 2.0f;
-                    using (var brushTitle = new SolidBrush(Color.FromArgb(248, 250, 252))) {
-                        g.DrawString(title, fontTitle, brushTitle, 16, titleY);
-                    }
-
-                    // Subtitle Text - cleanly spaced after the angled chamfer
-                    var szSub = g.MeasureString(subtitle, fontSub);
-                    float subX = chamferW + 16;
-                    float subY = (h - szSub.Height) / 2.0f + 0.5f;
-                    using (var brushSub = new SolidBrush(Color.FromArgb(148, 163, 184))) {
-                        g.DrawString(subtitle, fontSub, brushSub, subX, subY);
-                    }
-
-                    // Top Traveling Laser Light Beam
-                    float beamX = progress * (w + 140) - 70;
-                    using (var beamBrush = new LinearGradientBrush(
-                        new RectangleF(beamX - 60, 0, 120, 2),
-                        Color.Transparent, Color.Transparent, 0f)) {
-                        var cb = new ColorBlend(3);
-                        cb.Colors = new Color[] { Color.Transparent, accent, Color.Transparent };
-                        cb.Positions = new float[] { 0f, 0.5f, 1f };
-                        beamBrush.InterpolationColors = cb;
-                        g.FillRectangle(beamBrush, beamX - 60, 0, 120, 2);
-                    }
-
-                    // Right Status Tag & Pulsing Indicator Pip
-                    var szTag = g.MeasureString(tag, fontTag);
-                    float tagX = w - szTag.Width - 18;
-                    float tagY = (h - szTag.Height) / 2.0f;
-                    float dotX = tagX - 14;
-                    float dotY = h / 2.0f - 4;
-
-                    float pulse = 0.65f + 0.35f * (float)Math.Sin(progress * Math.PI * 2);
-                    int dotA = (int)(255 * pulse);
-                    using (var brushDotGlow = new SolidBrush(Color.FromArgb((int)(dotA * 0.4f), accent.R, accent.G, accent.B)))
-                    using (var brushDot = new SolidBrush(Color.FromArgb(dotA, accent.R, accent.G, accent.B))) {
-                        g.FillEllipse(brushDotGlow, dotX - 2, dotY - 2, 12, 12);
-                        g.FillEllipse(brushDot, dotX, dotY, 8, 8);
-                    }
-
-                    using (var brushTag = new SolidBrush(Color.FromArgb(203, 213, 225))) {
-                        g.DrawString(tag, fontTag, brushTag, tagX, tagY);
-                    }
-                }
+                RenderLuxuryBanner(g, w, h, title, subtitle, tag, accent, progress);
             }
             frames[f] = bmp;
         }
@@ -189,31 +310,39 @@ Add-Type -TypeDefinition $source -ReferencedAssemblies "System.Drawing"
 
 $assetsDir = "e:\Projects\Readme\assets"
 
-Write-Host "Rendering all 4 section banners with unified, proper, consistent design..."
+Write-Host "Rendering all 4 section banners with state-of-the-art cyber luxury design..."
 
-# 1. banner_work.gif (SELECTED BUILDS)
+# 1. banner_work_v3.gif (SELECTED BUILDS)
 $workGif = "$assetsDir\banner_work.gif"
 $workV2Gif = "$assetsDir\banner_work_v2.gif"
-[UnifiedBannerRenderer]::RenderBanner($workGif, ">> SELECTED BUILDS", "// 3 AUTONOMOUS PRODUCTION SYSTEMS", "[ACTIVE BUILDS]", [System.Drawing.Color]::FromArgb(0, 240, 255))
-Copy-Item $workGif $workV2Gif -Force
+$workV3Gif = "$assetsDir\banner_work_v3.gif"
+[UnifiedBannerRenderer]::RenderBanner($workV3Gif, ">> SELECTED BUILDS", "// 3 AUTONOMOUS PRODUCTION SYSTEMS", "ACTIVE BUILDS", [System.Drawing.Color]::FromArgb(0, 240, 255))
+Copy-Item $workV3Gif $workGif -Force
+Copy-Item $workV3Gif $workV2Gif -Force
 
-# 2. banner_telemetry.gif (CORE DOMAINS)
+# 2. banner_telemetry_v3.gif (CORE DOMAINS)
 $telemGif = "$assetsDir\banner_telemetry.gif"
 $telemV2Gif = "$assetsDir\banner_telemetry_v2.gif"
-[UnifiedBannerRenderer]::RenderBanner($telemGif, ">> CORE DOMAINS", "// COMPUTER VISION, AI AGENTS & SYSTEMS SECURITY", "[ACTIVE RESEARCH]", [System.Drawing.Color]::FromArgb(0, 240, 255))
-Copy-Item $telemGif $telemV2Gif -Force
+$telemV3Gif = "$assetsDir\banner_telemetry_v3.gif"
+[UnifiedBannerRenderer]::RenderBanner($telemV3Gif, ">> CORE DOMAINS", "// COMPUTER VISION, AI AGENTS & SYSTEMS SECURITY", "ACTIVE RESEARCH", [System.Drawing.Color]::FromArgb(0, 240, 255))
+Copy-Item $telemV3Gif $telemGif -Force
+Copy-Item $telemV3Gif $telemV2Gif -Force
 
-# 3. banner_stack.gif (TECHNICAL ARSENAL)
+# 3. banner_stack_v3.gif (TECHNICAL ARSENAL)
 $stackGif = "$assetsDir\banner_stack.gif"
 $stackV2Gif = "$assetsDir\banner_stack_v2.gif"
-[UnifiedBannerRenderer]::RenderBanner($stackGif, ">> TECHNICAL ARSENAL", "// VERIFIED TOOLING & ARCHITECTURAL STACK", "[VERIFIED]", [System.Drawing.Color]::FromArgb(168, 85, 247))
-Copy-Item $stackGif $stackV2Gif -Force
+$stackV3Gif = "$assetsDir\banner_stack_v3.gif"
+[UnifiedBannerRenderer]::RenderBanner($stackV3Gif, ">> TECHNICAL ARSENAL", "// VERIFIED TOOLING & ARCHITECTURAL STACK", "VERIFIED", [System.Drawing.Color]::FromArgb(168, 85, 247))
+Copy-Item $stackV3Gif $stackGif -Force
+Copy-Item $stackV3Gif $stackV2Gif -Force
 
-# 4. banner_contact.gif (CONTROL UPLINK)
+# 4. banner_contact_v3.gif (CONTROL UPLINK)
 $contactGif = "$assetsDir\banner_contact.gif"
 $contactV2Gif = "$assetsDir\banner_contact_v2.gif"
-[UnifiedBannerRenderer]::RenderBanner($contactGif, ">> CONTROL UPLINK", "// SECURE COMMS & TRANSMISSION CHANNELS", "[ACTIVE]", [System.Drawing.Color]::FromArgb(0, 240, 255))
-Copy-Item $contactGif $contactV2Gif -Force
+$contactV3Gif = "$assetsDir\banner_contact_v3.gif"
+[UnifiedBannerRenderer]::RenderBanner($contactV3Gif, ">> CONTROL UPLINK", "// SECURE COMMS & TRANSMISSION CHANNELS", "ONLINE", [System.Drawing.Color]::FromArgb(0, 240, 255))
+Copy-Item $contactV3Gif $contactGif -Force
+Copy-Item $contactV3Gif $contactV2Gif -Force
 
-Write-Host "All 4 banners generated successfully!"
-Get-ChildItem "$assetsDir\banner_*.gif" | Select-Object Name, Length
+Write-Host "All 4 luxury section banners rendered successfully!"
+Get-ChildItem "$assetsDir\banner_*_v3.gif" | Select-Object Name, Length

@@ -16,7 +16,7 @@
 
 <!-- 01 // SELECTED BUILDS -->
 <p align="center">
-  <img src="assets/banner_work_v2.gif?v=20" width="840" alt="featured architectures">
+  <img src="assets/banner_work_v3.gif?v=21" width="840" alt="featured architectures">
 </p>
 
 <p align="center">
@@ -27,7 +27,7 @@
 
 <!-- 02 // CORE DOMAINS & SPECIALIZATIONS -->
 <p align="center">
-  <img src="assets/banner_telemetry_v2.gif?v=30" width="840" alt="core domains and specializations">
+  <img src="assets/banner_telemetry_v3.gif?v=31" width="840" alt="core domains and specializations">
 </p>
 
 <p align="center">
@@ -45,7 +45,7 @@
 
 <!-- 04 // TECHNICAL ARSENAL -->
 <p align="center">
-  <img src="assets/banner_stack_v2.gif?v=20" width="840" alt="technical arsenal">
+  <img src="assets/banner_stack_v3.gif?v=21" width="840" alt="technical arsenal">
 </p>
 
 <p align="center">
@@ -56,7 +56,7 @@
 
 <!-- 05 // CONTROL UPLINK -->
 <p align="center">
-  <img src="assets/banner_contact_v2.gif?v=20" width="840" alt="control uplink">
+  <img src="assets/banner_contact_v3.gif?v=21" width="840" alt="control uplink">
 </p>
 
 <p align="center">
