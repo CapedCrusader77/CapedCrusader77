@@ -5,7 +5,7 @@
 -->
 
 <p align="center">
-  <img src="assets/hero_clean.gif?v=33" width="840" alt="Gokul A - AI &amp; Systems Engineering">
+  <img src="assets/hero_aurora.gif?v=35" width="840" alt="Gokul A">
 </p>
 
 <p align="center">

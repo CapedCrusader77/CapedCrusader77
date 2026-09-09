@@ -101,54 +101,86 @@ public class NeuralLabRendererV2 {
         g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-        float sx = (float)W / 960.0f;
-        float sy = (float)H / 400.0f;
+        float sx = (float)W / 840.0f;
+        float sy = (float)H / 350.0f;
         float theta = (float)(u * Math.PI * 2.0);
 
-        // 1. SOLID DEEP CYBER BACKGROUND
-        using (var brushBg = new SolidBrush(Color.FromArgb(6, 8, 14))) {
+        // 1. DEEP RICH OBSIDIAN BACKGROUND (No grid!)
+        using (var brushBg = new SolidBrush(Color.FromArgb(7, 9, 15))) {
             g.FillRectangle(brushBg, 0, 0, W, H);
         }
 
-        // 2. DELICATE CYBER GRID
-        using (var penGrid = new Pen(Color.FromArgb(12, 0, 240, 255), 1)) {
-            int stepX = (int)(32 * sx);
-            int stepY = (int)(32 * sy);
-            for (int x = 0; x <= W; x += stepX) g.DrawLine(penGrid, x, 0, x, H);
-            for (int y = 0; y <= H; y += stepY) g.DrawLine(penGrid, 0, y, W, y);
-        }
-
-        // Subtle decorative border marks
-        using (var brushTick = new SolidBrush(Color.FromArgb(35, 0, 240, 255))) {
-            for (int x = (int)(64 * sx); x < W - (int)(64 * sx); x += (int)(64 * sx)) {
-                g.FillRectangle(brushTick, x, 0, 1, 3);
+        // 2. LUXURY ATMOSPHERIC AURORA NEBULA GLOWS (Replaces harsh grids with smooth, modern lighting)
+        // Cyan bloom behind typography
+        using (var pather = new GraphicsPath()) {
+            pather.AddEllipse(-80 * sx, 30 * sy, 460 * sx, 320 * sy);
+            using (var pgb = new PathGradientBrush(pather)) {
+                pgb.CenterColor = Color.FromArgb(32, 0, 210, 255);
+                pgb.SurroundColors = new Color[] { Color.FromArgb(0, 7, 9, 15) };
+                g.FillPath(pgb, pather);
             }
         }
 
-        // Ambient cyber sparks
+        // Deep royal violet/indigo bloom in center
+        using (var pather2 = new GraphicsPath()) {
+            pather2.AddEllipse(260 * sx, 80 * sy, 440 * sx, 280 * sy);
+            using (var pgb2 = new PathGradientBrush(pather2)) {
+                pgb2.CenterColor = Color.FromArgb(26, 139, 92, 246);
+                pgb2.SurroundColors = new Color[] { Color.FromArgb(0, 7, 9, 15) };
+                g.FillPath(pgb2, pather2);
+            }
+        }
+
+        // Deep electric blue glow under workspace
+        using (var pather3 = new GraphicsPath()) {
+            pather3.AddEllipse(520 * sx, 160 * sy, 340 * sx, 220 * sy);
+            using (var pgb3 = new PathGradientBrush(pather3)) {
+                pgb3.CenterColor = Color.FromArgb(20, 14, 165, 233);
+                pgb3.SurroundColors = new Color[] { Color.FromArgb(0, 7, 9, 15) };
+                g.FillPath(pgb3, pather3);
+            }
+        }
+
+        // 3. ELEGANT AMBIENT FLOATING STARDUST (Harmonic seamless loop)
         var rand = new Random(77);
-        for (int i = 0; i < 16; i++) {
-            float px0 = 480.0f + (float)(rand.NextDouble() * 460.0);
-            float py0 = (float)(rand.NextDouble() * 320.0);
-            float freq = (i % 2 == 0) ? 1.0f : 2.0f;
-            float px = (px0 + (float)Math.Sin(theta * freq + i * 1.4f) * 10.0f) * sx;
-            float py = (py0 + (float)Math.Cos(theta * freq + i * 0.9f) * 8.0f) * sy;
-            float pAlpha = (float)(0.25f + 0.25f * Math.Sin(theta * 2.0f + i));
-            int alphaVal = (int)(255 * Math.Max(0.1f, Math.Min(0.6f, pAlpha)));
-            Color pColor = (i % 2 == 0) ? Color.FromArgb(alphaVal, 0, 240, 255) : Color.FromArgb(alphaVal, 139, 92, 246);
+        for (int i = 0; i < 36; i++) {
+            float seedX = (float)(rand.NextDouble() * 840.0);
+            float seedY = (float)(rand.NextDouble() * 350.0);
+            float speed = 0.6f + (float)(rand.NextDouble() * 1.4);
+            float pRadius = 0.8f + (float)(rand.NextDouble() * 1.8);
+
+            // Harmonic drift
+            float px = (seedX + (float)Math.Sin(theta * speed + i * 1.2f) * 14.0f) * sx;
+            float py = (seedY + (float)Math.Cos(theta * speed + i * 0.8f) * 10.0f) * sy;
+
+            // Breathing pulse
+            float pulse = (float)(0.30f + 0.40f * Math.Sin(theta * 2.0f + i * 1.7f));
+            int pAlpha = (int)(255 * Math.Max(0.10f, Math.Min(0.80f, pulse)));
+
+            Color pColor = (i % 3 == 0) 
+                ? Color.FromArgb(pAlpha, 0, 240, 255) 
+                : (i % 3 == 1) 
+                    ? Color.FromArgb(pAlpha, 168, 85, 247) 
+                    : Color.FromArgb((int)(pAlpha * 0.85), 224, 242, 254);
+
+            // Soft halo for larger particles
+            if (pRadius > 1.8f) {
+                using (var halo = new SolidBrush(Color.FromArgb((int)(pAlpha * 0.25f), pColor.R, pColor.G, pColor.B))) {
+                    g.FillEllipse(halo, px - pRadius * sx, py - pRadius * sy, pRadius * 4 * sx, pRadius * 4 * sy);
+                }
+            }
+
             using (var brushP = new SolidBrush(pColor)) {
-                g.FillEllipse(brushP, px, py, 2.0f * sx, 2.0f * sy);
+                g.FillEllipse(brushP, px, py, pRadius * 2 * sx, pRadius * 2 * sy);
             }
         }
 
-        // =========================================================================
-        // 3. RIGHT SIDE: CYBER AI OPERATIVE WITH HOLOGRAPHIC HUD
-        // =========================================================================
+        // 4. RIGHT SIDE: LO-FI DEVELOPER WORKSPACE (Seamless edge blending)
         if (operativeImg != null) {
-            float vpX = 460f * sx;
-            float vpY = 16f * sy;
-            float vpW = 475f * sx;
-            float vpH = 300f * sy;
+            float vpX = 405f * sx;
+            float vpY = 20f * sy;
+            float vpW = 415f * sx;
+            float vpH = 308f * sy;
 
             int srcW = operativeImg.Width;
             int srcH = operativeImg.Height;
@@ -162,46 +194,33 @@ public class NeuralLabRendererV2 {
 
             g.DrawImage(operativeImg, dstRect, srcRect, GraphicsUnit.Pixel);
 
-            // Soft seamless gradients
-            using (var lFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY, 70 * sx, vpH), Color.FromArgb(6, 8, 14), Color.Transparent, 0f)) {
-                g.FillRectangle(lFade, vpX - 1, vpY, 70 * sx, vpH);
+            // Soft seamless gradients blending image completely into background
+            using (var lFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY - 1, 95 * sx, vpH + 2), Color.FromArgb(7, 9, 15), Color.Transparent, 0f)) {
+                g.FillRectangle(lFade, vpX - 1, vpY - 1, 95 * sx, vpH + 2);
             }
-            using (var rFade = new LinearGradientBrush(new RectangleF(vpX + vpW - 35 * sx, vpY, 36 * sx, vpH), Color.Transparent, Color.FromArgb(6, 8, 14), 0f)) {
-                g.FillRectangle(rFade, vpX + vpW - 35 * sx, vpY, 36 * sx, vpH);
+            using (var rFade = new LinearGradientBrush(new RectangleF(vpX + vpW - 65 * sx, vpY - 1, 66 * sx, vpH + 2), Color.Transparent, Color.FromArgb(7, 9, 15), 0f)) {
+                g.FillRectangle(rFade, vpX + vpW - 65 * sx, vpY - 1, 66 * sx, vpH + 2);
             }
-            using (var bFade = new LinearGradientBrush(new RectangleF(vpX, vpY + vpH - 55 * sy, vpW, 56 * sy), Color.Transparent, Color.FromArgb(6, 8, 14), 90f)) {
-                g.FillRectangle(bFade, vpX, vpY + vpH - 55 * sy, vpW, 56 * sy);
+            using (var bFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY + vpH - 55 * sy, vpW + 2, 56 * sy), Color.Transparent, Color.FromArgb(7, 9, 15), 90f)) {
+                g.FillRectangle(bFade, vpX - 1, vpY + vpH - 55 * sy, vpW + 2, 56 * sy);
             }
-            using (var tFade = new LinearGradientBrush(new RectangleF(vpX, vpY - 1, vpW, 25 * sy), Color.FromArgb(6, 8, 14), Color.Transparent, 90f)) {
-                g.FillRectangle(tFade, vpX, vpY - 1, vpW, 25 * sy);
-            }
-
-            // Clean Frame Corner Reticles
-            DrawCornerBrackets(g, vpX + 30 * sx, vpY + 10 * sy, vpW - 40 * sx, vpH - 25 * sy, Color.FromArgb(200, 0, 240, 255), 14f);
-
-            // Top Label
-            using (var fontTag = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
-            using (var hBg = new SolidBrush(Color.FromArgb(220, 8, 12, 20)))
-            using (var hBorder = new Pen(Color.FromArgb(140, 0, 240, 255), 1f))
-            using (var hText = new SolidBrush(Color.FromArgb(240, 0, 240, 255))) {
-                g.FillRectangle(hBg, vpX + 50 * sx, vpY + 4 * sy, 210 * sx, 18 * sy);
-                g.DrawRectangle(hBorder, vpX + 50 * sx, vpY + 4 * sy, 210 * sx, 18 * sy);
-                g.DrawString("// DEVELOPER WORKSPACE // FOCUS", fontTag, hText, vpX + 56 * sx, vpY + 6 * sy);
+            using (var tFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY - 1, vpW + 2, 45 * sy), Color.FromArgb(7, 9, 15), Color.Transparent, 90f)) {
+                g.FillRectangle(tFade, vpX - 1, vpY - 1, vpW + 2, 45 * sy);
             }
 
             // Equalizer Waveform Bars (Lo-Fi beats aesthetic)
-            float eqX = vpX + 45 * sx;
-            float eqY = vpY + vpH - 46 * sy;
+            float eqX = vpX + 40 * sx;
+            float eqY = vpY + vpH - 42 * sy;
             float eqW = vpW - 60 * sx;
-            float eqH = 20 * sy;
+            float eqH = 22 * sy;
 
-            int numBars = 36;
+            int numBars = 32;
             float barW = (eqW / numBars) - 2.5f * sx;
             for (int b = 0; b < numBars; b++) {
                 float bx = eqX + b * (barW + 2.5f * sx);
                 float normB = (float)b / numBars;
 
-                float barMag = (float)(0.38f 
+                float barMag = (float)(0.36f 
                     + 0.35f * Math.Sin(theta * 2.0f + normB * 6.283f) 
                     + 0.20f * Math.Cos(theta * 3.0f + normB * 12.566f)
                     + 0.12f * Math.Sin(theta * 4.0f - normB * 9.424f));
@@ -209,9 +228,9 @@ public class NeuralLabRendererV2 {
                 float currH = barMag * (eqH - 4f * sy);
                 float by = eqY + eqH - currH;
 
-                int rCol = (int)(normB * 110);
-                int gCol = (int)(240 - normB * 60);
-                Color bColor = Color.FromArgb(255, rCol, gCol, 255);
+                int rCol = (int)(normB * 120);
+                int gCol = (int)(240 - normB * 50);
+                Color bColor = Color.FromArgb(240, rCol, gCol, 255);
 
                 using (var barBrush = new SolidBrush(bColor)) {
                     g.FillRectangle(barBrush, bx, by, barW, currH);
@@ -220,81 +239,45 @@ public class NeuralLabRendererV2 {
                     g.FillRectangle(capBrush, bx, by, barW, Math.Max(1.0f, 1.5f * sy));
                 }
             }
-
-            // Caption under equalizer
-            using (var statFont = new Font("Consolas", 7.2f * sx, FontStyle.Bold))
-            using (var statBrush = new SolidBrush(Color.FromArgb(210, 0, 240, 255))) {
-                g.DrawString("LO-FI CODING SESSION  //  BUILDING IN PUBLIC", statFont, statBrush, eqX, eqY + eqH + 5 * sy);
-            }
         }
 
-        // =========================================================================
-        // 4. LEFT HERO TYPOGRAPHY - CLEAN, PROMINENT & BALANCED
-        // =========================================================================
-        using (var fontTitle = new Font("Segoe UI", 48 * sx, FontStyle.Bold))
-        using (var fontTag = new Font("Consolas", 8.4f * sx, FontStyle.Bold)) {
+        // 5. LEFT HERO TYPOGRAPHY: PURE, ICONIC GOKUL A
+        using (var fontTitle = new Font("Segoe UI", 58 * sx, FontStyle.Bold)) {
+            float titleX = 65 * sx;
+            float titleY = 125 * sy;
 
-            // Top Affiliation Tag
-            float pillX = 50 * sx;
-            float pillY = 80 * sy;
-            string topTag = "DATA SCIENCE & AI  //  IIT MADRAS";
-            var topTagSize = g.MeasureString(topTag, fontTag);
-            float pillW = topTagSize.Width + 26 * sx;
-            float pillH = 22 * sy;
-
-            using (var brushPillBg = new SolidBrush(Color.FromArgb(180, 10, 16, 28)))
-            using (var penPillBorder = new Pen(Color.FromArgb(140, 0, 240, 255), 1.0f))
-            using (var brushDot = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
-            using (var brushTag = new SolidBrush(Color.FromArgb(235, 190, 220, 255))) {
-                g.FillRectangle(brushPillBg, pillX, pillY, pillW, pillH);
-                g.DrawRectangle(penPillBorder, pillX, pillY, pillW, pillH);
-                g.FillEllipse(brushDot, pillX + 8 * sx, pillY + 8.5f * sy, 5 * sx, 5 * sy);
-                g.DrawString(topTag, fontTag, brushTag, pillX + 18 * sx, pillY + 4.5f * sy);
+            // Ambient cyan glow bloom
+            using (var brushOuter = new SolidBrush(Color.FromArgb(40, 0, 240, 255))) {
+                g.DrawString("GOKUL A", fontTitle, brushOuter, titleX - 2.5f * sx, titleY);
+                g.DrawString("GOKUL A", fontTitle, brushOuter, titleX + 2.5f * sx, titleY);
+                g.DrawString("GOKUL A", fontTitle, brushOuter, titleX, titleY - 2.5f * sy);
+                g.DrawString("GOKUL A", fontTitle, brushOuter, titleX, titleY + 2.5f * sy);
             }
-
-            // PRIMARY TITLE: GOKUL A (Hero focal point)
-            float titleX = 50 * sx;
-            float titleY = 118 * sy;
-            using (var brushCyanGlow = new SolidBrush(Color.FromArgb(90, 0, 240, 255))) {
-                g.DrawString("GOKUL A", fontTitle, brushCyanGlow, titleX + 1.5f * sx, titleY + 1.5f * sy);
+            using (var brushGlow = new SolidBrush(Color.FromArgb(130, 0, 240, 255))) {
+                g.DrawString("GOKUL A", fontTitle, brushGlow, titleX + 1.8f * sx, titleY + 1.8f * sy);
             }
+            // Crisp, brilliant white foreground
             using (var brushMain = new SolidBrush(Color.FromArgb(255, 255, 255, 255))) {
                 g.DrawString("GOKUL A", fontTitle, brushMain, titleX, titleY);
             }
 
-            // Sleek Gradient Accent Line
-            float lineY = 194 * sy;
+            // Sleek Gradient Accent Underline
+            float lineY = titleY + 86 * sy;
+            float lineW = 290 * sx;
             using (var lineBrush = new LinearGradientBrush(
-                new RectangleF(50 * sx, lineY, 280 * sx, 2.5f),
-                Color.FromArgb(240, 0, 240, 255), Color.Transparent, 0f)) {
-                g.FillRectangle(lineBrush, 50 * sx, lineY, 280 * sx, 2.5f);
+                new RectangleF(titleX, lineY, lineW, 3f),
+                Color.FromArgb(255, 0, 240, 255), Color.Transparent, 0f)) {
+                g.FillRectangle(lineBrush, titleX, lineY, lineW, 3f);
             }
-        }
 
-        // =========================================================================
-        // 5. STATUS BAR FOOTER
-        // =========================================================================
-        using (var brushBar = new SolidBrush(Color.FromArgb(245, 5, 7, 12)))
-        using (var penBar = new Pen(Color.FromArgb(90, 30, 41, 59), 1)) {
-            g.FillRectangle(brushBar, 0, H - 32, W, 32);
-            g.DrawLine(penBar, 0, H - 32, W, H - 32);
-        }
-
-        // Live status pip
-        using (var brushDotGlow = new SolidBrush(Color.FromArgb(90, 52, 211, 153)))
-        using (var brushDot = new SolidBrush(Color.FromArgb(255, 52, 211, 153))) {
-            g.FillEllipse(brushDotGlow, 50 * sx, H - 22, 10 * sx, 10 * sy);
-            g.FillEllipse(brushDot, 52 * sx, H - 20, 6 * sx, 6 * sy);
-        }
-
-        using (var fontHud = new Font("Consolas", 8.2f * sx, FontStyle.Regular))
-        using (var fontHudBold = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
-        using (var brushStatus = new SolidBrush(Color.FromArgb(255, 52, 211, 153)))
-        using (var brushMuted = new SolidBrush(Color.FromArgb(160, 148, 163, 184))) {
-            g.DrawString("ONLINE", fontHudBold, brushStatus, 64 * sx, H - 20);
-
-            string telemString = "  //   IIT MADRAS (DATA SCIENCE)   //   CHENNAI, INDIA   //   GITHUB: CAPEDCRUSADER77";
-            g.DrawString(telemString, fontHud, brushMuted, 115 * sx, H - 20);
+            // Pulsing accent orb at start of line
+            float orbPulse = (float)(0.7f + 0.3f * Math.Sin(theta * 2.0f));
+            int orbAlpha = (int)(255 * orbPulse);
+            using (var brushOrbGlow = new SolidBrush(Color.FromArgb((int)(orbAlpha * 0.45f), 0, 240, 255)))
+            using (var brushOrb = new SolidBrush(Color.FromArgb(orbAlpha, 255, 255, 255))) {
+                g.FillEllipse(brushOrbGlow, titleX - 4 * sx, lineY - 3f * sy, 9 * sx, 9 * sy);
+                g.FillEllipse(brushOrb, titleX - 2 * sx, lineY - 1.2f * sy, 5.5f * sx, 5.5f * sy);
+            }
         }
     }
 
@@ -343,6 +326,7 @@ $heroGif = "e:\Projects\Readme\assets\hero.gif"
 $heroCoreGif = "e:\Projects\Readme\assets\hero_core.gif"
 $heroMainGif = "e:\Projects\Readme\assets\hero_main.gif"
 $heroCleanGif = "e:\Projects\Readme\assets\hero_clean.gif"
+$heroAuroraGif = "e:\Projects\Readme\assets\hero_aurora.gif"
 $previewPng = "e:\Projects\Readme\assets\hero_preview.png"
 $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 
@@ -352,14 +336,15 @@ $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 # Save sample frame for PNG inspection
 [NeuralLabRendererV2]::SavePreviewFrame($previewPng, $operativePath, 840, 350, 0.25)
 
-# Copy to assets/hero.gif, hero_core.gif, hero_main.gif, and fresh hero_clean.gif
+# Copy to assets/hero.gif, hero_core.gif, hero_main.gif, hero_clean.gif, and hero_aurora.gif
 Copy-Item $optGif $heroGif -Force
 Copy-Item $optGif $heroCoreGif -Force
 Copy-Item $optGif $heroMainGif -Force
 Copy-Item $optGif $heroCleanGif -Force
-Write-Host "Copied $optGif to $heroGif, $heroCoreGif, $heroMainGif, and $heroCleanGif"
+Copy-Item $optGif $heroAuroraGif -Force
+Write-Host "Copied $optGif to assets"
 
-$heroItem = Get-Item $heroCleanGif
+$heroItem = Get-Item $heroAuroraGif
 Write-Output "=== COMPLETE HERO EXPORT REPORT ==="
 Write-Output "GIF Size: $([math]::Round($heroItem.Length / 1MB, 2)) MB ($($heroItem.Length) bytes)"
 if ($heroItem.Length -lt 5000000) {
