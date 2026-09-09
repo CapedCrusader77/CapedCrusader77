@@ -5,7 +5,7 @@
 -->
 
 <p align="center">
-  <img src="assets/hero.gif?v=14" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
+  <img src="assets/hero_core.gif?v=15" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
 </p>
 
 <p align="center">

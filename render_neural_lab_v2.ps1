@@ -105,30 +105,27 @@ public class NeuralLabRendererV2 {
         float sy = (float)H / 400.0f;
         float theta = (float)(u * Math.PI * 2.0);
 
-        // 1. SOLID PITCH BLACK BACKGROUND
-        using (var brushBg = new SolidBrush(Color.FromArgb(0, 0, 0))) {
+        // 1. SOLID DEEP CYBER BACKGROUND
+        using (var brushBg = new SolidBrush(Color.FromArgb(6, 8, 14))) {
             g.FillRectangle(brushBg, 0, 0, W, H);
         }
 
-        // 2. ULTRA-DELICATE CYBER GRID GUIDE (ALWAYS VISIBLE - NO DISAPPEAR)
-        using (var penGrid = new Pen(Color.FromArgb(16, 0, 240, 255), 1)) {
+        // 2. DELICATE CYBER GRID
+        using (var penGrid = new Pen(Color.FromArgb(12, 0, 240, 255), 1)) {
             int stepX = (int)(32 * sx);
             int stepY = (int)(32 * sy);
             for (int x = 0; x <= W; x += stepX) g.DrawLine(penGrid, x, 0, x, H);
             for (int y = 0; y <= H; y += stepY) g.DrawLine(penGrid, 0, y, W, y);
         }
 
-        // Micro ticks along borders (ALWAYS VISIBLE)
-        using (var fontMicro = new Font("Consolas", 7.0f * sx, FontStyle.Regular))
-        using (var brushTick = new SolidBrush(Color.FromArgb(45, 0, 240, 255))) {
-            for (int x = (int)(32 * sx); x < W - (int)(32 * sx); x += (int)(64 * sx)) {
-                g.FillRectangle(brushTick, x, 3, 1, 4);
-                g.FillRectangle(brushTick, x, H - 7, 1, 4);
-                g.DrawString("+" + ((int)(x / sx)).ToString("D4"), fontMicro, brushTick, x - 10, 10);
+        // Subtle decorative border marks
+        using (var brushTick = new SolidBrush(Color.FromArgb(35, 0, 240, 255))) {
+            for (int x = (int)(64 * sx); x < W - (int)(64 * sx); x += (int)(64 * sx)) {
+                g.FillRectangle(brushTick, x, 0, 1, 3);
             }
         }
 
-        // Ambient cyber sparks on operative side
+        // Ambient cyber sparks
         var rand = new Random(77);
         for (int i = 0; i < 16; i++) {
             float px0 = 480.0f + (float)(rand.NextDouble() * 460.0);
@@ -145,7 +142,7 @@ public class NeuralLabRendererV2 {
         }
 
         // =========================================================================
-        // 3. RIGHT SIDE: CYBER AI OPERATIVE WITH HOLOGRAPHIC HUD (100% VISIBLE THROUGHOUT)
+        // 3. RIGHT SIDE: CYBER AI OPERATIVE WITH HOLOGRAPHIC HUD
         // =========================================================================
         if (operativeImg != null) {
             float vpX = 460f * sx;
@@ -165,17 +162,17 @@ public class NeuralLabRendererV2 {
 
             g.DrawImage(operativeImg, dstRect, srcRect, GraphicsUnit.Pixel);
 
-            // Soft seamless gradient fades directly into pure pitch black void
-            using (var lFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY, 70 * sx, vpH), Color.FromArgb(0, 0, 0), Color.Transparent, 0f)) {
+            // Soft seamless gradients
+            using (var lFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY, 70 * sx, vpH), Color.FromArgb(6, 8, 14), Color.Transparent, 0f)) {
                 g.FillRectangle(lFade, vpX - 1, vpY, 70 * sx, vpH);
             }
-            using (var rFade = new LinearGradientBrush(new RectangleF(vpX + vpW - 35 * sx, vpY, 36 * sx, vpH), Color.Transparent, Color.FromArgb(0, 0, 0), 0f)) {
+            using (var rFade = new LinearGradientBrush(new RectangleF(vpX + vpW - 35 * sx, vpY, 36 * sx, vpH), Color.Transparent, Color.FromArgb(6, 8, 14), 0f)) {
                 g.FillRectangle(rFade, vpX + vpW - 35 * sx, vpY, 36 * sx, vpH);
             }
-            using (var bFade = new LinearGradientBrush(new RectangleF(vpX, vpY + vpH - 55 * sy, vpW, 56 * sy), Color.Transparent, Color.FromArgb(0, 0, 0), 90f)) {
+            using (var bFade = new LinearGradientBrush(new RectangleF(vpX, vpY + vpH - 55 * sy, vpW, 56 * sy), Color.Transparent, Color.FromArgb(6, 8, 14), 90f)) {
                 g.FillRectangle(bFade, vpX, vpY + vpH - 55 * sy, vpW, 56 * sy);
             }
-            using (var tFade = new LinearGradientBrush(new RectangleF(vpX, vpY - 1, vpW, 25 * sy), Color.FromArgb(0, 0, 0), Color.Transparent, 90f)) {
+            using (var tFade = new LinearGradientBrush(new RectangleF(vpX, vpY - 1, vpW, 25 * sy), Color.FromArgb(6, 8, 14), Color.Transparent, 90f)) {
                 g.FillRectangle(tFade, vpX, vpY - 1, vpW, 25 * sy);
             }
 
@@ -184,12 +181,12 @@ public class NeuralLabRendererV2 {
 
             // HUD Top Tag
             using (var fontTag = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
-            using (var hBg = new SolidBrush(Color.FromArgb(225, 0, 0, 0)))
+            using (var hBg = new SolidBrush(Color.FromArgb(235, 8, 12, 20)))
             using (var hBorder = new Pen(Color.FromArgb(160, 0, 240, 255), 1f))
             using (var hText = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
                 g.FillRectangle(hBg, vpX + 50 * sx, vpY + 4 * sy, 220 * sx, 18 * sy);
                 g.DrawRectangle(hBorder, vpX + 50 * sx, vpY + 4 * sy, 220 * sx, 18 * sy);
-                g.DrawString("// ENTITY: GOKUL_A [AI_OPERATIVE]", fontTag, hText, vpX + 56 * sx, vpY + 6 * sy);
+                g.DrawString("// NEURAL INTERFACE // ACTIVE AGENT", fontTag, hText, vpX + 56 * sx, vpY + 6 * sy);
             }
 
             // Biometric Visor Target Lock
@@ -198,21 +195,22 @@ public class NeuralLabRendererV2 {
             float visorW = 145 * sx;
             float visorH = 125 * sy;
 
-            // Subtle smooth pulse for visor bracket
             float pulse = 0.72f + 0.28f * (float)Math.Sin(theta * 2.0);
             int retAlpha = (int)(255 * pulse);
             DrawCornerBrackets(g, visorX, visorY, visorW, visorH, Color.FromArgb(retAlpha, 0, 240, 255), 10f);
 
-            // Biometric lock badge (always vibrant)
+            // Biometric lock badge
             using (var lockFont = new Font("Consolas", 7.0f * sx, FontStyle.Bold))
+            using (var lockBg = new SolidBrush(Color.FromArgb(220, 6, 10, 18)))
             using (var lockBrush = new SolidBrush(Color.FromArgb(240, 52, 211, 153))) {
-                g.DrawString("LOCK_99.8% // NEURAL_LINK: ACTIVE", lockFont, lockBrush, visorX + 4, visorY - 11 * sy);
+                g.FillRectangle(lockBg, visorX + 4, visorY - 14 * sy, 142 * sx, 13 * sy);
+                g.DrawString("LOCK_99.8% // NEURAL_LINK", lockFont, lockBrush, visorX + 6, visorY - 13 * sy);
             }
 
-            // Continuous Seamless Holographic Laser Scanline across visor
-            float scanNorm = (u * 2.0f) % 1.0f; // Two smooth scans per loop
+            // Continuous Holographic Laser Scanline
+            float scanNorm = (u * 2.0f) % 1.0f;
             float hudScanY = visorY + scanNorm * visorH;
-            float scanFade = (float)Math.Sin(scanNorm * Math.PI); // Fades in smoothly at top, out at bottom
+            float scanFade = (float)Math.Sin(scanNorm * Math.PI);
 
             using (var hudScanBrush = new LinearGradientBrush(
                 new RectangleF(visorX, hudScanY - 6, visorW, 12),
@@ -227,11 +225,11 @@ public class NeuralLabRendererV2 {
                 g.DrawLine(scanLinePen, visorX, hudScanY, visorX + visorW, hudScanY);
             }
 
-            // Real-Time Equalizer Waveform Bars (100% Mathematically Seamless Periodic Oscillation)
+            // Equalizer Waveform Bars
             float eqX = vpX + 45 * sx;
-            float eqY = vpY + vpH - 42 * sy;
+            float eqY = vpY + vpH - 46 * sy;
             float eqW = vpW - 60 * sx;
-            float eqH = 24 * sy;
+            float eqH = 20 * sy;
 
             int numBars = 36;
             float barW = (eqW / numBars) - 2.5f * sx;
@@ -239,7 +237,6 @@ public class NeuralLabRendererV2 {
                 float bx = eqX + b * (barW + 2.5f * sx);
                 float normB = (float)b / numBars;
 
-                // Seamless harmonic frequencies (multiples of 2*PI*u)
                 float barMag = (float)(0.40f 
                     + 0.35f * Math.Sin(theta * 2.0f + normB * 6.283f) 
                     + 0.22f * Math.Cos(theta * 3.0f + normB * 12.566f)
@@ -255,84 +252,109 @@ public class NeuralLabRendererV2 {
                 using (var barBrush = new SolidBrush(bColor)) {
                     g.FillRectangle(barBrush, bx, by, barW, currH);
                 }
-                // Bright cap on each bar
                 using (var capBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 255))) {
                     g.FillRectangle(capBrush, bx, by, barW, Math.Max(1.0f, 1.5f * sy));
                 }
             }
 
             // Real-time telemetry ticker
-            using (var statFont = new Font("Consolas", 7.5f * sx, FontStyle.Bold))
-            using (var statBrush = new SolidBrush(Color.FromArgb(240, 0, 240, 255))) {
-                g.DrawString("CUDA_THROUGHPUT: 120 FPS // LATENCY: 1.8ms // PRECISION: FP16", statFont, statBrush, eqX, vpY + vpH - 15f * sy);
+            using (var statFont = new Font("Consolas", 7.2f * sx, FontStyle.Bold))
+            using (var statBrush = new SolidBrush(Color.FromArgb(230, 0, 240, 255))) {
+                g.DrawString("THROUGHPUT: 120 FPS // LATENCY: 1.8ms // PRECISION: FP16", statFont, statBrush, eqX, eqY + eqH + 5 * sy);
             }
         }
 
         // =========================================================================
-        // 4. LEFT HERO TYPOGRAPHY: GOKUL A (100% STAGNANT & STEADY FROM THE START)
+        // 4. LEFT HERO TYPOGRAPHY
         // =========================================================================
-        using (var fontTitle = new Font("Segoe UI", 40 * sx, FontStyle.Bold))
-        using (var fontSub = new Font("Consolas", 10.2f * sx, FontStyle.Bold))
+        using (var fontTitle = new Font("Segoe UI", 38 * sx, FontStyle.Bold))
+        using (var fontSub = new Font("Consolas", 9.8f * sx, FontStyle.Bold))
         using (var fontTag = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
-        using (var fontPipe = new Font("Consolas", 9.0f * sx, FontStyle.Bold)) {
+        using (var fontPipe = new Font("Consolas", 8.8f * sx, FontStyle.Bold)) {
 
-            // Top Tag Pill (100% STAGNANT)
-            float pillX = 52 * sx;
-            float pillY = 46 * sy;
-            using (var brushTag = new SolidBrush(Color.FromArgb(235, 139, 92, 246)))
-            using (var brushDot = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
-                g.FillEllipse(brushDot, pillX, pillY + 3 * sy, 6 * sx, 6 * sy);
-                g.DrawString("[ GOKUL A // AUTONOMOUS NEURAL CORE ]", fontTag, brushTag, pillX + 12 * sx, pillY);
+            // Top Pill: System Architecture Classification
+            float pillX = 50 * sx;
+            float pillY = 38 * sy;
+            string topTag = "AUTONOMOUS SYSTEMS // NEURAL CORE ARCHITECTURE";
+            var topTagSize = g.MeasureString(topTag, fontTag);
+            float pillW = topTagSize.Width + 28 * sx;
+            float pillH = 20 * sy;
+
+            using (var brushPillBg = new SolidBrush(Color.FromArgb(190, 10, 15, 28)))
+            using (var penPillBorder = new Pen(Color.FromArgb(150, 0, 240, 255), 1.0f))
+            using (var brushDot = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
+            using (var brushTag = new SolidBrush(Color.FromArgb(240, 190, 220, 255))) {
+                g.FillRectangle(brushPillBg, pillX, pillY, pillW, pillH);
+                g.DrawRectangle(penPillBorder, pillX, pillY, pillW, pillH);
+                g.FillEllipse(brushDot, pillX + 8 * sx, pillY + 7.5f * sy, 5 * sx, 5 * sy);
+                g.DrawString(topTag, fontTag, brushTag, pillX + 18 * sx, pillY + 3.5f * sy);
             }
 
-            // PRIMARY TITLE: GOKUL A (100% STAGNANT ROCK-SOLID NEON BLOOM)
-            // Layer 1: Electric Violet Bloom
-            using (var brushGlow = new SolidBrush(Color.FromArgb(120, 139, 92, 246))) {
-                g.DrawString("GOKUL A", fontTitle, brushGlow, 53 * sx, 78 * sy);
-                g.DrawString("GOKUL A", fontTitle, brushGlow, 49 * sx, 82 * sy);
+            // PRIMARY TITLE: GOKUL A
+            float titleX = 50 * sx;
+            float titleY = 68 * sy;
+            using (var brushCyanGlow = new SolidBrush(Color.FromArgb(100, 0, 240, 255))) {
+                g.DrawString("GOKUL A", fontTitle, brushCyanGlow, titleX + 1.2f * sx, titleY + 1.2f * sy);
             }
-            // Layer 2: Neon Cyan Rim
-            using (var brushCyanGlow = new SolidBrush(Color.FromArgb(140, 0, 240, 255))) {
-                g.DrawString("GOKUL A", fontTitle, brushCyanGlow, 51 * sx, 77 * sy);
+            using (var brushVioletGlow = new SolidBrush(Color.FromArgb(90, 139, 92, 246))) {
+                g.DrawString("GOKUL A", fontTitle, brushVioletGlow, titleX - 1.0f * sx, titleY - 1.0f * sy);
             }
-            // Layer 3: Ultra-Crisp White Foreground
             using (var brushMain = new SolidBrush(Color.FromArgb(255, 255, 255, 255))) {
-                g.DrawString("GOKUL A", fontTitle, brushMain, 50 * sx, 76 * sy);
+                g.DrawString("GOKUL A", fontTitle, brushMain, titleX, titleY);
             }
 
-            // Cyber Accent Line Under Name (100% STAGNANT)
+            // Sleek Cyber Accent Line
+            float lineY = 126 * sy;
             using (var lineBrush = new LinearGradientBrush(
-                new RectangleF(50 * sx, 135 * sy, 260 * sx, 2),
-                Color.FromArgb(230, 0, 240, 255), Color.Transparent, 0f)) {
-                g.FillRectangle(lineBrush, 50 * sx, 135 * sy, 260 * sx, 2);
+                new RectangleF(50 * sx, lineY, 280 * sx, 2),
+                Color.FromArgb(240, 0, 240, 255), Color.Transparent, 0f)) {
+                g.FillRectangle(lineBrush, 50 * sx, lineY, 280 * sx, 2);
             }
 
-            // Subtitle (100% STAGNANT)
+            // Subtitle
+            float subY = 138 * sy;
             using (var brushSub = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
-                g.DrawString("AI & SYSTEMS RESEARCH // COMPUTER VISION // AGENTS", fontSub, brushSub, 52 * sx, 146 * sy);
+                g.DrawString("AI & SYSTEMS RESEARCH  //  COMPUTER VISION  //  AGENTS", fontSub, brushSub, 50 * sx, subY);
             }
 
-            // Pipeline: PERCEPTION -> REASONING -> EXECUTION (100% STAGNANT & VIBRANT)
-            float curX = 52 * sx;
-            float curY = 176 * sy;
-            using (var brushStage = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
-            using (var brushArrow = new SolidBrush(Color.FromArgb(255, 139, 92, 246))) {
-                g.DrawString("PERCEPTION", fontPipe, brushStage, curX, curY);
-                curX += g.MeasureString("PERCEPTION", fontPipe).Width + 4 * sx;
+            // 3-Pillar Pipeline: PERCEPTION -> REASONING -> ACTION
+            float curX = 50 * sx;
+            float curY = 170 * sy;
 
-                g.DrawString("->", fontPipe, brushArrow, curX, curY);
-                curX += 20 * sx;
+            string[] pillars = new string[] { "PERCEPTION", "REASONING", "ACTION" };
+            Color[] pillarColors = new Color[] {
+                Color.FromArgb(0, 240, 255),
+                Color.FromArgb(192, 132, 252),
+                Color.FromArgb(183, 241, 106)
+            };
 
-                g.DrawString("REASONING", fontPipe, brushStage, curX, curY);
-                curX += g.MeasureString("REASONING", fontPipe).Width + 4 * sx;
+            for (int p = 0; p < pillars.Length; p++) {
+                string name = pillars[p];
+                Color pColor = pillarColors[p];
+                var sz = g.MeasureString(name, fontPipe);
+                float pw = sz.Width + 14 * sx;
+                float ph = 22 * sy;
 
-                g.DrawString("->", fontPipe, brushArrow, curX, curY);
-                curX += 20 * sx;
+                using (var bBg = new SolidBrush(Color.FromArgb(200, 10, 16, 28)))
+                using (var pen = new Pen(Color.FromArgb(160, pColor.R, pColor.G, pColor.B), 1.0f))
+                using (var bDot = new SolidBrush(pColor))
+                using (var bTxt = new SolidBrush(Color.FromArgb(250, 250, 250))) {
+                    g.FillRectangle(bBg, curX, curY, pw, ph);
+                    g.DrawRectangle(pen, curX, curY, pw, ph);
+                    g.FillEllipse(bDot, curX + 7 * sx, curY + 8.5f * sy, 4.5f * sx, 4.5f * sy);
+                    g.DrawString(name, fontPipe, bTxt, curX + 15 * sx, curY + 4 * sy);
+                }
+                curX += pw;
 
-                g.DrawString("EXECUTION", fontPipe, brushStage, curX, curY);
+                if (p < pillars.Length - 1) {
+                    using (var bArrow = new SolidBrush(Color.FromArgb(220, 139, 92, 246))) {
+                        g.DrawString("->", fontPipe, bArrow, curX + 5 * sx, curY + 4 * sy);
+                    }
+                    curX += 24 * sx;
+                }
             }
 
-            // Technical Badges (100% STAGNANT)
+            // Technical Badges - Clean Spaced Chips
             string[] badgeTexts = new string[] {
                 "IIT MADRAS",
                 "EDGE INFERENCE",
@@ -346,31 +368,35 @@ public class NeuralLabRendererV2 {
                 Color.FromArgb(16, 185, 129)
             };
 
-            float bX = 52 * sx;
-            float bY = 228 * sy;
+            float bX = 50 * sx;
+            float bY = 216 * sy;
+            float bGap = 10 * sx;
+
             for (int i = 0; i < badgeTexts.Length; i++) {
                 string bText = badgeTexts[i];
                 Color bCol = badgeColors[i];
-                var size = g.MeasureString(bText, fontTag);
+                var sz = g.MeasureString(bText, fontTag);
+                float bw = sz.Width + 16 * sx;
+                float bh = 22 * sy;
 
-                using (var brushPill = new SolidBrush(Color.FromArgb(220, 0, 0, 0)))
-                using (var penPill = new Pen(bCol, 1.0f))
+                using (var brushPill = new SolidBrush(Color.FromArgb(210, 8, 14, 24)))
+                using (var penPill = new Pen(Color.FromArgb(180, bCol.R, bCol.G, bCol.B), 1.0f))
                 using (var brushPip = new SolidBrush(bCol))
-                using (var brushPillText = new SolidBrush(Color.FromArgb(255, 248, 250, 252))) {
-                    g.FillRectangle(brushPill, bX, bY, size.Width + 18, 20 * sy);
-                    g.DrawRectangle(penPill, bX, bY, size.Width + 18, 20 * sy);
-                    g.FillEllipse(brushPip, bX + 5, bY + 7 * sy, 4 * sx, 4 * sy);
-                    g.DrawString(bText, fontTag, brushPillText, bX + 13, bY + 3 * sy);
+                using (var brushPillText = new SolidBrush(Color.FromArgb(245, 245, 245))) {
+                    g.FillRectangle(brushPill, bX, bY, bw, bh);
+                    g.DrawRectangle(penPill, bX, bY, bw, bh);
+                    g.FillEllipse(brushPip, bX + 6 * sx, bY + 8.5f * sy, 4.5f * sx, 4.5f * sy);
+                    g.DrawString(bText, fontTag, brushPillText, bX + 14 * sx, bY + 4 * sy);
                 }
-                bX += size.Width + 18 * sx;
+                bX += bw + bGap;
             }
         }
 
         // =========================================================================
-        // 5. TELEMETRY FOOTER & STATUS (100% STAGNANT ONLINE)
+        // 5. STATUS BAR FOOTER
         // =========================================================================
-        using (var brushBar = new SolidBrush(Color.FromArgb(240, 0, 0, 0)))
-        using (var penBar = new Pen(Color.FromArgb(70, 28, 38, 54), 1)) {
+        using (var brushBar = new SolidBrush(Color.FromArgb(245, 6, 8, 14)))
+        using (var penBar = new Pen(Color.FromArgb(90, 30, 41, 59), 1)) {
             g.FillRectangle(brushBar, 0, H - 32, W, 32);
             g.DrawLine(penBar, 0, H - 32, W, H - 32);
         }
@@ -378,15 +404,19 @@ public class NeuralLabRendererV2 {
         // Static bright live status pip
         using (var brushDotGlow = new SolidBrush(Color.FromArgb(90, 0, 240, 255)))
         using (var brushDot = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
-            g.FillEllipse(brushDotGlow, 50 * sx, H - 23, 10 * sx, 10 * sy);
-            g.FillEllipse(brushDot, 52 * sx, H - 21, 6 * sx, 6 * sy);
+            g.FillEllipse(brushDotGlow, 50 * sx, H - 22, 10 * sx, 10 * sy);
+            g.FillEllipse(brushDot, 52 * sx, H - 20, 6 * sx, 6 * sy);
         }
 
-        using (var fontHud = new Font("Consolas", 8.5f * sx, FontStyle.Regular))
+        using (var fontHud = new Font("Consolas", 8.2f * sx, FontStyle.Regular))
+        using (var fontHudBold = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
         using (var brushStatus = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
-        using (var brushTelem = new SolidBrush(Color.FromArgb(200, 148, 163, 184))) {
-            g.DrawString("SYSTEM ONLINE", fontHud, brushStatus, 64 * sx, H - 20);
-            g.DrawString("|  INFERENCE: 1.8ms  |  BANDWIDTH: 100Gb/s  |  CUDA CORES: 16,384  |  PRO ACCOUNT", fontHud, brushTelem, 185 * sx, H - 20);
+        using (var brushMuted = new SolidBrush(Color.FromArgb(160, 148, 163, 184))) {
+            g.DrawString("SYSTEM ONLINE", fontHudBold, brushStatus, 64 * sx, H - 20);
+
+            // Clean unified telemetry string
+            string telemString = "  //   IIT MADRAS   //   AUTONOMOUS AGENTS RESEARCH   //   NODES: SYNCED [25 FPS]";
+            g.DrawString(telemString, fontHud, brushMuted, 162 * sx, H - 20);
         }
     }
 
@@ -435,8 +465,8 @@ $heroGif = "e:\Projects\Readme\assets\hero.gif"
 $previewPng = "e:\Projects\Readme\assets\hero_preview.png"
 $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 
-# 50 frames * 40ms delay = 25 FPS (Silky smooth, continuous alive HUD loop, 840x350 px, under 5MB)
-[NeuralLabRendererV2]::RenderGif($optGif, $operativePath, 840, 350, 50, 40)
+# 36 frames * 50ms delay = 20 FPS (Silky smooth, continuous alive HUD loop, 840x350 px, strictly under 4.5MB)
+[NeuralLabRendererV2]::RenderGif($optGif, $operativePath, 840, 350, 36, 50)
 
 # Save sample frame for PNG inspection
 [NeuralLabRendererV2]::SavePreviewFrame($previewPng, $operativePath, 840, 350, 0.25)
