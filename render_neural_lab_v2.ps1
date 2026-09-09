@@ -177,6 +177,7 @@ public class NeuralLabRendererV2 {
             }
 
             // HUD Frame Corner Reticles
+            // Frame Corner Reticles
             DrawCornerBrackets(g, vpX + 30 * sx, vpY + 10 * sy, vpW - 40 * sx, vpH - 25 * sy, Color.FromArgb(240, 0, 240, 255), 14f);
 
             // HUD Top Tag
@@ -186,10 +187,10 @@ public class NeuralLabRendererV2 {
             using (var hText = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
                 g.FillRectangle(hBg, vpX + 50 * sx, vpY + 4 * sy, 220 * sx, 18 * sy);
                 g.DrawRectangle(hBorder, vpX + 50 * sx, vpY + 4 * sy, 220 * sx, 18 * sy);
-                g.DrawString("// NEURAL INTERFACE // ACTIVE AGENT", fontTag, hText, vpX + 56 * sx, vpY + 6 * sy);
+                g.DrawString("// DEV ENVIRONMENT // CAPEDCRUSADER77", fontTag, hText, vpX + 56 * sx, vpY + 6 * sy);
             }
 
-            // Biometric Visor Target Lock
+            // Visor Focus Reticle Box
             float visorX = vpX + 175 * sx;
             float visorY = vpY + 85 * sy;
             float visorW = 145 * sx;
@@ -198,14 +199,6 @@ public class NeuralLabRendererV2 {
             float pulse = 0.72f + 0.28f * (float)Math.Sin(theta * 2.0);
             int retAlpha = (int)(255 * pulse);
             DrawCornerBrackets(g, visorX, visorY, visorW, visorH, Color.FromArgb(retAlpha, 0, 240, 255), 10f);
-
-            // Biometric lock badge
-            using (var lockFont = new Font("Consolas", 7.0f * sx, FontStyle.Bold))
-            using (var lockBg = new SolidBrush(Color.FromArgb(220, 6, 10, 18)))
-            using (var lockBrush = new SolidBrush(Color.FromArgb(240, 52, 211, 153))) {
-                g.FillRectangle(lockBg, visorX + 4, visorY - 14 * sy, 142 * sx, 13 * sy);
-                g.DrawString("LOCK_99.8% // NEURAL_LINK", lockFont, lockBrush, visorX + 6, visorY - 13 * sy);
-            }
 
             // Continuous Holographic Laser Scanline
             float scanNorm = (u * 2.0f) % 1.0f;
@@ -257,10 +250,10 @@ public class NeuralLabRendererV2 {
                 }
             }
 
-            // Real-time telemetry ticker
+            // Workspace session caption
             using (var statFont = new Font("Consolas", 7.2f * sx, FontStyle.Bold))
             using (var statBrush = new SolidBrush(Color.FromArgb(230, 0, 240, 255))) {
-                g.DrawString("THROUGHPUT: 120 FPS // LATENCY: 1.8ms // PRECISION: FP16", statFont, statBrush, eqX, eqY + eqH + 5 * sy);
+                g.DrawString("LO-FI CODING WORKSPACE  //  BUILDING IN PUBLIC", statFont, statBrush, eqX, eqY + eqH + 5 * sy);
             }
         }
 
@@ -272,10 +265,10 @@ public class NeuralLabRendererV2 {
         using (var fontTag = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
         using (var fontPipe = new Font("Consolas", 8.8f * sx, FontStyle.Bold)) {
 
-            // Top Pill: System Architecture Classification
+            // Top Pill: Authentic Affiliation
             float pillX = 50 * sx;
             float pillY = 38 * sy;
-            string topTag = "AUTONOMOUS SYSTEMS // NEURAL CORE ARCHITECTURE";
+            string topTag = "AI & SYSTEMS RESEARCH  //  IIT MADRAS";
             var topTagSize = g.MeasureString(topTag, fontTag);
             float pillW = topTagSize.Width + 28 * sx;
             float pillH = 20 * sy;
@@ -314,23 +307,23 @@ public class NeuralLabRendererV2 {
             // Subtitle
             float subY = 138 * sy;
             using (var brushSub = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
-                g.DrawString("AI & SYSTEMS RESEARCH  //  COMPUTER VISION  //  AGENTS", fontSub, brushSub, 50 * sx, subY);
+                g.DrawString("COMPUTER VISION   //   AI AGENTS   //   SYSTEMS ENGINEERING", fontSub, brushSub, 50 * sx, subY);
             }
 
-            // 3-Pillar Pipeline: PERCEPTION -> REASONING -> ACTION
+            // 3 Specialization Chips: DEEP LEARNING, AGENTIC SYSTEMS, SECURITY & AST
             float curX = 50 * sx;
             float curY = 170 * sy;
 
-            string[] pillars = new string[] { "PERCEPTION", "REASONING", "ACTION" };
-            Color[] pillarColors = new Color[] {
+            string[] domains = new string[] { "DEEP LEARNING", "AGENTIC SYSTEMS", "SECURITY & AST" };
+            Color[] domainColors = new Color[] {
                 Color.FromArgb(0, 240, 255),
                 Color.FromArgb(192, 132, 252),
                 Color.FromArgb(183, 241, 106)
             };
 
-            for (int p = 0; p < pillars.Length; p++) {
-                string name = pillars[p];
-                Color pColor = pillarColors[p];
+            for (int p = 0; p < domains.Length; p++) {
+                string name = domains[p];
+                Color pColor = domainColors[p];
                 var sz = g.MeasureString(name, fontPipe);
                 float pw = sz.Width + 14 * sx;
                 float ph = 22 * sy;
@@ -344,22 +337,15 @@ public class NeuralLabRendererV2 {
                     g.FillEllipse(bDot, curX + 7 * sx, curY + 8.5f * sy, 4.5f * sx, 4.5f * sy);
                     g.DrawString(name, fontPipe, bTxt, curX + 15 * sx, curY + 4 * sy);
                 }
-                curX += pw;
-
-                if (p < pillars.Length - 1) {
-                    using (var bArrow = new SolidBrush(Color.FromArgb(220, 139, 92, 246))) {
-                        g.DrawString("->", fontPipe, bArrow, curX + 5 * sx, curY + 4 * sy);
-                    }
-                    curX += 24 * sx;
-                }
+                curX += pw + 10 * sx;
             }
 
-            // Technical Badges - Clean Spaced Chips
+            // Real Languages & Core Tools: PYTHON, PYTORCH, TYPESCRIPT, OPENCV
             string[] badgeTexts = new string[] {
-                "IIT MADRAS",
-                "EDGE INFERENCE",
-                "AI AGENTS",
-                "TENSOR CORE"
+                "PYTHON",
+                "PYTORCH",
+                "TYPESCRIPT",
+                "OPENCV"
             };
             Color[] badgeColors = new Color[] {
                 Color.FromArgb(0, 240, 255),
@@ -402,21 +388,20 @@ public class NeuralLabRendererV2 {
         }
 
         // Static bright live status pip
-        using (var brushDotGlow = new SolidBrush(Color.FromArgb(90, 0, 240, 255)))
-        using (var brushDot = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
+        using (var brushDotGlow = new SolidBrush(Color.FromArgb(90, 52, 211, 153)))
+        using (var brushDot = new SolidBrush(Color.FromArgb(255, 52, 211, 153))) {
             g.FillEllipse(brushDotGlow, 50 * sx, H - 22, 10 * sx, 10 * sy);
             g.FillEllipse(brushDot, 52 * sx, H - 20, 6 * sx, 6 * sy);
         }
 
         using (var fontHud = new Font("Consolas", 8.2f * sx, FontStyle.Regular))
         using (var fontHudBold = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
-        using (var brushStatus = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
+        using (var brushStatus = new SolidBrush(Color.FromArgb(255, 52, 211, 153)))
         using (var brushMuted = new SolidBrush(Color.FromArgb(160, 148, 163, 184))) {
-            g.DrawString("SYSTEM ONLINE", fontHudBold, brushStatus, 64 * sx, H - 20);
+            g.DrawString("ACTIVE", fontHudBold, brushStatus, 64 * sx, H - 20);
 
-            // Clean unified telemetry string
-            string telemString = "  //   IIT MADRAS   //   AUTONOMOUS AGENTS RESEARCH   //   NODES: SYNCED [25 FPS]";
-            g.DrawString(telemString, fontHud, brushMuted, 162 * sx, H - 20);
+            string telemString = "  //   IIT MADRAS (DATA SCIENCE)   //   BUILDING INTELLIGENT SYSTEMS   //   GITHUB: CAPEDCRUSADER77";
+            g.DrawString(telemString, fontHud, brushMuted, 115 * sx, H - 20);
         }
     }
 

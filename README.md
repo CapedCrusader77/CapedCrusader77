@@ -5,11 +5,11 @@
 -->
 
 <p align="center">
-  <img src="assets/hero_core.gif?v=15" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
+  <img src="assets/hero_core.gif?v=16" width="840" alt="Gokul A - AI &amp; Systems Engineering">
 </p>
 
 <p align="center">
-  <em>"Building machines that can perceive, reason, and act."</em>
+  <em>"Engineering intelligent systems, computer vision models, and robust developer tooling."</em>
 </p>
 
 <br>
@@ -25,13 +25,13 @@
 
 <br>
 
-<!-- 02 // AUTONOMOUS SYSTEMS TELEMETRY -->
+<!-- 02 // CORE DOMAINS & SPECIALIZATIONS -->
 <p align="center">
-  <img src="assets/banner_telemetry.gif?v=28" width="840" alt="live telemetry">
+  <img src="assets/banner_telemetry.gif?v=29" width="840" alt="core domains and specializations">
 </p>
 
 <p align="center">
-  <img src="assets/telemetry_cards.gif?v=28" width="840" alt="Three animated telemetry cards: perception, reasoning, and action">
+  <img src="assets/telemetry_cards.gif?v=29" width="840" alt="Core Specializations: Computer Vision, AI Agents, Systems Security">
 </p>
 
 <br>

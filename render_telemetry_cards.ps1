@@ -307,20 +307,20 @@ Add-Type -TypeDefinition $source -ReferencedAssemblies "System.Drawing"
 
 $assetsDir = "e:\Projects\Readme\assets"
 
-Write-Host "Rendering Autonomous Systems Telemetry Cards (30 frames @ 40ms = 25 FPS)..."
+Write-Host "Rendering Core Specializations Cards (30 frames @ 40ms = 25 FPS)..."
 
-# Card 1: Perception
-Write-Host "1. Rendering Perception (telemetry_perception.gif)..."
+# Card 1: Computer Vision
+Write-Host "1. Rendering Computer Vision (telemetry_perception.gif)..."
 $pFrames = [TelemetryCardsSuite]::GenerateCardFrames(
     "$assetsDir\telemetry_perception_bg.jpg",
     1,
-    "PERCEPTION",
-    "LIVE",
+    "COMPUTER VISION",
+    "ACTIVE",
     [System.Drawing.Color]::FromArgb(52, 211, 153),
-    "PERCEPTION",
-    "SENSOR FUSION",
-    "Turns camera and depth input into stable landmarks.",
-    @("Vision", "WASM", "6-DoF"),
+    "COMPUTER VISION",
+    "SPATIAL & VISUAL AI",
+    "Real-time landmark detection, 3D facial geometry, and visual neural embeddings.",
+    @("PyTorch", "OpenCV", "WASM"),
     [System.Drawing.Color]::FromArgb(0, 240, 255),
     0.18,
     30
@@ -328,20 +328,20 @@ $pFrames = [TelemetryCardsSuite]::GenerateCardFrames(
 $pFrames[0].Save("e:\Projects\Readme\telemetry_card_1_preview.png", [System.Drawing.Imaging.ImageFormat]::Png)
 $pFrames[0].Save("$assetsDir\telemetry_perception.png", [System.Drawing.Imaging.ImageFormat]::Png)
 [TelemetryCardsSuite]::SaveGif("$assetsDir\telemetry_perception.gif", $pFrames, 40)
-Write-Host "Perception card done."
+Write-Host "Computer Vision card done."
 
-# Card 2: Reasoning
-Write-Host "2. Rendering Reasoning (telemetry_reasoning.gif)..."
+# Card 2: AI Agents
+Write-Host "2. Rendering AI Agents (telemetry_reasoning.gif)..."
 $rFrames = [TelemetryCardsSuite]::GenerateCardFrames(
     "$assetsDir\telemetry_reasoning_bg.jpg",
     2,
-    "REASONING",
-    "LIVE",
+    "AI AGENTS",
+    "ACTIVE",
     [System.Drawing.Color]::FromArgb(52, 211, 153),
-    "REASONING",
-    "CAUSAL MODEL",
-    "Traces cause and effect across a changing system.",
-    @("Graph", "Policy", "Trace"),
+    "AI AGENTS",
+    "AUTONOMOUS WORKFLOWS",
+    "Multi-agent orchestration, tool routing, and automated problem-solving pipelines.",
+    @("Python", "LangChain", "Tools"),
     [System.Drawing.Color]::FromArgb(192, 132, 252),
     0.16,
     30
@@ -349,20 +349,20 @@ $rFrames = [TelemetryCardsSuite]::GenerateCardFrames(
 $rFrames[0].Save("e:\Projects\Readme\telemetry_card_2_preview.png", [System.Drawing.Imaging.ImageFormat]::Png)
 $rFrames[0].Save("$assetsDir\telemetry_reasoning.png", [System.Drawing.Imaging.ImageFormat]::Png)
 [TelemetryCardsSuite]::SaveGif("$assetsDir\telemetry_reasoning.gif", $rFrames, 40)
-Write-Host "Reasoning card done."
+Write-Host "AI Agents card done."
 
-# Card 3: Action
-Write-Host "3. Rendering Action (telemetry_action.gif)..."
+# Card 3: Systems Security
+Write-Host "3. Rendering Systems Security (telemetry_action.gif)..."
 $aFrames = [TelemetryCardsSuite]::GenerateCardFrames(
     "$assetsDir\telemetry_action_bg.jpg",
     3,
-    "ACTION",
-    "LIVE",
+    "SYSTEMS & AST",
+    "ACTIVE",
     [System.Drawing.Color]::FromArgb(52, 211, 153),
-    "ACTION",
-    "SPATIAL CONTROL",
-    "Maps distance, heading, and the next safe move.",
-    @("LiDAR", "Nav", "Control"),
+    "SYSTEMS SECURITY",
+    "STATIC ANALYSIS",
+    "AST vulnerability detection, dependency graph analysis, and automated fixes.",
+    @("TypeScript", "AST", "Security"),
     [System.Drawing.Color]::FromArgb(183, 241, 106),
     0.15,
     30
@@ -370,7 +370,7 @@ $aFrames = [TelemetryCardsSuite]::GenerateCardFrames(
 $aFrames[0].Save("e:\Projects\Readme\telemetry_card_3_preview.png", [System.Drawing.Imaging.ImageFormat]::Png)
 $aFrames[0].Save("$assetsDir\telemetry_action.png", [System.Drawing.Imaging.ImageFormat]::Png)
 [TelemetryCardsSuite]::SaveGif("$assetsDir\telemetry_action.gif", $aFrames, 40)
-Write-Host "Action card done."
+Write-Host "Systems Security card done."
 
 # Combined 840px Showcase Row
 Write-Host "4. Rendering Combined 840px Telemetry Row..."

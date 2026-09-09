@@ -116,29 +116,29 @@ public class AutonomousTelemetrySuite {
                 // Title
                 using (var fTitle = new Font("Segoe UI", 10.5f, FontStyle.Bold))
                 using (var bTitle = new SolidBrush(Color.White)) {
-                    g.DrawString("02 // AUTONOMOUS SYSTEMS TELEMETRY", fTitle, bTitle, 16, 7);
+                    g.DrawString("02 // CORE DOMAINS & SPECIALIZATIONS", fTitle, bTitle, 16, 7);
                 }
 
                 // Subtitle
                 using (var fSub = new Font("Consolas", 7.8f, FontStyle.Regular))
                 using (var bSub = new SolidBrush(Color.FromArgb(100, 116, 139))) {
-                    g.DrawString("// REAL-TIME PERCEPTION, CAUSAL INFERENCE & AST DIAGNOSTICS", fSub, bSub, 320, 10);
+                    g.DrawString("// COMPUTER VISION, INTELLIGENT AGENTS & SYSTEMS SECURITY", fSub, bSub, 320, 10);
                 }
 
-                // Status pill (pulsing cyan / emerald)
+                // Status pill
                 float pulse = 0.65f + 0.35f * (float)Math.Sin(t * Math.PI * 2f);
                 int dotA = (int)(255 * pulse);
                 int pillW = 142, pillH = 20;
                 int pillX = w - pillW - 8, pillY = 8;
                 using (var bPill = new SolidBrush(Color.FromArgb(15, 23, 42)))
                 using (var pPill = new Pen(Color.FromArgb(51, 65, 85), 1f))
-                using (var bDot = new SolidBrush(Color.FromArgb(dotA, 0, 240, 255)))
+                using (var bDot = new SolidBrush(Color.FromArgb(dotA, 52, 211, 153)))
                 using (var fStatus = new Font("Consolas", 7.2f, FontStyle.Bold))
                 using (var bStatusText = new SolidBrush(Color.FromArgb(203, 213, 225))) {
                     g.FillRectangle(bPill, pillX, pillY, pillW, pillH);
                     g.DrawRectangle(pPill, pillX, pillY, pillW, pillH);
                     g.FillEllipse(bDot, pillX + 8, pillY + 6, 7, 7);
-                    g.DrawString("ALL NODES SYNCED", fStatus, bStatusText, pillX + 20, pillY + 3);
+                    g.DrawString("ACTIVE RESEARCH", fStatus, bStatusText, pillX + 22, pillY + 3);
                 }
             }
             frames[f] = bmp;
@@ -726,12 +726,6 @@ Write-Host "Rendering Autonomous Systems Diagnostic Suite..."
 Write-Host "1. Rendering banner_telemetry.gif..."
 [AutonomousTelemetrySuite]::RenderBanner("$assetsDir\banner_telemetry.gif", 20)
 
-Write-Host "2. Rendering telemetry.gif (Autonomous Systems Diagnostic HUD)..."
-[AutonomousTelemetrySuite]::RenderTelemetryHUD("$assetsDir\telemetry.gif", 30)
-
-Write-Host "3. Rendering contrib.gif (Robotics & Perception State HUD)..."
-[AutonomousTelemetrySuite]::RenderRoboticsHUD("$assetsDir\contrib.gif", 30)
-
-Write-Host "All autonomous diagnostic assets rendered successfully!"
+Write-Host "Section 02 banner rendered successfully!"
 Get-ChildItem $assetsDir\banner_telemetry.*, $assetsDir\telemetry.*, $assetsDir\contrib.* | Select-Object Name, Length
 
