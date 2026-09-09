@@ -5,61 +5,59 @@
 -->
 
 <p align="center">
-  <img src="assets/hero.gif?v=13" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
+  <img src="assets/hero.gif?v=14" width="840" alt="Gokul A - Autonomous Neural Core &amp; AI Systems Interface">
 </p>
 
 <p align="center">
-  <code>[ NEURAL CORE: ONLINE ]</code> &nbsp;•&nbsp;
-  <code>[ REPOS: 15 PUBLIC ]</code> &nbsp;•&nbsp;
-  <code>[ CONTRIBUTIONS: 264 ]</code> &nbsp;•&nbsp;
-  <code>[ IIT MADRAS ]</code> &nbsp;•&nbsp;
-  <code>[ PRO ACCOUNT ]</code>
-</p>
-
-<p align="center">
-  <strong>"Building machines that can perceive, reason, and act."</strong>
+  <em>"Building machines that can perceive, reason, and act."</em>
 </p>
 
 <br>
 
 <!-- 01 // SELECTED BUILDS -->
-<p align="center"><img src="assets/banner_work.gif?v=13" width="840" alt="featured architectures"></p>
+<p align="center">
+  <img src="assets/banner_work.gif?v=14" width="840" alt="featured architectures">
+</p>
 
 <p align="center">
-  <img src="assets/cards_row.gif?v=17" width="840" alt="Selected Projects: FaceTrack-AI, SkillGuard-OSS, RootCause-IQ">
+  <img src="assets/cards_row.gif?v=18" width="840" alt="Selected Projects: FaceTrack-AI, SkillGuard-OSS, RootCause-IQ">
 </p>
 
 <br>
 
 <!-- 02 // AUTONOMOUS SYSTEMS TELEMETRY -->
-<p align="center"><img src="assets/banner_telemetry.gif?v=24" width="840" alt="live telemetry"></p>
+<p align="center">
+  <img src="assets/banner_telemetry.gif?v=28" width="840" alt="live telemetry">
+</p>
 
 <p align="center">
-  <img src="assets/telemetry.gif?v=27" width="840" alt="Three animated telemetry cards: perception, reasoning, and action">
+  <img src="assets/telemetry_cards.gif?v=28" width="840" alt="Three animated telemetry cards: perception, reasoning, and action">
 </p>
 
 <br>
 
 <!-- 03 // CONTRIBUTIONS -->
 <p align="center">
-  <img src="assets/contrib.gif?v=33" width="840" alt="Animated GitHub contribution table for the last 12 months">
+  <img src="assets/contrib.gif?v=34" width="840" alt="Animated GitHub contribution table for the last 12 months">
 </p>
-
-<p align="center"><sub>Contribution activity over the last 12 months.</sub></p>
 
 <br>
 
 <!-- 04 // TECHNICAL ARSENAL -->
-<p align="center"><img src="assets/banner_stack.gif?v=10" width="840" alt="technical arsenal"></p>
+<p align="center">
+  <img src="assets/banner_stack.gif?v=11" width="840" alt="technical arsenal">
+</p>
 
 <p align="center">
-  <img src="assets/stack.gif?v=10" width="840" alt="tech stack: Python 3.11+, TypeScript, JavaScript, TensorFlow, PyTorch, Computer Vision, Security AST, Next.js, Node.js">
+  <img src="assets/stack.gif?v=11" width="840" alt="tech stack: Python 3.11+, TypeScript, JavaScript, TensorFlow, PyTorch, Computer Vision, Security AST, Next.js, Node.js">
 </p>
 
 <br>
 
 <!-- 05 // CONTROL UPLINK -->
-<p align="center"><img src="assets/banner_contact.gif?v=10" width="840" alt="control uplink"></p>
+<p align="center">
+  <img src="assets/banner_contact.gif?v=11" width="840" alt="control uplink">
+</p>
 
 <p align="center">
   <a href="https://github.com/CapedCrusader77">
@@ -73,14 +71,4 @@
   <a href="mailto:25f2008464@ds.study.iitm.ac.in">
     <img src="https://img.shields.io/badge/Email-IIT_Madras-00f0ff?style=for-the-badge&logo=gmail&logoColor=07090e" alt="Email">
   </a>
-  &nbsp;
-  <a href="https://github.com/CapedCrusader77">
-    <img src="https://img.shields.io/badge/Status-ONLINE-38bdf8?style=for-the-badge" alt="Status">
-  </a>
-</p>
-
-<br>
-
-<p align="center">
-  <i>"The best way to predict the future is to build it."</i>
 </p>
