@@ -328,15 +328,7 @@ $telemV3Gif = "$assetsDir\banner_telemetry_v3.gif"
 Copy-Item $telemV3Gif $telemGif -Force
 Copy-Item $telemV3Gif $telemV2Gif -Force
 
-# 3. banner_contrib_v3.gif (LIVE TELEMETRY / CONTRIBUTIONS)
-$contribBannerGif = "$assetsDir\banner_contrib.gif"
-$contribBannerV2Gif = "$assetsDir\banner_contrib_v2.gif"
-$contribBannerV3Gif = "$assetsDir\banner_contrib_v3.gif"
-[UnifiedBannerRenderer]::RenderBanner($contribBannerV3Gif, ">> LIVE TELEMETRY", "// 264 ANNUAL COMMITS & REPOSITORY ACTIVITY MATRIX", "264 COMMITS", [System.Drawing.Color]::FromArgb(0, 240, 255))
-Copy-Item $contribBannerV3Gif $contribBannerGif -Force
-Copy-Item $contribBannerV3Gif $contribBannerV2Gif -Force
-
-# 4. banner_stack_v3.gif (TECHNICAL ARSENAL)
+# 3. banner_stack_v3.gif (TECHNICAL ARSENAL)
 $stackGif = "$assetsDir\banner_stack.gif"
 $stackV2Gif = "$assetsDir\banner_stack_v2.gif"
 $stackV3Gif = "$assetsDir\banner_stack_v3.gif"
@@ -344,7 +336,7 @@ $stackV3Gif = "$assetsDir\banner_stack_v3.gif"
 Copy-Item $stackV3Gif $stackGif -Force
 Copy-Item $stackV3Gif $stackV2Gif -Force
 
-# 5. banner_contact_v3.gif (CONTROL UPLINK)
+# 4. banner_contact_v3.gif (CONTROL UPLINK)
 $contactGif = "$assetsDir\banner_contact.gif"
 $contactV2Gif = "$assetsDir\banner_contact_v2.gif"
 $contactV3Gif = "$assetsDir\banner_contact_v3.gif"
@@ -352,5 +344,5 @@ $contactV3Gif = "$assetsDir\banner_contact_v3.gif"
 Copy-Item $contactV3Gif $contactGif -Force
 Copy-Item $contactV3Gif $contactV2Gif -Force
 
-Write-Host "All 5 luxury section banners rendered successfully!"
+Write-Host "All 4 luxury section banners rendered successfully!"
 Get-ChildItem "$assetsDir\banner_*_v3.gif" | Select-Object Name, Length

@@ -1,5 +1,4 @@
 $ErrorActionPreference = "Stop"
-
 $source = @"
 using System;
 using System.IO;
@@ -9,17 +8,17 @@ using System.Drawing.Text;
 using System.Drawing.Imaging;
 
 public class ContributionTable {
+    static Color C(int a, int r, int g, int b) { return Color.FromArgb(a, r, g, b); }
+
     public static void SaveGif(string outputPath, Bitmap[] frames, int delayMs) {
         using (var fs = new FileStream(outputPath, FileMode.Create, FileAccess.Write)) {
             int delay100th = delayMs / 10;
             byte delayLo = (byte)(delay100th & 0xFF);
             byte delayHi = (byte)((delay100th >> 8) & 0xFF);
-
             for (int i = 0; i < frames.Length; i++) {
                 using (var ms = new MemoryStream()) {
                     frames[i].Save(ms, ImageFormat.Gif);
                     byte[] bytes = ms.ToArray();
-
                     if (i == 0) {
                         fs.Write(bytes, 0, 13);
                         int gctSize = 0;
@@ -28,46 +27,36 @@ public class ContributionTable {
                             gctSize = 3 * count;
                             fs.Write(bytes, 13, gctSize);
                         }
-
-                        // Netscape 2.0 Loop Extension
                         byte[] netscape = new byte[] {
                             0x21, 0xFF, 0x0B,
                             (byte)'N', (byte)'E', (byte)'T', (byte)'S', (byte)'C', (byte)'A', (byte)'P', (byte)'E', (byte)'2', (byte)'.', (byte)'0',
                             0x03, 0x01, 0x00, 0x00, 0x00
                         };
                         fs.Write(netscape, 0, netscape.Length);
-
                         byte[] gce = new byte[] { 0x21, 0xF9, 0x04, 0x00, delayLo, delayHi, 0x00, 0x00 };
                         fs.Write(gce, 0, gce.Length);
-
                         int imgStart = 13 + gctSize;
                         if (bytes[imgStart] == 0x21 && bytes[imgStart + 1] == 0xF9) imgStart += 8;
                         fs.Write(bytes, imgStart, bytes.Length - imgStart - 1);
                     } else {
                         byte[] gce = new byte[] { 0x21, 0xF9, 0x04, 0x00, delayLo, delayHi, 0x00, 0x00 };
                         fs.Write(gce, 0, gce.Length);
-
                         int imgStart = 13;
                         if ((bytes[10] & 0x80) != 0) {
                             int count = 1 << ((bytes[10] & 7) + 1);
                             imgStart += 3 * count;
                         }
                         if (bytes[imgStart] == 0x21 && bytes[imgStart + 1] == 0xF9) imgStart += 8;
-
                         if (bytes[imgStart] == 0x2C) {
                             if ((bytes[10] & 0x80) != 0) {
                                 byte[] imgDesc = new byte[10];
                                 Array.Copy(bytes, imgStart, imgDesc, 0, 10);
                                 imgDesc[9] = (byte)(0x80 | (bytes[10] & 0x07));
                                 fs.Write(imgDesc, 0, 10);
-
                                 int count = 1 << ((bytes[10] & 7) + 1);
                                 fs.Write(bytes, 13, 3 * count);
-
                                 fs.Write(bytes, imgStart + 10, bytes.Length - (imgStart + 10) - 1);
-                            } else {
-                                fs.Write(bytes, imgStart, bytes.Length - imgStart - 1);
-                            }
+                            } else fs.Write(bytes, imgStart, bytes.Length - imgStart - 1);
                         }
                     }
                 }
@@ -76,364 +65,139 @@ public class ContributionTable {
         }
     }
 
-    public static void SetHighQuality(Graphics g) {
-        g.SmoothingMode = SmoothingMode.HighQuality;
+    static void Quality(Graphics g) {
+        g.SmoothingMode = SmoothingMode.AntiAlias;
         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
         g.PixelOffsetMode = PixelOffsetMode.HighQuality;
         g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
     }
 
-    public static Color Mix(Color a, Color b, float amount) {
+    static void Text(Graphics g, string value, string family, float size, FontStyle style, Color color, float x, float y) {
+        using (var f = new Font(family, size, style)) using (var b = new SolidBrush(color)) g.DrawString(value, f, b, x, y);
+    }
+
+    static void Rounded(Graphics g, int x, int y, int w, int h, int r, Color fill, Color stroke) {
+        using (var path = new GraphicsPath()) {
+            path.AddArc(x, y, r, r, 180, 90);
+            path.AddArc(x + w - r, y, r, r, 270, 90);
+            path.AddArc(x + w - r, y + h - r, r, r, 0, 90);
+            path.AddArc(x, y + h - r, r, r, 90, 90);
+            path.CloseFigure();
+            using (var b = new SolidBrush(fill)) g.FillPath(b, path);
+            using (var p = new Pen(stroke, 1f)) g.DrawPath(p, path);
+        }
+    }
+
+    static Color Mix(Color a, Color b, float amount) {
         amount = Math.Max(0f, Math.Min(1f, amount));
-        return Color.FromArgb(
-            255,
-            (int)(a.R + (b.R - a.R) * amount),
-            (int)(a.G + (b.G - a.G) * amount),
-            (int)(a.B + (b.B - a.B) * amount)
-        );
+        return C(255, (int)(a.R + (b.R - a.R) * amount), (int)(a.G + (b.G - a.G) * amount), (int)(a.B + (b.B - a.B) * amount));
     }
 
-    public static void RenderFrame(Graphics g, int w, int h, int[,] grid, int[] weeksTotals, int activeWeeks, float progress) {
-        SetHighQuality(g);
-
-        Color cyan = Color.FromArgb(0, 240, 255);
-        Color emerald = Color.FromArgb(52, 211, 153);
-        Color purple = Color.FromArgb(168, 85, 247);
-        Color textWhite = Color.FromArgb(248, 250, 252);
-        Color textMuted = Color.FromArgb(148, 163, 184);
-        Color textDim = Color.FromArgb(90, 105, 125);
-
-        // Modern Cyber Palette for Cells
-        Color[] cellColors = new Color[] {
-            Color.FromArgb(14, 20, 32),   // 0: empty
-            Color.FromArgb(16, 68, 80),   // 1: low
-            Color.FromArgb(18, 130, 140), // 2: med
-            Color.FromArgb(0, 210, 225),  // 3: high
-            Color.FromArgb(52, 211, 153)  // 4: peak emerald
-        };
-
-        // 1. Deep atmospheric background
-        using (var bgBrush = new LinearGradientBrush(
-            new RectangleF(0, 0, w, h),
-            Color.FromArgb(9, 13, 22), Color.FromArgb(5, 7, 13), 90f)) {
-            g.FillRectangle(bgBrush, 0, 0, w, h);
-        }
-
-        // Faint ambient glow behind left stats panel
-        using (var glowPather = new GraphicsPath()) {
-            glowPather.AddEllipse(-40, -40, 300, 200);
-            using (var pgb = new PathGradientBrush(glowPather)) {
-                pgb.CenterColor = Color.FromArgb(22, cyan.R, cyan.G, cyan.B);
-                pgb.SurroundColors = new Color[] { Color.Transparent };
-                g.FillPath(pgb, glowPather);
-            }
-        }
-
-        // Outer sleek container border
-        using (var penBorder = new Pen(Color.FromArgb(28, 38, 54), 1f)) {
-            g.DrawRectangle(penBorder, 0, 0, w - 1, h - 1);
-        }
-
-        // Corner framing micro-accents
-        using (var penCorner = new Pen(Color.FromArgb(90, cyan.R, cyan.G, cyan.B), 1.2f)) {
-            g.DrawLine(penCorner, 0, 0, 8, 0);
-            g.DrawLine(penCorner, 0, 0, 0, 8);
-            g.DrawLine(penCorner, w - 1, 0, w - 9, 0);
-            g.DrawLine(penCorner, w - 1, 0, w - 1, 8);
-            g.DrawLine(penCorner, 0, h - 1, 8, h - 1);
-            g.DrawLine(penCorner, 0, h - 1, 0, h - 9);
-            g.DrawLine(penCorner, w - 1, h - 1, w - 9, h - 1);
-            g.DrawLine(penCorner, w - 1, h - 1, w - 1, h - 9);
-        }
-
-        // Top traveling laser beam with radiant spark flare
-        float beamX = progress * (w + 160) - 80;
-        using (var beamBrush = new LinearGradientBrush(
-            new RectangleF(beamX - 80, 0, 160, 2),
-            Color.Transparent, Color.Transparent, 0f)) {
-            var cb = new ColorBlend(3);
-            cb.Colors = new Color[] { Color.Transparent, cyan, Color.Transparent };
-            cb.Positions = new float[] { 0f, 0.5f, 1f };
-            beamBrush.InterpolationColors = cb;
-            g.FillRectangle(beamBrush, beamX - 80, 0, 160, 2);
-        }
-        using (var brushSpark = new SolidBrush(Color.FromArgb(240, 255, 255, 255))) {
-            g.FillRectangle(brushSpark, beamX - 4, 0, 8, 2);
-        }
-
-        using (var fontBig = new Font("Segoe UI", 26f, FontStyle.Bold))
-        using (var fontLabel = new Font("Consolas", 7.8f, FontStyle.Bold))
-        using (var fontSmall = new Font("Consolas", 6.8f, FontStyle.Regular))
-        using (var fontMono = new Font("Consolas", 7.2f, FontStyle.Regular)) {
-
-            // ================= LEFT TELEMETRY METRICS PANEL (Width: ~140px) =================
-            int leftPanelW = 142;
-
-            // Live stream header tag
-            using (var bTagBg = new SolidBrush(Color.FromArgb(16, 24, 38)))
-            using (var pTag = new Pen(Color.FromArgb(60, cyan.R, cyan.G, cyan.B), 1f)) {
-                g.FillRectangle(bTagBg, 16, 14, 110, 18);
-                g.DrawRectangle(pTag, 16, 14, 110, 18);
-            }
-            float dotPulse = (float)(0.65f + 0.35f * Math.Sin(progress * Math.PI * 2));
-            int dotA = (int)(255 * dotPulse);
-            using (var bDotGlow = new SolidBrush(Color.FromArgb((int)(dotA * 0.4f), cyan.R, cyan.G, cyan.B)))
-            using (var bDot = new SolidBrush(Color.FromArgb(dotA, cyan.R, cyan.G, cyan.B))) {
-                g.FillEllipse(bDotGlow, 21, 18, 10, 10);
-                g.FillEllipse(bDot, 23, 20, 6, 6);
-            }
-            using (var bTagText = new SolidBrush(Color.FromArgb(220, 235, 248))) {
-                g.DrawString("LIVE TELEMETRY", fontSmall, bTagText, 34, 17);
-            }
-
-            // Big 264 Metric
-            float numY = 40;
-            using (var bNumGlow = new SolidBrush(Color.FromArgb(70, cyan.R, cyan.G, cyan.B)))
-            using (var bNum = new SolidBrush(textWhite)) {
-                g.DrawString("264", fontBig, bNumGlow, 15.5f, numY + 0.5f);
-                g.DrawString("264", fontBig, bNum, 14, numY);
-            }
-
-            // Sub-labels
-            using (var bLabel = new SolidBrush(cyan)) {
-                g.DrawString("CONTRIBUTIONS", fontLabel, bLabel, 16, 88);
-            }
-            using (var bActive = new SolidBrush(emerald)) {
-                g.DrawString(activeWeeks + " ACTIVE WEEKS", fontLabel, bActive, 16, 104);
-            }
-
-            // Divider line
-            using (var pDiv = new Pen(Color.FromArgb(30, 42, 60), 1f)) {
-                g.DrawLine(pDiv, 16, 122, 126, 122);
-            }
-
-            // Bottom telemetry specs
-            using (var bSpec = new SolidBrush(textMuted)) {
-                g.DrawString("PERIOD // 365 DAYS", fontSmall, bSpec, 16, 130);
-                g.DrawString("AUDIT  // VERIFIED", fontSmall, bSpec, 16, 144);
-                g.DrawString("PEAK   // 4 COMMITS/D", fontSmall, bSpec, 16, 158);
-                g.DrawString("RATE   // 100% SYNC", fontSmall, bSpec, 16, 172);
-            }
-
-            // Vertical separator between panel and matrix
-            using (var pVert = new Pen(Color.FromArgb(24, 34, 50), 1f)) {
-                g.DrawLine(pVert, leftPanelW, 14, leftPanelW, h - 14);
-            }
-            using (var pVertAccent = new Pen(Color.FromArgb(80, cyan.R, cyan.G, cyan.B), 1.5f)) {
-                g.DrawLine(pVertAccent, leftPanelW, 14, leftPanelW, 26);
-                g.DrawLine(pVertAccent, leftPanelW, h - 26, leftPanelW, h - 14);
-            }
-
-            // ================= RIGHT HEATMAP MATRIX PANEL =================
-            int startX = 172;
-            int startY = 38;
-            int tile = 9;
-            int gap = 3;
-            int step = tile + gap;
-            int weeks = 53;
-            int days = 7;
-
-            // Header Row: Months
-            string[] months = new string[] { "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug" };
-            using (var bMonth = new SolidBrush(textMuted)) {
-                for (int m = 0; m < months.Length; m++) {
-                    int mx = startX + (int)(m * (weeks / 12.0f) * step);
-                    g.DrawString(months[m], fontMono, bMonth, mx, 20);
-                }
-            }
-
-            // Left Day Labels (M, W, F)
-            using (var bDay = new SolidBrush(textDim)) {
-                g.DrawString("M", fontSmall, bDay, startX - 16, startY + 8);
-                g.DrawString("W", fontSmall, bDay, startX - 16, startY + 32);
-                g.DrawString("F", fontSmall, bDay, startX - 16, startY + 56);
-            }
-
-            // Radar laser sweep calculation
-            float sweep = 0.5f + 0.5f * (float)Math.Sin((progress - 0.25f) * Math.PI * 2f);
-            float focusWeek = 0.75f + (weeks - 1.5f) * sweep;
-            float markerX = startX + focusWeek * step + (tile / 2f);
-
-            // Subtle vertical radar beam line over the heatmap
-            using (var pSweep = new Pen(Color.FromArgb(90, cyan.R, cyan.G, cyan.B), 1f)) {
-                g.DrawLine(pSweep, markerX, startY - 2, markerX, startY + (days * step));
-            }
-
-            // Draw Cells
-            for (int x = 0; x < weeks; x++) {
-                for (int y = 0; y < days; y++) {
-                    int tx = startX + x * step;
-                    int ty = startY + y * step;
-                    int val = grid[x, y];
-                    Color fill = cellColors[val];
-
-                    // Active sweep highlight
-                    float dist = Math.Abs(x - focusWeek);
-                    if (dist < 1.2f && val > 0) {
-                        fill = Mix(fill, Color.FromArgb(240, 255, 255), (1.2f - dist) / 1.2f * 0.28f);
-                    }
-
-                    using (var bCell = new SolidBrush(fill)) {
-                        g.FillRectangle(bCell, tx, ty, tile, tile);
-                    }
-                    using (var pCell = new Pen(Color.FromArgb(30, 42, 60), 1f)) {
-                        g.DrawRectangle(pCell, tx, ty, tile, tile);
-                    }
-
-                    // Neon halo on laser contact
-                    if (dist < 1.6f && val > 0) {
-                        int alpha = (int)(70f + 120f * (1.6f - dist) / 1.6f);
-                        using (var pGlow = new Pen(Color.FromArgb(alpha, cyan.R, cyan.G, cyan.B), 1f)) {
-                            g.DrawRectangle(pGlow, tx - 1, ty - 1, tile + 2, tile + 2);
-                        }
-                    }
-                }
-            }
-
-            // ================= BOTTOM WEEKLY ACTIVITY WAVEFORM =================
-            int chartX = startX;
-            int chartY = startY + (days * step) + 22;
-            int chartW = weeks * step - gap;
-            int chartH = 24;
-
-            // Waveform container background
-            using (var bChartBg = new SolidBrush(Color.FromArgb(12, 16, 26)))
-            using (var pChartBorder = new Pen(Color.FromArgb(24, 34, 50), 1f)) {
-                g.FillRectangle(bChartBg, chartX - 4, chartY - 14, chartW + 8, chartH + 20);
-                g.DrawRectangle(pChartBorder, chartX - 4, chartY - 14, chartW + 8, chartH + 20);
-            }
-
-            // Title above waveform
-            using (var bWaveTitle = new SolidBrush(textMuted)) {
-                g.DrawString("WEEKLY COMMIT VELOCITY", fontLabel, bWaveTitle, chartX, chartY - 11);
-            }
-
-            // Legend on right
-            int legX = chartX + chartW - 136;
-            using (var bLegText = new SolidBrush(textDim)) {
-                g.DrawString("LESS", fontSmall, bLegText, legX, chartY - 10);
-            }
-            for (int i = 0; i < 5; i++) {
-                int lx = legX + 30 + i * 14;
-                using (var bL = new SolidBrush(cellColors[i])) {
-                    g.FillRectangle(bL, lx, chartY - 11, tile, tile);
-                }
-                using (var pL = new Pen(Color.FromArgb(40, 54, 76), 1f)) {
-                    g.DrawRectangle(pL, lx, chartY - 11, tile, tile);
-                }
-            }
-            using (var bLegText = new SolidBrush(textDim)) {
-                g.DrawString("MORE", fontSmall, bLegText, legX + 104, chartY - 10);
-            }
-
-            // Baseline
-            using (var pBase = new Pen(Color.FromArgb(32, 44, 64), 1f)) {
-                g.DrawLine(pBase, chartX, chartY + chartH, chartX + chartW, chartY + chartH);
-            }
-
-            // Build Waveform Curve
-            PointF[] curve = new PointF[weeks];
-            int maxVal = 1;
-            for (int x = 0; x < weeks; x++) {
-                if (weeksTotals[x] > maxVal) maxVal = weeksTotals[x];
-            }
-            for (int x = 0; x < weeks; x++) {
-                float xx = chartX + x * step + (tile / 2f);
-                float yy = chartY + chartH - ((float)weeksTotals[x] / maxVal) * chartH;
-                curve[x] = new PointF(xx, yy);
-            }
-
-            // Draw Area Gradient under curve
-            using (var pathArea = new GraphicsPath()) {
-                pathArea.AddLine(chartX, chartY + chartH, curve[0].X, curve[0].Y);
-                pathArea.AddCurve(curve, 0.35f);
-                pathArea.AddLine(curve[weeks - 1].X, chartY + chartH, chartX, chartY + chartH);
-                using (var brushArea = new LinearGradientBrush(
-                    new RectangleF(chartX, chartY, chartW, chartH),
-                    Color.FromArgb(40, purple.R, purple.G, purple.B),
-                    Color.Transparent, 90f)) {
-                    g.FillPath(brushArea, pathArea);
-                }
-            }
-
-            // Draw Waveform Stroke
-            using (var pCurve = new Pen(Color.FromArgb(200, purple.R, purple.G, purple.B), 1.5f)) {
-                g.DrawCurve(pCurve, curve, 0.35f);
-            }
-
-            // Vertical radar tracker on waveform
-            using (var pMarker = new Pen(Color.FromArgb(180, cyan.R, cyan.G, cyan.B), 1f)) {
-                g.DrawLine(pMarker, markerX, chartY - 3, markerX, chartY + chartH + 3);
-            }
-
-            // Glowing pip on curve
-            int mIdx = Math.Max(0, Math.Min(weeks - 1, (int)Math.Round(focusWeek)));
-            float markerY = curve[mIdx].Y;
-            using (var bPipGlow = new SolidBrush(Color.FromArgb(80, cyan.R, cyan.G, cyan.B)))
-            using (var bPip = new SolidBrush(cyan))
-            using (var bPipCore = new SolidBrush(Color.White)) {
-                g.FillEllipse(bPipGlow, markerX - 6, markerY - 6, 12, 12);
-                g.FillEllipse(bPip, markerX - 3.5f, markerY - 3.5f, 7, 7);
-                g.FillEllipse(bPipCore, markerX - 1.5f, markerY - 1.5f, 3, 3);
-            }
-        }
-    }
-
-    public static void Render(string outputPath, string matrixFile, int totalFrames = 32, int delayMs = 50) {
-        int w = 840, h = 220;
-        int weeks = 53, days = 7;
+    public static void Render(string outputPath, string matrixFile, int totalContrib = 298, int totalFrames = 48) {
+        int w = 840, h = 220, weeks = 53, days = 7;
         int[,] grid = new int[weeks, days];
-        int[] weeksTotals = new int[weeks];
-        int activeWeeks = 0;
-
         if (File.Exists(matrixFile)) {
-            string[] cols = File.ReadAllText(matrixFile).Trim().Split(';');
+            string[] cols = File.ReadAllText(matrixFile).Split(';');
             for (int x = 0; x < Math.Min(weeks, cols.Length); x++) {
                 string[] vals = cols[x].Split(',');
-                for (int y = 0; y < Math.Min(days, vals.Length); y++) {
-                    int n;
-                    if (int.TryParse(vals[y], out n)) {
-                        grid[x, y] = Math.Max(0, Math.Min(4, n));
-                    }
-                }
+                for (int y = 0; y < Math.Min(days, vals.Length); y++) { int n; if (int.TryParse(vals[y], out n)) grid[x, y] = Math.Max(0, Math.Min(4, n)); }
             }
         }
-
+        Color cyan = C(255, 76, 231, 255);
+        Color violet = C(255, 172, 127, 255);
+        Color lime = C(255, 183, 241, 106);
+        Color ink = C(245, 242, 250, 255);
+        Color muted = C(185, 196, 210, 220);
+        Color[] cells = new Color[] { C(190, 8, 14, 24), C(220, 18, 39, 61), C(235, 31, 83, 104), C(240, 76, 163, 160), C(245, 183, 241, 106) };
+        var frames = new Bitmap[totalFrames];
+        int startX = 145, startY = 55, tile = 9, gap = 3, step = tile + gap;
+        int[] weeksTotals = new int[weeks];
+        int activeWeeks = 0;
         for (int x = 0; x < weeks; x++) {
             for (int y = 0; y < days; y++) weeksTotals[x] += grid[x, y];
             if (weeksTotals[x] > 0) activeWeeks++;
         }
 
-        var frames = new Bitmap[totalFrames];
         for (int f = 0; f < totalFrames; f++) {
-            float progress = (float)f / totalFrames;
+            float t = (float)f / totalFrames;
             var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb);
             using (var g = Graphics.FromImage(bmp)) {
-                RenderFrame(g, w, h, grid, weeksTotals, activeWeeks, progress);
+                Quality(g);
+                using (var bg = new LinearGradientBrush(new Rectangle(0, 0, w, h), C(255, 3, 6, 11), C(255, 7, 11, 19), 90f)) g.FillRectangle(bg, 0, 0, w, h);
+                using (var border = new Pen(C(80, 42, 61, 82), 1f)) g.DrawRectangle(border, 1, 1, w - 3, h - 3);
+                using (var p = new Pen(C(180, cyan.R, cyan.G, cyan.B), 2f)) g.DrawLine(p, 3, 3, 37, 3);
+                using (var p = new Pen(C(180, violet.R, violet.G, violet.B), 2f)) g.DrawLine(p, 39, 3, 73, 3);
+                using (var p = new Pen(C(180, lime.R, lime.G, lime.B), 2f)) g.DrawLine(p, 75, 3, 109, 3);
+                using (var b = new SolidBrush(C(150, 4, 9, 18))) g.FillRectangle(b, 140, 37, 646, 111);
+                using (var p = new Pen(C(55, 40, 57, 78), 1f)) g.DrawRectangle(p, 140, 37, 646, 111);
+                using (var b = new SolidBrush(C(110, 4, 9, 17))) g.FillRectangle(b, 140, 153, 646, 49);
+                using (var p = new Pen(C(48, 40, 57, 70), 1f)) g.DrawRectangle(p, 140, 153, 646, 49);
+                Text(g, "03 // CONTRIBUTIONS", "Consolas", 7.2f, FontStyle.Bold, cyan, 14, 12);
+                using (var b = new SolidBrush(C(210, lime.R, lime.G, lime.B))) g.FillEllipse(b, 760, 15, 6, 6);
+                Text(g, "YEAR VIEW", "Consolas", 6.8f, FontStyle.Bold, muted, 773, 12);
+                Text(g, totalContrib.ToString(), "Segoe UI", 26f, FontStyle.Bold, ink, 14, 43);
+                Text(g, "CONTRIBUTIONS", "Consolas", 6.5f, FontStyle.Bold, muted, 16, 88);
+                Text(g, activeWeeks.ToString().PadLeft(2, '0') + " ACTIVE WEEKS", "Consolas", 6.5f, FontStyle.Bold, lime, 16, 108);
+                using (var p = new Pen(C(80, 53, 69, 88), 1f)) g.DrawLine(p, 16, 124, 112, 124);
+                Text(g, "LAST 12 MONTHS", "Consolas", 6.2f, FontStyle.Regular, muted, 16, 137);
+                using (var p = new Pen(C(85, 40, 53, 75), 1f)) g.DrawLine(p, 124, 42, 124, 147);
+
+                string[] months = new string[] { "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug" };
+                for (int m = 0; m < months.Length; m++) { int mx = startX + (int)(m * (weeks / 12.0f) * step); Text(g, months[m], "Consolas", 6.6f, FontStyle.Regular, muted, mx, 42); }
+                Text(g, "M", "Consolas", 6.2f, FontStyle.Regular, muted, 131, startY + 7);
+                Text(g, "W", "Consolas", 6.2f, FontStyle.Regular, muted, 131, startY + 31);
+                Text(g, "F", "Consolas", 6.2f, FontStyle.Regular, muted, 131, startY + 55);
+
+                int chartX = startX;
+                float sweep = 0.5f + 0.5f * (float)Math.Sin((t - 0.25f) * Math.PI * 2f);
+                float focusWeek = 0.75f + (weeks - 1.5f) * sweep;
+                float markerX = chartX + focusWeek * step;
+                using (var p = new Pen(C(75, cyan.R, cyan.G, cyan.B), 1f)) g.DrawLine(p, markerX, 44, markerX, 146);
+                for (int x = 0; x < weeks; x++) for (int y = 0; y < days; y++) {
+                    int tx = startX + x * step, ty = startY + y * step;
+                    Color fill = cells[grid[x, y]];
+                    float distance = Math.Abs(x - focusWeek);
+                    if (distance < 1.2f && grid[x, y] > 0) fill = Mix(fill, C(255, 226, 240, 255), (1.2f - distance) / 1.2f * 0.18f);
+                    using (var b = new SolidBrush(fill)) g.FillRectangle(b, tx, ty, tile, tile);
+                    using (var p = new Pen(C(55, 46, 65, 89), 1f)) g.DrawRectangle(p, tx, ty, tile, tile);
+                    if (distance < 1.75f) { int alpha = (int)(55f + 100f * (1.75f - distance) / 1.75f); using (var p = new Pen(C(alpha, cyan.R, cyan.G, cyan.B), 1f)) g.DrawRectangle(p, tx - 1, ty - 1, tile + 2, tile + 2); }
+                }
+
+                int chartY = 174, chartW = weeks * step - gap, chartH = 22;
+                Text(g, "WEEKLY ACTIVITY", "Consolas", 6.2f, FontStyle.Bold, muted, chartX, 158);
+                using (var p = new Pen(C(55, 53, 73, 95), 1f)) g.DrawLine(p, chartX, chartY + chartH, chartX + chartW, chartY + chartH);
+                PointF[] curve = new PointF[weeks];
+                int max = 1; for (int x = 0; x < weeks; x++) if (weeksTotals[x] > max) max = weeksTotals[x];
+                for (int x = 0; x < weeks; x++) { float xx = chartX + x * step; float yy = chartY + chartH - ((float)weeksTotals[x] / max) * chartH; curve[x] = new PointF(xx, yy); }
+                using (var p = new Pen(C(180, violet.R, violet.G, violet.B), 1.15f)) g.DrawCurve(p, curve, 0.35f);
+                using (var p = new Pen(C(190, cyan.R, cyan.G, cyan.B), 1f)) g.DrawLine(p, markerX, chartY - 1, markerX, chartY + chartH + 1);
+                int markerIndex = Math.Max(0, Math.Min(weeks - 1, (int)Math.Round(focusWeek)));
+                float markerY = curve[markerIndex].Y;
+                using (var b = new SolidBrush(C(40, cyan.R, cyan.G, cyan.B))) g.FillEllipse(b, markerX - 4, markerY - 4, 8, 8);
+                using (var b = new SolidBrush(C(235, cyan.R, cyan.G, cyan.B))) g.FillEllipse(b, markerX - 2, markerY - 2, 4, 4);
+                Text(g, "LESS", "Consolas", 6.2f, FontStyle.Regular, muted, 674, 158);
+                for (int i = 0; i < 5; i++) { using (var b = new SolidBrush(cells[i])) g.FillRectangle(b, 702 + i * 12, 157, tile, tile); using (var p = new Pen(C(55, 46, 65, 89), 1f)) g.DrawRectangle(p, 702 + i * 12, 157, tile, tile); }
+                Text(g, "MORE", "Consolas", 6.2f, FontStyle.Regular, muted, 774, 158);
             }
             frames[f] = bmp;
         }
-
-        SaveGif(outputPath, frames, delayMs);
+        SaveGif(outputPath, frames, 55);
         frames[0].Save(outputPath.Replace(".gif", ".png"), ImageFormat.Png);
         frames[0].Save(outputPath.Replace(".gif", "_frame.png"), ImageFormat.Png);
-
         for (int i = 0; i < totalFrames; i++) frames[i].Dispose();
-        Console.WriteLine("Rendered Telemetry Table to: " + outputPath);
     }
 }
 "@
 
 Add-Type -TypeDefinition $source -ReferencedAssemblies "System.Drawing"
-
 $assetsDir = "E:\Projects\Readme\assets"
 $matrixFile = "E:\Projects\Readme\real_contrib_matrix.txt"
 $contribGif = "$assetsDir\contrib.gif"
 $contribV2Gif = "$assetsDir\contrib_v2.gif"
 
-Write-Host "Rendering state-of-the-art Live Telemetry Table (contrib.gif)..."
-[ContributionTable]::Render($contribV2Gif, $matrixFile, 32, 50)
-Copy-Item $contribV2Gif $contribGif -Force
-
-Write-Host "Telemetry table rendered successfully!"
-Get-ChildItem "$assetsDir\contrib*.gif" | Select-Object Name, Length
+Write-Host "Rendering contribution table with preserved original design and updated 298 live data..."
+[ContributionTable]::Render($contribGif, $matrixFile, 298, 48)
+Copy-Item $contribGif $contribV2Gif -Force
+Write-Host "Contribution table rendered successfully!"
+$img = [System.Drawing.Image]::FromFile($contribGif)
+try { Write-Host ("{0}x{1}, {2} frames" -f $img.Width, $img.Height, $img.GetFrameCount([System.Drawing.Imaging.FrameDimension]::Time)) } finally { $img.Dispose() }

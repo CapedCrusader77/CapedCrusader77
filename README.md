@@ -36,13 +36,9 @@
 
 <br>
 
-<!-- 03 // LIVE TELEMETRY & CONTRIBUTIONS -->
+<!-- 03 // CONTRIBUTIONS -->
 <p align="center">
-  <img src="assets/banner_contrib_v3.gif?v=21" width="840" alt="live telemetry and contributions">
-</p>
-
-<p align="center">
-  <img src="assets/contrib_v2.gif?v=35" width="840" alt="Animated Live Telemetry & GitHub contribution activity table for the last 12 months">
+  <img src="assets/contrib.gif?v=38" width="840" alt="Animated GitHub contribution table for the last 12 months">
 </p>
 
 <br>
