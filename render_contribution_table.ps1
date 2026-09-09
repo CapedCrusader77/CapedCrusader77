@@ -93,7 +93,7 @@ public class ContributionTable {
         return C(255, (int)(a.R + (b.R - a.R) * amount), (int)(a.G + (b.G - a.G) * amount), (int)(a.B + (b.B - a.B) * amount));
     }
 
-    public static void Render(string outputPath, string matrixFile, int totalContrib = 298, int totalFrames = 48) {
+    public static void Render(string outputPath, string matrixFile, int totalContrib = 367, int totalFrames = 48) {
         int w = 840, h = 220, weeks = 53, days = 7;
         int[,] grid = new int[weeks, days];
         if (File.Exists(matrixFile)) {
@@ -195,8 +195,8 @@ $matrixFile = "E:\Projects\Readme\real_contrib_matrix.txt"
 $contribGif = "$assetsDir\contrib.gif"
 $contribV2Gif = "$assetsDir\contrib_v2.gif"
 
-Write-Host "Rendering contribution table with preserved original design and updated 298 live data..."
-[ContributionTable]::Render($contribGif, $matrixFile, 298, 48)
+Write-Host "Rendering contribution table with preserved original design and updated 367 live data..."
+[ContributionTable]::Render($contribGif, $matrixFile, 367, 48)
 Copy-Item $contribGif $contribV2Gif -Force
 Write-Host "Contribution table rendered successfully!"
 $img = [System.Drawing.Image]::FromFile($contribGif)
