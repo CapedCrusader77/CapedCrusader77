@@ -241,29 +241,30 @@ public class NeuralLabRendererV2 {
             }
         }
 
-        // 5. LEFT HERO TYPOGRAPHY: PURE, ICONIC GOKUL A
-        using (var fontTitle = new Font("Segoe UI", 58 * sx, FontStyle.Bold)) {
-            float titleX = 65 * sx;
-            float titleY = 125 * sy;
+        // 5. LEFT HERO TYPOGRAPHY: REFINED G O K U L   A
+        using (var fontTitle = new Font("Bahnschrift", 46 * sx, FontStyle.Bold)) {
+            float titleX = 58 * sx;
+            float titleY = 118 * sy;
+            string text = "G O K U L   A";
 
             // Ambient cyan glow bloom
             using (var brushOuter = new SolidBrush(Color.FromArgb(40, 0, 240, 255))) {
-                g.DrawString("GOKUL A", fontTitle, brushOuter, titleX - 2.5f * sx, titleY);
-                g.DrawString("GOKUL A", fontTitle, brushOuter, titleX + 2.5f * sx, titleY);
-                g.DrawString("GOKUL A", fontTitle, brushOuter, titleX, titleY - 2.5f * sy);
-                g.DrawString("GOKUL A", fontTitle, brushOuter, titleX, titleY + 2.5f * sy);
+                g.DrawString(text, fontTitle, brushOuter, titleX - 2.5f * sx, titleY);
+                g.DrawString(text, fontTitle, brushOuter, titleX + 2.5f * sx, titleY);
+                g.DrawString(text, fontTitle, brushOuter, titleX, titleY - 2.5f * sy);
+                g.DrawString(text, fontTitle, brushOuter, titleX, titleY + 2.5f * sy);
             }
             using (var brushGlow = new SolidBrush(Color.FromArgb(130, 0, 240, 255))) {
-                g.DrawString("GOKUL A", fontTitle, brushGlow, titleX + 1.8f * sx, titleY + 1.8f * sy);
+                g.DrawString(text, fontTitle, brushGlow, titleX + 1.8f * sx, titleY + 1.8f * sy);
             }
             // Crisp, brilliant white foreground
-            using (var brushMain = new SolidBrush(Color.FromArgb(255, 255, 255, 255))) {
-                g.DrawString("GOKUL A", fontTitle, brushMain, titleX, titleY);
+            using (var brushMain = new SolidBrush(Color.White)) {
+                g.DrawString(text, fontTitle, brushMain, titleX, titleY);
             }
 
-            // Sleek Gradient Accent Underline
-            float lineY = titleY + 86 * sy;
-            float lineW = 290 * sx;
+            // Sleek Gradient Accent Underline - Placed comfortably down below the name
+            float lineY = titleY + 94 * sy;
+            float lineW = 335 * sx;
             using (var lineBrush = new LinearGradientBrush(
                 new RectangleF(titleX, lineY, lineW, 3f),
                 Color.FromArgb(255, 0, 240, 255), Color.Transparent, 0f)) {
@@ -327,6 +328,7 @@ $heroCoreGif = "e:\Projects\Readme\assets\hero_core.gif"
 $heroMainGif = "e:\Projects\Readme\assets\hero_main.gif"
 $heroCleanGif = "e:\Projects\Readme\assets\hero_clean.gif"
 $heroAuroraGif = "e:\Projects\Readme\assets\hero_aurora.gif"
+$heroV2Gif = "e:\Projects\Readme\assets\hero_v2.gif"
 $previewPng = "e:\Projects\Readme\assets\hero_preview.png"
 $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 
@@ -336,15 +338,16 @@ $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 # Save sample frame for PNG inspection
 [NeuralLabRendererV2]::SavePreviewFrame($previewPng, $operativePath, 840, 350, 0.25)
 
-# Copy to assets/hero.gif, hero_core.gif, hero_main.gif, hero_clean.gif, and hero_aurora.gif
+# Copy to assets
 Copy-Item $optGif $heroGif -Force
 Copy-Item $optGif $heroCoreGif -Force
 Copy-Item $optGif $heroMainGif -Force
 Copy-Item $optGif $heroCleanGif -Force
 Copy-Item $optGif $heroAuroraGif -Force
-Write-Host "Copied $optGif to assets"
+Copy-Item $optGif $heroV2Gif -Force
+Write-Host "Copied $optGif to assets including hero_v2.gif"
 
-$heroItem = Get-Item $heroAuroraGif
+$heroItem = Get-Item $heroV2Gif
 Write-Output "=== COMPLETE HERO EXPORT REPORT ==="
 Write-Output "GIF Size: $([math]::Round($heroItem.Length / 1MB, 2)) MB ($($heroItem.Length) bytes)"
 if ($heroItem.Length -lt 5000000) {
