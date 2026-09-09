@@ -5,7 +5,7 @@
 -->
 
 <p align="center">
-  <img src="assets/hero_v2.gif?v=36" width="840" alt="Gokul A">
+  <img src="assets/hero_v4.gif?v=38" width="840" alt="Gokul A">
 </p>
 
 <p align="center">

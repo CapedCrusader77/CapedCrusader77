@@ -175,12 +175,12 @@ public class NeuralLabRendererV2 {
             }
         }
 
-        // 4. RIGHT SIDE: LO-FI DEVELOPER WORKSPACE (Seamless edge blending)
+        // 4. RIGHT SIDE: LO-FI DEVELOPER WORKSPACE (Shifted right to guarantee wide margin)
         if (operativeImg != null) {
-            float vpX = 405f * sx;
-            float vpY = 20f * sy;
-            float vpW = 415f * sx;
-            float vpH = 308f * sy;
+            float vpX = 450f * sx;
+            float vpY = 18f * sy;
+            float vpW = 380f * sx;
+            float vpH = 312f * sy;
 
             int srcW = operativeImg.Width;
             int srcH = operativeImg.Height;
@@ -195,26 +195,26 @@ public class NeuralLabRendererV2 {
             g.DrawImage(operativeImg, dstRect, srcRect, GraphicsUnit.Pixel);
 
             // Soft seamless gradients blending image completely into background
-            using (var lFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY - 1, 95 * sx, vpH + 2), Color.FromArgb(7, 9, 15), Color.Transparent, 0f)) {
-                g.FillRectangle(lFade, vpX - 1, vpY - 1, 95 * sx, vpH + 2);
+            using (var lFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY - 1, 90 * sx, vpH + 2), Color.FromArgb(7, 9, 15), Color.Transparent, 0f)) {
+                g.FillRectangle(lFade, vpX - 1, vpY - 1, 90 * sx, vpH + 2);
             }
-            using (var rFade = new LinearGradientBrush(new RectangleF(vpX + vpW - 65 * sx, vpY - 1, 66 * sx, vpH + 2), Color.Transparent, Color.FromArgb(7, 9, 15), 0f)) {
-                g.FillRectangle(rFade, vpX + vpW - 65 * sx, vpY - 1, 66 * sx, vpH + 2);
+            using (var rFade = new LinearGradientBrush(new RectangleF(vpX + vpW - 45 * sx, vpY - 1, 46 * sx, vpH + 2), Color.Transparent, Color.FromArgb(7, 9, 15), 0f)) {
+                g.FillRectangle(rFade, vpX + vpW - 45 * sx, vpY - 1, 46 * sx, vpH + 2);
             }
-            using (var bFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY + vpH - 55 * sy, vpW + 2, 56 * sy), Color.Transparent, Color.FromArgb(7, 9, 15), 90f)) {
-                g.FillRectangle(bFade, vpX - 1, vpY + vpH - 55 * sy, vpW + 2, 56 * sy);
+            using (var bFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY + vpH - 50 * sy, vpW + 2, 51 * sy), Color.Transparent, Color.FromArgb(7, 9, 15), 90f)) {
+                g.FillRectangle(bFade, vpX - 1, vpY + vpH - 50 * sy, vpW + 2, 51 * sy);
             }
-            using (var tFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY - 1, vpW + 2, 45 * sy), Color.FromArgb(7, 9, 15), Color.Transparent, 90f)) {
-                g.FillRectangle(tFade, vpX - 1, vpY - 1, vpW + 2, 45 * sy);
+            using (var tFade = new LinearGradientBrush(new RectangleF(vpX - 1, vpY - 1, vpW + 2, 40 * sy), Color.Transparent, Color.FromArgb(7, 9, 15), 90f)) {
+                g.FillRectangle(tFade, vpX - 1, vpY - 1, vpW + 2, 40 * sy);
             }
 
             // Equalizer Waveform Bars (Lo-Fi beats aesthetic)
-            float eqX = vpX + 40 * sx;
+            float eqX = vpX + 35 * sx;
             float eqY = vpY + vpH - 42 * sy;
-            float eqW = vpW - 60 * sx;
+            float eqW = vpW - 55 * sx;
             float eqH = 22 * sy;
 
-            int numBars = 32;
+            int numBars = 30;
             float barW = (eqW / numBars) - 2.5f * sx;
             for (int b = 0; b < numBars; b++) {
                 float bx = eqX + b * (barW + 2.5f * sx);
@@ -241,11 +241,11 @@ public class NeuralLabRendererV2 {
             }
         }
 
-        // 5. LEFT HERO TYPOGRAPHY: REFINED G O K U L   A
-        using (var fontTitle = new Font("Bahnschrift", 46 * sx, FontStyle.Bold)) {
-            float titleX = 58 * sx;
-            float titleY = 118 * sy;
-            string text = "G O K U L   A";
+        // 5. LEFT HERO TYPOGRAPHY: BALANCED WITH GENEROUS 100PX MARGIN (ZERO OVERLAP)
+        using (var fontTitle = new Font("Bahnschrift", 39 * sx, FontStyle.Bold)) {
+            float titleX = 52 * sx;
+            float titleY = 120 * sy;
+            string text = "G O K U L  A";
 
             // Ambient cyan glow bloom
             using (var brushOuter = new SolidBrush(Color.FromArgb(40, 0, 240, 255))) {
@@ -263,8 +263,8 @@ public class NeuralLabRendererV2 {
             }
 
             // Sleek Gradient Accent Underline - Placed comfortably down below the name
-            float lineY = titleY + 94 * sy;
-            float lineW = 335 * sx;
+            float lineY = titleY + 86 * sy;
+            float lineW = 270 * sx;
             using (var lineBrush = new LinearGradientBrush(
                 new RectangleF(titleX, lineY, lineW, 3f),
                 Color.FromArgb(255, 0, 240, 255), Color.Transparent, 0f)) {
@@ -329,6 +329,7 @@ $heroMainGif = "e:\Projects\Readme\assets\hero_main.gif"
 $heroCleanGif = "e:\Projects\Readme\assets\hero_clean.gif"
 $heroAuroraGif = "e:\Projects\Readme\assets\hero_aurora.gif"
 $heroV2Gif = "e:\Projects\Readme\assets\hero_v2.gif"
+$heroV4Gif = "e:\Projects\Readme\assets\hero_v4.gif"
 $previewPng = "e:\Projects\Readme\assets\hero_preview.png"
 $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 
@@ -345,9 +346,10 @@ Copy-Item $optGif $heroMainGif -Force
 Copy-Item $optGif $heroCleanGif -Force
 Copy-Item $optGif $heroAuroraGif -Force
 Copy-Item $optGif $heroV2Gif -Force
-Write-Host "Copied $optGif to assets including hero_v2.gif"
+Copy-Item $optGif $heroV4Gif -Force
+Write-Host "Copied $optGif to assets including hero_v4.gif"
 
-$heroItem = Get-Item $heroV2Gif
+$heroItem = Get-Item $heroV4Gif
 Write-Output "=== COMPLETE HERO EXPORT REPORT ==="
 Write-Output "GIF Size: $([math]::Round($heroItem.Length / 1MB, 2)) MB ($($heroItem.Length) bytes)"
 if ($heroItem.Length -lt 5000000) {
