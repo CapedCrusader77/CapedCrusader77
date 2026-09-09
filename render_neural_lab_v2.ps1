@@ -176,49 +176,20 @@ public class NeuralLabRendererV2 {
                 g.FillRectangle(tFade, vpX, vpY - 1, vpW, 25 * sy);
             }
 
-            // HUD Frame Corner Reticles
-            // Frame Corner Reticles
-            DrawCornerBrackets(g, vpX + 30 * sx, vpY + 10 * sy, vpW - 40 * sx, vpH - 25 * sy, Color.FromArgb(240, 0, 240, 255), 14f);
+            // Clean Frame Corner Reticles
+            DrawCornerBrackets(g, vpX + 30 * sx, vpY + 10 * sy, vpW - 40 * sx, vpH - 25 * sy, Color.FromArgb(200, 0, 240, 255), 14f);
 
-            // HUD Top Tag
+            // Top Label
             using (var fontTag = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
-            using (var hBg = new SolidBrush(Color.FromArgb(235, 8, 12, 20)))
-            using (var hBorder = new Pen(Color.FromArgb(160, 0, 240, 255), 1f))
-            using (var hText = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
-                g.FillRectangle(hBg, vpX + 50 * sx, vpY + 4 * sy, 220 * sx, 18 * sy);
-                g.DrawRectangle(hBorder, vpX + 50 * sx, vpY + 4 * sy, 220 * sx, 18 * sy);
-                g.DrawString("// DEV ENVIRONMENT // CAPEDCRUSADER77", fontTag, hText, vpX + 56 * sx, vpY + 6 * sy);
+            using (var hBg = new SolidBrush(Color.FromArgb(220, 8, 12, 20)))
+            using (var hBorder = new Pen(Color.FromArgb(140, 0, 240, 255), 1f))
+            using (var hText = new SolidBrush(Color.FromArgb(240, 0, 240, 255))) {
+                g.FillRectangle(hBg, vpX + 50 * sx, vpY + 4 * sy, 210 * sx, 18 * sy);
+                g.DrawRectangle(hBorder, vpX + 50 * sx, vpY + 4 * sy, 210 * sx, 18 * sy);
+                g.DrawString("// DEVELOPER WORKSPACE // FOCUS", fontTag, hText, vpX + 56 * sx, vpY + 6 * sy);
             }
 
-            // Visor Focus Reticle Box
-            float visorX = vpX + 175 * sx;
-            float visorY = vpY + 85 * sy;
-            float visorW = 145 * sx;
-            float visorH = 125 * sy;
-
-            float pulse = 0.72f + 0.28f * (float)Math.Sin(theta * 2.0);
-            int retAlpha = (int)(255 * pulse);
-            DrawCornerBrackets(g, visorX, visorY, visorW, visorH, Color.FromArgb(retAlpha, 0, 240, 255), 10f);
-
-            // Continuous Holographic Laser Scanline
-            float scanNorm = (u * 2.0f) % 1.0f;
-            float hudScanY = visorY + scanNorm * visorH;
-            float scanFade = (float)Math.Sin(scanNorm * Math.PI);
-
-            using (var hudScanBrush = new LinearGradientBrush(
-                new RectangleF(visorX, hudScanY - 6, visorW, 12),
-                Color.Transparent, Color.Transparent, 0f)) {
-                var cb = new ColorBlend(3);
-                cb.Colors = new Color[] { Color.Transparent, Color.FromArgb((int)(140 * scanFade), 0, 240, 255), Color.Transparent };
-                cb.Positions = new float[] { 0f, 0.5f, 1f };
-                hudScanBrush.InterpolationColors = cb;
-                g.FillRectangle(hudScanBrush, visorX, hudScanY - 6, visorW, 12);
-            }
-            using (var scanLinePen = new Pen(Color.FromArgb((int)(245 * scanFade), 0, 240, 255), 1.2f)) {
-                g.DrawLine(scanLinePen, visorX, hudScanY, visorX + visorW, hudScanY);
-            }
-
-            // Equalizer Waveform Bars
+            // Equalizer Waveform Bars (Lo-Fi beats aesthetic)
             float eqX = vpX + 45 * sx;
             float eqY = vpY + vpH - 46 * sy;
             float eqW = vpW - 60 * sx;
@@ -230,9 +201,9 @@ public class NeuralLabRendererV2 {
                 float bx = eqX + b * (barW + 2.5f * sx);
                 float normB = (float)b / numBars;
 
-                float barMag = (float)(0.40f 
+                float barMag = (float)(0.38f 
                     + 0.35f * Math.Sin(theta * 2.0f + normB * 6.283f) 
-                    + 0.22f * Math.Cos(theta * 3.0f + normB * 12.566f)
+                    + 0.20f * Math.Cos(theta * 3.0f + normB * 12.566f)
                     + 0.12f * Math.Sin(theta * 4.0f - normB * 9.424f));
                 barMag = Math.Max(0.12f, Math.Min(1.0f, barMag));
                 float currH = barMag * (eqH - 4f * sy);
@@ -250,29 +221,26 @@ public class NeuralLabRendererV2 {
                 }
             }
 
-            // Workspace session caption
+            // Caption under equalizer
             using (var statFont = new Font("Consolas", 7.2f * sx, FontStyle.Bold))
-            using (var statBrush = new SolidBrush(Color.FromArgb(230, 0, 240, 255))) {
-                g.DrawString("LO-FI CODING WORKSPACE  //  BUILDING IN PUBLIC", statFont, statBrush, eqX, eqY + eqH + 5 * sy);
+            using (var statBrush = new SolidBrush(Color.FromArgb(210, 0, 240, 255))) {
+                g.DrawString("LO-FI CODING SESSION  //  BUILDING IN PUBLIC", statFont, statBrush, eqX, eqY + eqH + 5 * sy);
             }
         }
 
         // =========================================================================
-        // 4. LEFT HERO TYPOGRAPHY - CLEAN, PRESTIGIOUS, NO BUZZWORDS
+        // 4. LEFT HERO TYPOGRAPHY - CLEAN, PROMINENT & BALANCED
         // =========================================================================
-        using (var fontTitle = new Font("Segoe UI", 42 * sx, FontStyle.Bold))
-        using (var fontRole = new Font("Segoe UI", 11.5f * sx, FontStyle.Bold))
-        using (var fontDesc = new Font("Consolas", 9.2f * sx, FontStyle.Regular))
-        using (var fontChip = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
-        using (var fontTag = new Font("Consolas", 8.0f * sx, FontStyle.Bold)) {
+        using (var fontTitle = new Font("Segoe UI", 48 * sx, FontStyle.Bold))
+        using (var fontTag = new Font("Consolas", 8.4f * sx, FontStyle.Bold)) {
 
             // Top Affiliation Tag
             float pillX = 50 * sx;
-            float pillY = 34 * sy;
+            float pillY = 80 * sy;
             string topTag = "DATA SCIENCE & AI  //  IIT MADRAS";
             var topTagSize = g.MeasureString(topTag, fontTag);
             float pillW = topTagSize.Width + 26 * sx;
-            float pillH = 20 * sy;
+            float pillH = 22 * sy;
 
             using (var brushPillBg = new SolidBrush(Color.FromArgb(180, 10, 16, 28)))
             using (var penPillBorder = new Pen(Color.FromArgb(140, 0, 240, 255), 1.0f))
@@ -280,77 +248,26 @@ public class NeuralLabRendererV2 {
             using (var brushTag = new SolidBrush(Color.FromArgb(235, 190, 220, 255))) {
                 g.FillRectangle(brushPillBg, pillX, pillY, pillW, pillH);
                 g.DrawRectangle(penPillBorder, pillX, pillY, pillW, pillH);
-                g.FillEllipse(brushDot, pillX + 8 * sx, pillY + 7.5f * sy, 5 * sx, 5 * sy);
-                g.DrawString(topTag, fontTag, brushTag, pillX + 18 * sx, pillY + 3.5f * sy);
+                g.FillEllipse(brushDot, pillX + 8 * sx, pillY + 8.5f * sy, 5 * sx, 5 * sy);
+                g.DrawString(topTag, fontTag, brushTag, pillX + 18 * sx, pillY + 4.5f * sy);
             }
 
-            // PRIMARY TITLE: GOKUL A (Crisp, authoritative, pristine)
+            // PRIMARY TITLE: GOKUL A (Hero focal point)
             float titleX = 50 * sx;
-            float titleY = 62 * sy;
+            float titleY = 118 * sy;
             using (var brushCyanGlow = new SolidBrush(Color.FromArgb(90, 0, 240, 255))) {
-                g.DrawString("GOKUL A", fontTitle, brushCyanGlow, titleX + 1.2f * sx, titleY + 1.2f * sy);
+                g.DrawString("GOKUL A", fontTitle, brushCyanGlow, titleX + 1.5f * sx, titleY + 1.5f * sy);
             }
             using (var brushMain = new SolidBrush(Color.FromArgb(255, 255, 255, 255))) {
                 g.DrawString("GOKUL A", fontTitle, brushMain, titleX, titleY);
             }
 
             // Sleek Gradient Accent Line
-            float lineY = 124 * sy;
+            float lineY = 194 * sy;
             using (var lineBrush = new LinearGradientBrush(
-                new RectangleF(50 * sx, lineY, 280 * sx, 2),
+                new RectangleF(50 * sx, lineY, 280 * sx, 2.5f),
                 Color.FromArgb(240, 0, 240, 255), Color.Transparent, 0f)) {
-                g.FillRectangle(lineBrush, 50 * sx, lineY, 280 * sx, 2);
-            }
-
-            // Role / Headline
-            float roleY = 136 * sy;
-            using (var brushRole = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
-                g.DrawString("AI & Systems Engineer  //  Open Source Contributor", fontRole, brushRole, 50 * sx, roleY);
-            }
-
-            // Clean Focus Areas
-            float descY = 168 * sy;
-            using (var brushHighlight = new SolidBrush(Color.FromArgb(240, 240, 240))) {
-                g.DrawString("Focus:  Computer Vision  //  AI Agents  //  Systems Security", fontDesc, brushHighlight, 50 * sx, descY);
-            }
-
-            // Clean Tech Stack Chips (Single row of 5 spaced chips)
-            string[] stackBadges = new string[] {
-                "Python",
-                "PyTorch",
-                "TypeScript",
-                "OpenCV",
-                "MediaPipe"
-            };
-            Color[] stackColors = new Color[] {
-                Color.FromArgb(0, 240, 255),
-                Color.FromArgb(192, 132, 252),
-                Color.FromArgb(56, 189, 248),
-                Color.FromArgb(52, 211, 153),
-                Color.FromArgb(251, 146, 60)
-            };
-
-            float bX = 50 * sx;
-            float bY = 208 * sy;
-            float bGap = 8 * sx;
-
-            for (int i = 0; i < stackBadges.Length; i++) {
-                string bText = stackBadges[i];
-                Color bCol = stackColors[i];
-                var sz = g.MeasureString(bText, fontChip);
-                float bw = sz.Width + 18 * sx;
-                float bh = 22 * sy;
-
-                using (var brushPill = new SolidBrush(Color.FromArgb(200, 10, 15, 26)))
-                using (var penPill = new Pen(Color.FromArgb(170, bCol.R, bCol.G, bCol.B), 1.0f))
-                using (var brushPip = new SolidBrush(bCol))
-                using (var brushPillText = new SolidBrush(Color.FromArgb(245, 245, 245))) {
-                    g.FillRectangle(brushPill, bX, bY, bw, bh);
-                    g.DrawRectangle(penPill, bX, bY, bw, bh);
-                    g.FillEllipse(brushPip, bX + 6 * sx, bY + 8.5f * sy, 4.5f * sx, 4.5f * sy);
-                    g.DrawString(bText, fontChip, brushPillText, bX + 14 * sx, bY + 4 * sy);
-                }
-                bX += bw + bGap;
+                g.FillRectangle(lineBrush, 50 * sx, lineY, 280 * sx, 2.5f);
             }
         }
 
@@ -425,6 +342,7 @@ $optGif = "e:\Projects\Readme\capedcrusader77-neural-lab.gif"
 $heroGif = "e:\Projects\Readme\assets\hero.gif"
 $heroCoreGif = "e:\Projects\Readme\assets\hero_core.gif"
 $heroMainGif = "e:\Projects\Readme\assets\hero_main.gif"
+$heroCleanGif = "e:\Projects\Readme\assets\hero_clean.gif"
 $previewPng = "e:\Projects\Readme\assets\hero_preview.png"
 $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 
@@ -434,13 +352,14 @@ $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 # Save sample frame for PNG inspection
 [NeuralLabRendererV2]::SavePreviewFrame($previewPng, $operativePath, 840, 350, 0.25)
 
-# Copy to assets/hero.gif, hero_core.gif, and brand-new hero_main.gif
+# Copy to assets/hero.gif, hero_core.gif, hero_main.gif, and fresh hero_clean.gif
 Copy-Item $optGif $heroGif -Force
 Copy-Item $optGif $heroCoreGif -Force
 Copy-Item $optGif $heroMainGif -Force
-Write-Host "Copied $optGif to $heroGif, $heroCoreGif, and $heroMainGif"
+Copy-Item $optGif $heroCleanGif -Force
+Write-Host "Copied $optGif to $heroGif, $heroCoreGif, $heroMainGif, and $heroCleanGif"
 
-$heroItem = Get-Item $heroMainGif
+$heroItem = Get-Item $heroCleanGif
 Write-Output "=== COMPLETE HERO EXPORT REPORT ==="
 Write-Output "GIF Size: $([math]::Round($heroItem.Length / 1MB, 2)) MB ($($heroItem.Length) bytes)"
 if ($heroItem.Length -lt 5000000) {
