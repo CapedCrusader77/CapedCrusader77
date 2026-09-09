@@ -258,121 +258,97 @@ public class NeuralLabRendererV2 {
         }
 
         // =========================================================================
-        // 4. LEFT HERO TYPOGRAPHY
+        // 4. LEFT HERO TYPOGRAPHY - CLEAN, PRESTIGIOUS, NO BUZZWORDS
         // =========================================================================
-        using (var fontTitle = new Font("Segoe UI", 38 * sx, FontStyle.Bold))
-        using (var fontSub = new Font("Consolas", 9.8f * sx, FontStyle.Bold))
-        using (var fontTag = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
-        using (var fontPipe = new Font("Consolas", 8.8f * sx, FontStyle.Bold)) {
+        using (var fontTitle = new Font("Segoe UI", 42 * sx, FontStyle.Bold))
+        using (var fontRole = new Font("Segoe UI", 11.5f * sx, FontStyle.Bold))
+        using (var fontDesc = new Font("Consolas", 9.2f * sx, FontStyle.Regular))
+        using (var fontChip = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
+        using (var fontTag = new Font("Consolas", 8.0f * sx, FontStyle.Bold)) {
 
-            // Top Pill: Authentic Affiliation
+            // Top Affiliation Tag
             float pillX = 50 * sx;
-            float pillY = 38 * sy;
-            string topTag = "AI & SYSTEMS RESEARCH  //  IIT MADRAS";
+            float pillY = 34 * sy;
+            string topTag = "DATA SCIENCE & AI  //  IIT MADRAS";
             var topTagSize = g.MeasureString(topTag, fontTag);
-            float pillW = topTagSize.Width + 28 * sx;
+            float pillW = topTagSize.Width + 26 * sx;
             float pillH = 20 * sy;
 
-            using (var brushPillBg = new SolidBrush(Color.FromArgb(190, 10, 15, 28)))
-            using (var penPillBorder = new Pen(Color.FromArgb(150, 0, 240, 255), 1.0f))
+            using (var brushPillBg = new SolidBrush(Color.FromArgb(180, 10, 16, 28)))
+            using (var penPillBorder = new Pen(Color.FromArgb(140, 0, 240, 255), 1.0f))
             using (var brushDot = new SolidBrush(Color.FromArgb(255, 0, 240, 255)))
-            using (var brushTag = new SolidBrush(Color.FromArgb(240, 190, 220, 255))) {
+            using (var brushTag = new SolidBrush(Color.FromArgb(235, 190, 220, 255))) {
                 g.FillRectangle(brushPillBg, pillX, pillY, pillW, pillH);
                 g.DrawRectangle(penPillBorder, pillX, pillY, pillW, pillH);
                 g.FillEllipse(brushDot, pillX + 8 * sx, pillY + 7.5f * sy, 5 * sx, 5 * sy);
                 g.DrawString(topTag, fontTag, brushTag, pillX + 18 * sx, pillY + 3.5f * sy);
             }
 
-            // PRIMARY TITLE: GOKUL A
+            // PRIMARY TITLE: GOKUL A (Crisp, authoritative, pristine)
             float titleX = 50 * sx;
-            float titleY = 68 * sy;
-            using (var brushCyanGlow = new SolidBrush(Color.FromArgb(100, 0, 240, 255))) {
+            float titleY = 62 * sy;
+            using (var brushCyanGlow = new SolidBrush(Color.FromArgb(90, 0, 240, 255))) {
                 g.DrawString("GOKUL A", fontTitle, brushCyanGlow, titleX + 1.2f * sx, titleY + 1.2f * sy);
-            }
-            using (var brushVioletGlow = new SolidBrush(Color.FromArgb(90, 139, 92, 246))) {
-                g.DrawString("GOKUL A", fontTitle, brushVioletGlow, titleX - 1.0f * sx, titleY - 1.0f * sy);
             }
             using (var brushMain = new SolidBrush(Color.FromArgb(255, 255, 255, 255))) {
                 g.DrawString("GOKUL A", fontTitle, brushMain, titleX, titleY);
             }
 
-            // Sleek Cyber Accent Line
-            float lineY = 126 * sy;
+            // Sleek Gradient Accent Line
+            float lineY = 124 * sy;
             using (var lineBrush = new LinearGradientBrush(
                 new RectangleF(50 * sx, lineY, 280 * sx, 2),
                 Color.FromArgb(240, 0, 240, 255), Color.Transparent, 0f)) {
                 g.FillRectangle(lineBrush, 50 * sx, lineY, 280 * sx, 2);
             }
 
-            // Subtitle
-            float subY = 138 * sy;
-            using (var brushSub = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
-                g.DrawString("COMPUTER VISION   //   AI AGENTS   //   SYSTEMS ENGINEERING", fontSub, brushSub, 50 * sx, subY);
+            // Role / Headline
+            float roleY = 136 * sy;
+            using (var brushRole = new SolidBrush(Color.FromArgb(255, 0, 240, 255))) {
+                g.DrawString("AI & Systems Engineer  //  Open Source Contributor", fontRole, brushRole, 50 * sx, roleY);
             }
 
-            // 3 Specialization Chips: DEEP LEARNING, AGENTIC SYSTEMS, SECURITY & AST
-            float curX = 50 * sx;
-            float curY = 170 * sy;
+            // Clean Focus Areas
+            float descY = 168 * sy;
+            using (var brushHighlight = new SolidBrush(Color.FromArgb(240, 240, 240))) {
+                g.DrawString("Focus:  Computer Vision  //  AI Agents  //  Systems Security", fontDesc, brushHighlight, 50 * sx, descY);
+            }
 
-            string[] domains = new string[] { "DEEP LEARNING", "AGENTIC SYSTEMS", "SECURITY & AST" };
-            Color[] domainColors = new Color[] {
+            // Clean Tech Stack Chips (Single row of 5 spaced chips)
+            string[] stackBadges = new string[] {
+                "Python",
+                "PyTorch",
+                "TypeScript",
+                "OpenCV",
+                "MediaPipe"
+            };
+            Color[] stackColors = new Color[] {
                 Color.FromArgb(0, 240, 255),
                 Color.FromArgb(192, 132, 252),
-                Color.FromArgb(183, 241, 106)
-            };
-
-            for (int p = 0; p < domains.Length; p++) {
-                string name = domains[p];
-                Color pColor = domainColors[p];
-                var sz = g.MeasureString(name, fontPipe);
-                float pw = sz.Width + 14 * sx;
-                float ph = 22 * sy;
-
-                using (var bBg = new SolidBrush(Color.FromArgb(200, 10, 16, 28)))
-                using (var pen = new Pen(Color.FromArgb(160, pColor.R, pColor.G, pColor.B), 1.0f))
-                using (var bDot = new SolidBrush(pColor))
-                using (var bTxt = new SolidBrush(Color.FromArgb(250, 250, 250))) {
-                    g.FillRectangle(bBg, curX, curY, pw, ph);
-                    g.DrawRectangle(pen, curX, curY, pw, ph);
-                    g.FillEllipse(bDot, curX + 7 * sx, curY + 8.5f * sy, 4.5f * sx, 4.5f * sy);
-                    g.DrawString(name, fontPipe, bTxt, curX + 15 * sx, curY + 4 * sy);
-                }
-                curX += pw + 10 * sx;
-            }
-
-            // Real Languages & Core Tools: PYTHON, PYTORCH, TYPESCRIPT, OPENCV
-            string[] badgeTexts = new string[] {
-                "PYTHON",
-                "PYTORCH",
-                "TYPESCRIPT",
-                "OPENCV"
-            };
-            Color[] badgeColors = new Color[] {
-                Color.FromArgb(0, 240, 255),
-                Color.FromArgb(139, 92, 246),
                 Color.FromArgb(56, 189, 248),
-                Color.FromArgb(16, 185, 129)
+                Color.FromArgb(52, 211, 153),
+                Color.FromArgb(251, 146, 60)
             };
 
             float bX = 50 * sx;
-            float bY = 216 * sy;
-            float bGap = 10 * sx;
+            float bY = 208 * sy;
+            float bGap = 8 * sx;
 
-            for (int i = 0; i < badgeTexts.Length; i++) {
-                string bText = badgeTexts[i];
-                Color bCol = badgeColors[i];
-                var sz = g.MeasureString(bText, fontTag);
-                float bw = sz.Width + 16 * sx;
+            for (int i = 0; i < stackBadges.Length; i++) {
+                string bText = stackBadges[i];
+                Color bCol = stackColors[i];
+                var sz = g.MeasureString(bText, fontChip);
+                float bw = sz.Width + 18 * sx;
                 float bh = 22 * sy;
 
-                using (var brushPill = new SolidBrush(Color.FromArgb(210, 8, 14, 24)))
-                using (var penPill = new Pen(Color.FromArgb(180, bCol.R, bCol.G, bCol.B), 1.0f))
+                using (var brushPill = new SolidBrush(Color.FromArgb(200, 10, 15, 26)))
+                using (var penPill = new Pen(Color.FromArgb(170, bCol.R, bCol.G, bCol.B), 1.0f))
                 using (var brushPip = new SolidBrush(bCol))
                 using (var brushPillText = new SolidBrush(Color.FromArgb(245, 245, 245))) {
                     g.FillRectangle(brushPill, bX, bY, bw, bh);
                     g.DrawRectangle(penPill, bX, bY, bw, bh);
                     g.FillEllipse(brushPip, bX + 6 * sx, bY + 8.5f * sy, 4.5f * sx, 4.5f * sy);
-                    g.DrawString(bText, fontTag, brushPillText, bX + 14 * sx, bY + 4 * sy);
+                    g.DrawString(bText, fontChip, brushPillText, bX + 14 * sx, bY + 4 * sy);
                 }
                 bX += bw + bGap;
             }
@@ -381,13 +357,13 @@ public class NeuralLabRendererV2 {
         // =========================================================================
         // 5. STATUS BAR FOOTER
         // =========================================================================
-        using (var brushBar = new SolidBrush(Color.FromArgb(245, 6, 8, 14)))
+        using (var brushBar = new SolidBrush(Color.FromArgb(245, 5, 7, 12)))
         using (var penBar = new Pen(Color.FromArgb(90, 30, 41, 59), 1)) {
             g.FillRectangle(brushBar, 0, H - 32, W, 32);
             g.DrawLine(penBar, 0, H - 32, W, H - 32);
         }
 
-        // Static bright live status pip
+        // Live status pip
         using (var brushDotGlow = new SolidBrush(Color.FromArgb(90, 52, 211, 153)))
         using (var brushDot = new SolidBrush(Color.FromArgb(255, 52, 211, 153))) {
             g.FillEllipse(brushDotGlow, 50 * sx, H - 22, 10 * sx, 10 * sy);
@@ -398,9 +374,9 @@ public class NeuralLabRendererV2 {
         using (var fontHudBold = new Font("Consolas", 8.2f * sx, FontStyle.Bold))
         using (var brushStatus = new SolidBrush(Color.FromArgb(255, 52, 211, 153)))
         using (var brushMuted = new SolidBrush(Color.FromArgb(160, 148, 163, 184))) {
-            g.DrawString("ACTIVE", fontHudBold, brushStatus, 64 * sx, H - 20);
+            g.DrawString("ONLINE", fontHudBold, brushStatus, 64 * sx, H - 20);
 
-            string telemString = "  //   IIT MADRAS (DATA SCIENCE)   //   BUILDING INTELLIGENT SYSTEMS   //   GITHUB: CAPEDCRUSADER77";
+            string telemString = "  //   IIT MADRAS (DATA SCIENCE)   //   CHENNAI, INDIA   //   GITHUB: CAPEDCRUSADER77";
             g.DrawString(telemString, fontHud, brushMuted, 115 * sx, H - 20);
         }
     }
@@ -447,6 +423,8 @@ Add-Type -TypeDefinition $source -ReferencedAssemblies "System.Drawing"
 
 $optGif = "e:\Projects\Readme\capedcrusader77-neural-lab.gif"
 $heroGif = "e:\Projects\Readme\assets\hero.gif"
+$heroCoreGif = "e:\Projects\Readme\assets\hero_core.gif"
+$heroMainGif = "e:\Projects\Readme\assets\hero_main.gif"
 $previewPng = "e:\Projects\Readme\assets\hero_preview.png"
 $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 
@@ -456,11 +434,13 @@ $operativePath = "e:\Projects\Readme\assets\cyber_operative.jpg"
 # Save sample frame for PNG inspection
 [NeuralLabRendererV2]::SavePreviewFrame($previewPng, $operativePath, 840, 350, 0.25)
 
-# Copy to assets/hero.gif
+# Copy to assets/hero.gif, hero_core.gif, and brand-new hero_main.gif
 Copy-Item $optGif $heroGif -Force
-Write-Host "Copied $optGif to $heroGif"
+Copy-Item $optGif $heroCoreGif -Force
+Copy-Item $optGif $heroMainGif -Force
+Write-Host "Copied $optGif to $heroGif, $heroCoreGif, and $heroMainGif"
 
-$heroItem = Get-Item $heroGif
+$heroItem = Get-Item $heroMainGif
 Write-Output "=== COMPLETE HERO EXPORT REPORT ==="
 Write-Output "GIF Size: $([math]::Round($heroItem.Length / 1MB, 2)) MB ($($heroItem.Length) bytes)"
 if ($heroItem.Length -lt 5000000) {
