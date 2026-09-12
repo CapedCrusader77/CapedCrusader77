@@ -27,11 +27,11 @@
 
 <!-- 02 // CORE DOMAINS & SPECIALIZATIONS -->
 <p align="center">
-  <img src="assets/banner_telemetry_v3.gif?v=40" width="840" alt="case file for core specializations">
+  <img src="assets/banner_telemetry_v3.gif?v=31" width="840" alt="core domains and specializations">
 </p>
 
 <p align="center">
-  <img src="assets/telemetry_cards.gif?v=40" width="840" alt="Animated case-file cards for perception, reasoning, and action">
+  <img src="assets/telemetry_cards.gif?v=29" width="840" alt="Core Specializations: Computer Vision, AI Agents, Systems Security">
 </p>
 
 <br>
