@@ -1,0 +1,23 @@
+<svg width="1100" height="260" viewBox="0 0 1100 260" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Gokul A — AI, robotics, and software</title>
+  <desc id="desc">A field-manual style title card for Gokul A.</desc>
+  <rect width="1100" height="260" fill="#F2EDE3"/>
+  <rect x="808" width="292" height="260" fill="#B6492D"/>
+  <path d="M48 42H764" stroke="#161515" stroke-width="2"/>
+  <path d="M48 210H764" stroke="#161515" stroke-width="2"/>
+  <path d="M48 224H764" stroke="#161515" stroke-width="1" opacity="0.35"/>
+  <path d="M48 42V28M160 42V34M272 42V28M384 42V34M496 42V28M608 42V34M720 42V28" stroke="#161515" stroke-width="2"/>
+  <path d="M64 160C121 160 128 113 188 113C243 113 247 178 309 178C371 178 370 93 436 93C502 93 498 148 562 148C624 148 642 83 708 83C731 83 745 94 764 107" stroke="#B6492D" stroke-width="4"/>
+  <circle cx="188" cy="113" r="5" fill="#161515"/>
+  <circle cx="436" cy="93" r="5" fill="#161515"/>
+  <circle cx="708" cy="83" r="5" fill="#161515"/>
+  <text x="48" y="88" fill="#B6492D" font-family="IBM Plex Mono, Courier New, monospace" font-size="14" font-weight="700" letter-spacing="3">FIELD NOTES / 077</text>
+  <text x="48" y="142" fill="#161515" font-family="Georgia, Times New Roman, serif" font-size="72" font-weight="700" letter-spacing="-3">GOKUL A</text>
+  <text x="48" y="246" fill="#161515" font-family="IBM Plex Mono, Courier New, monospace" font-size="13" letter-spacing="2">AI / ROBOTICS / DEVELOPER TOOLS</text>
+  <text x="844" y="58" fill="#F2EDE3" font-family="IBM Plex Mono, Courier New, monospace" font-size="13" font-weight="700" letter-spacing="2">THE WORKING LINE</text>
+  <text x="844" y="118" fill="#F2EDE3" font-family="Georgia, Times New Roman, serif" font-size="34" font-weight="700">sense.</text>
+  <text x="844" y="157" fill="#F2EDE3" font-family="Georgia, Times New Roman, serif" font-size="34" font-weight="700">decide.</text>
+  <text x="844" y="196" fill="#F2EDE3" font-family="Georgia, Times New Roman, serif" font-size="34" font-weight="700">ship.</text>
+  <path d="M844 218H1042" stroke="#F2EDE3" stroke-width="2"/>
+  <text x="844" y="240" fill="#F2EDE3" font-family="IBM Plex Mono, Courier New, monospace" font-size="11" letter-spacing="1.5">MODELS MEET MACHINES</text>
+</svg>
