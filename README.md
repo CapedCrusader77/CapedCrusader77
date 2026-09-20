@@ -1,79 +1,74 @@
+<!--
+  github.com/CapedCrusader77 - Gokul A - Profile README
+  Neural Control Lab interface architecture
+  All components rendered as high-performance, modular cyber animated GIFs with 100% real data
+-->
+
 <p align="center">
-  <img src="assets/profile-header.svg?v=2" width="100%" alt="Gokul A — AI, robotics, and developer tools">
+  <img src="assets/hero_v4.gif?v=38" width="840" alt="Gokul A">
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=IBM+Plex+Mono&size=15&duration=3200&pause=1400&color=B6492D&vCenter=true&width=820&height=28&lines=I+build+at+the+seam+between+what+a+model+sees+and+what+a+system+can+do.&repeat=false" alt="I build at the seam between what a model sees and what a system can do.">
+  <em>"Engineering intelligent systems, computer vision models, and robust developer tooling."</em>
 </p>
 
-<table border="0" cellpadding="12" cellspacing="0" width="100%">
-  <tr>
-    <td width="62%" valign="top">
-      <h2>Working thesis</h2>
-      <p>I’m an AI and robotics student at IIT Madras. I like the unglamorous seam: data that arrives late, models that need an operator, and interfaces that have to explain themselves.</p>
-    </td>
-    <td width="38%" valign="top" bgcolor="#F2EDE3">
-      <sub>NOW / 2026</sub><br>
-      <strong>Deep reinforcement learning<br>+ edge deployment on Jetson</strong>
-    </td>
-  </tr>
-</table>
+<br>
 
-## Selected work
+<!-- 01 // SELECTED BUILDS -->
+<p align="center">
+  <img src="assets/banner_work_v3.gif?v=21" width="840" alt="featured architectures">
+</p>
 
-<table border="0" cellpadding="12" cellspacing="0" width="100%">
-  <tr>
-    <td width="48%" valign="top">
-      <a href="https://github.com/CapedCrusader77/SEIGE"><img src="https://raw.githubusercontent.com/CapedCrusader77/SEIGE/main/frontend/src/assets/hero.png" width="100%" alt="SIEGE cyber-range interface"></a>
-    </td>
-    <td width="52%" valign="top">
-      <sub>01 / CYBER RANGE</sub>
-      <h3><a href="https://github.com/CapedCrusader77/SEIGE">SIEGE</a></h3>
-      <p>Simulates attacks, firewall and IDS responses, history, and reports in one live control surface. The hard problem is keeping the simulation, WebSocket stream, and operator view telling the same story.</p>
-      <sub>FastAPI · WebSockets · React · D3 · SQLite</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="48%" valign="top">
-      <a href="https://github.com/CapedCrusader77/skillguard-oss"><img src="https://raw.githubusercontent.com/CapedCrusader77/skillguard-oss/main/docs/images/dashboard.png" width="100%" alt="SkillGuard OSS security dashboard"></a>
-    </td>
-    <td width="52%" valign="top">
-      <sub>02 / SUPPLY-CHAIN SECURITY</sub>
-      <h3><a href="https://github.com/CapedCrusader77/skillguard-oss">SkillGuard OSS</a></h3>
-      <p>Scans MCP servers, plugins, tools, workflows, dependencies, and source before execution. The hard problem is making a broad permission surface concrete enough for a developer to act on.</p>
-      <sub>Python · AST analysis · dependency checks · GitHub Actions</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="48%" valign="top" bgcolor="#161515">
-      <font color="#F2EDE3"><strong>DATA → SIGNAL → DECISION</strong></font><br><br>
-      <font color="#B6492D">Stock / sentiment / backtest</font>
-    </td>
-    <td width="52%" valign="top">
-      <sub>03 / MARKET DATA</sub>
-      <h3><a href="https://github.com/CapedCrusader77/Stock-Market-Predictor">Stock Market Predictor</a></h3>
-      <p>Combines Yahoo Finance data, indicators, news sentiment, and backtesting to classify trend direction. The hard problem is making ingestion, features, and evaluation agree.</p>
-      <sub>Python · FastAPI · scikit-learn · React · yfinance</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="48%" valign="top" bgcolor="#B6492D">
-      <font color="#F2EDE3"><strong>STRUCTURE BEFORE STYLE</strong></font><br><br>
-      <font color="#161515">Data structures / visualization</font>
-    </td>
-    <td width="52%" valign="top">
-      <sub>04 / ANALYSIS TOOLING</sub>
-      <h3><a href="https://github.com/CapedCrusader77/Stock-Market-Analyzer">Stock Market Analyzer</a></h3>
-      <p>A Python project that keeps core data structures separate from market visualization and analysis. The hard problem is leaving the analysis layer easy to test and extend.</p>
-      <sub>Python · data structures · visualization</sub>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <img src="assets/cards_row.gif?v=18" width="840" alt="Selected Projects">
+</p>
 
-## The kit
+<br>
 
-<p><code>Python</code> <code>C++</code> <code>TypeScript</code> <code>PyTorch</code> <code>OpenCV</code> <code>ROS 2</code></p>
+<!-- 02 // CORE DOMAINS & SPECIALIZATIONS -->
+<p align="center">
+  <img src="assets/banner_telemetry_v3.gif?v=31" width="840" alt="core domains and specializations">
+</p>
 
-<p><sub>Currently building toward systems that can sense, decide, and leave a useful trail behind.</sub></p>
+<p align="center">
+  <img src="assets/telemetry_cards.gif?v=29" width="840" alt="Core Specializations: Computer Vision, AI Agents, Systems Security">
+</p>
 
-<p><a href="https://github.com/CapedCrusader77">GitHub</a> · <a href="https://www.linkedin.com/in/gokul-a-2726a4391/">LinkedIn</a> · <a href="mailto:25f2008464@ds.study.iitm.ac.in">Email</a></p>
+<br>
+
+<!-- 03 // CONTRIBUTIONS -->
+<p align="center">
+  <img src="assets/contrib.gif?v=38" width="840" alt="Animated GitHub contribution table for the last 12 months">
+</p>
+
+<br>
+
+<!-- 04 // TECHNICAL ARSENAL -->
+<p align="center">
+  <img src="assets/banner_stack_v3.gif?v=21" width="840" alt="technical arsenal">
+</p>
+
+<p align="center">
+  <img src="assets/stack.gif?v=11" width="840" alt="tech stack: Python 3.11+, TypeScript, JavaScript, TensorFlow, PyTorch, Computer Vision, Security AST, Next.js, Node.js">
+</p>
+
+<br>
+
+<!-- 05 // CONTROL UPLINK -->
+<p align="center">
+  <img src="assets/banner_contact_v3.gif?v=21" width="840" alt="control uplink">
+</p>
+
+<p align="center">
+  <a href="https://github.com/CapedCrusader77">
+    <img src="https://img.shields.io/badge/GitHub-Gokul_A-00f0ff?style=for-the-badge&logo=github&logoColor=07090e" alt="GitHub">
+  </a>
+  &nbsp;
+  <a href="https://www.linkedin.com/in/gokul-a-2726a4391/">
+    <img src="https://img.shields.io/badge/LinkedIn-Gokul_A-8b5cf6?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+  &nbsp;
+  <a href="mailto:25f2008464@ds.study.iitm.ac.in">
+    <img src="https://img.shields.io/badge/Email-IIT_Madras-00f0ff?style=for-the-badge&logo=gmail&logoColor=07090e" alt="Email">
+  </a>
+</p>
