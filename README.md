@@ -1,74 +1,44 @@
-<!--
-  github.com/CapedCrusader77 - Gokul A - Profile README
-  Neural Control Lab interface architecture
-  All components rendered as high-performance, modular cyber animated GIFs with 100% real data
--->
+<div align="center">
+  <img src="assets/motion/cover.gif?v=1" width="100%" alt="Gokul A — systems that make signals useful; a moving diagram from sensing to reasoning to response">
+</div>
 
 <p align="center">
-  <img src="assets/hero_v4.gif?v=38" width="840" alt="Gokul A">
-</p>
-
-<p align="center">
-  <em>"Engineering intelligent systems, computer vision models, and robust developer tooling."</em>
-</p>
-
-<br>
-
-<!-- 01 // SELECTED BUILDS -->
-<p align="center">
-  <img src="assets/banner_work_v3.gif?v=21" width="840" alt="featured architectures">
-</p>
-
-<p align="center">
-  <img src="assets/cards_row.gif?v=18" width="840" alt="Selected Projects">
+  <a href="https://github.com/CapedCrusader77">GitHub</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.linkedin.com/in/gokul-a-2726a4391/">LinkedIn</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:25f2008464@ds.study.iitm.ac.in">Email</a>
 </p>
 
 <br>
 
-<!-- 02 // CORE DOMAINS & SPECIALIZATIONS -->
-<p align="center">
-  <img src="assets/banner_telemetry_v3.gif?v=31" width="840" alt="core domains and specializations">
-</p>
+<h2>Selected work</h2>
 
-<p align="center">
-  <img src="assets/telemetry_cards.gif?v=29" width="840" alt="Core Specializations: Computer Vision, AI Agents, Systems Security">
-</p>
-
-<br>
-
-<!-- 03 // CONTRIBUTIONS -->
-<p align="center">
-  <img src="assets/contrib.gif?v=38" width="840" alt="Animated GitHub contribution table for the last 12 months">
-</p>
-
-<br>
-
-<!-- 04 // TECHNICAL ARSENAL -->
-<p align="center">
-  <img src="assets/banner_stack_v3.gif?v=21" width="840" alt="technical arsenal">
-</p>
-
-<p align="center">
-  <img src="assets/stack.gif?v=11" width="840" alt="tech stack: Python 3.11+, TypeScript, JavaScript, TensorFlow, PyTorch, Computer Vision, Security AST, Next.js, Node.js">
-</p>
+<table width="100%">
+  <tr>
+    <td width="58%" valign="top">
+      <a href="https://github.com/CapedCrusader77/SEIGE">
+        <img src="assets/motion/siege.gif?v=1" width="100%" alt="Animated SIEGE network simulation: an event travels through a service graph as the defense boundary responds">
+      </a>
+      <p><strong><a href="https://github.com/CapedCrusader77/SEIGE">SIEGE</a></strong><br>
+      A real-time attack and defense simulator. FastAPI and WebSockets drive the event stream; firewall and IDS controls change the simulation.</p>
+    </td>
+    <td width="42%" valign="top">
+      <a href="https://github.com/CapedCrusader77/Stock-Market-Predictor">
+        <img src="assets/motion/market.gif?v=1" width="100%" alt="Animated illustrative chart moving from historical price signal into a trend estimate; not live market data">
+      </a>
+      <p><strong><a href="https://github.com/CapedCrusader77/Stock-Market-Predictor">Stock Market Predictor</a></strong><br>
+      Combines price history, technical indicators, and news sentiment for trend predictions, with a backtesting module.</p>
+    </td>
+  </tr>
+</table>
 
 <br>
 
-<!-- 05 // CONTROL UPLINK -->
 <p align="center">
-  <img src="assets/banner_contact_v3.gif?v=21" width="840" alt="control uplink">
+  <strong>Python</strong> &nbsp;·&nbsp; TypeScript &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; React &nbsp;·&nbsp; PyTorch &nbsp;·&nbsp; OpenCV
 </p>
 
 <p align="center">
-  <a href="https://github.com/CapedCrusader77">
-    <img src="https://img.shields.io/badge/GitHub-Gokul_A-00f0ff?style=for-the-badge&logo=github&logoColor=07090e" alt="GitHub">
-  </a>
-  &nbsp;
-  <a href="https://www.linkedin.com/in/gokul-a-2726a4391/">
-    <img src="https://img.shields.io/badge/LinkedIn-Gokul_A-8b5cf6?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
-  </a>
-  &nbsp;
-  <a href="mailto:25f2008464@ds.study.iitm.ac.in">
-    <img src="https://img.shields.io/badge/Email-IIT_Madras-00f0ff?style=for-the-badge&logo=gmail&logoColor=07090e" alt="Email">
-  </a>
+  I like systems whose decisions can be followed and whose failure modes are visible.
 </p>
