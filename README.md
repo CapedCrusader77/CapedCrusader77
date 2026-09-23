@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/motion/cover.gif?v=1" width="100%" alt="Gokul A — systems that make signals useful; a moving diagram from sensing to reasoning to response">
+  <img src="assets/motion/cover-art.gif?v=1" width="100%" alt="Gokul A — systems that make signals useful, over a gently moving handmade paper collage">
 </div>
 
 <p align="center">
@@ -18,14 +18,14 @@
   <tr>
     <td width="58%" valign="top">
       <a href="https://github.com/CapedCrusader77/SEIGE">
-        <img src="assets/motion/siege.gif?v=1" width="100%" alt="Animated SIEGE network simulation: an event travels through a service graph as the defense boundary responds">
+        <img src="assets/motion/siege-art.gif?v=1" width="100%" alt="Gently moving paper-cut city illustration: a rust-colored route is stopped by an olive defense">
       </a>
       <p><strong><a href="https://github.com/CapedCrusader77/SEIGE">SIEGE</a></strong><br>
       A real-time attack and defense simulator. FastAPI and WebSockets drive the event stream; firewall and IDS controls change the simulation.</p>
     </td>
     <td width="42%" valign="top">
       <a href="https://github.com/CapedCrusader77/Stock-Market-Predictor">
-        <img src="assets/motion/market.gif?v=1" width="100%" alt="Animated illustrative chart moving from historical price signal into a trend estimate; not live market data">
+        <img src="assets/motion/market-art.gif?v=1" width="100%" alt="Gently moving paper-cut illustration of market history resolving into a forecast window; metaphorical, not live data">
       </a>
       <p><strong><a href="https://github.com/CapedCrusader77/Stock-Market-Predictor">Stock Market Predictor</a></strong><br>
       Combines price history, technical indicators, and news sentiment for trend predictions, with a backtesting module.</p>
