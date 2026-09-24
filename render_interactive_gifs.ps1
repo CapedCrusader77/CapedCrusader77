@@ -131,10 +131,12 @@ public static class ProfileArtworkMotion
         {
             SaveLoopingGif(Frames(System.IO.Path.Combine(source, "cover.jpg"), 840, 323, 32, 5, 3, true),
                            System.IO.Path.Combine(output, "cover-art.gif"), template, 11);
-            SaveLoopingGif(Frames(System.IO.Path.Combine(source, "siege.jpg"), 512, 304, 32, 4, 3, false),
-                           System.IO.Path.Combine(output, "siege-art.gif"), template, 11);
-            SaveLoopingGif(Frames(System.IO.Path.Combine(source, "market.jpg"), 512, 304, 32, 4, 3, false),
-                           System.IO.Path.Combine(output, "market-art.gif"), template, 11);
+            SaveLoopingGif(Frames(System.IO.Path.Combine(source, "facetrack.jpg"), 512, 304, 32, 4, 3, false),
+                           System.IO.Path.Combine(output, "facetrack-art.gif"), template, 11);
+            SaveLoopingGif(Frames(System.IO.Path.Combine(source, "skillguard.jpg"), 512, 304, 32, 4, 3, false),
+                           System.IO.Path.Combine(output, "skillguard-art.gif"), template, 11);
+            SaveLoopingGif(Frames(System.IO.Path.Combine(source, "rootcause.jpg"), 512, 304, 32, 4, 3, false),
+                           System.IO.Path.Combine(output, "rootcause-art.gif"), template, 11);
         }
     }
 }
@@ -153,4 +155,4 @@ Add-Type -TypeDefinition $source -ReferencedAssemblies $references -ErrorAction 
 $root = Get-Location
 $templatePath = Join-Path $root 'assets\divider.gif'
 [ProfileArtworkMotion]::RenderAll($root.Path, $templatePath)
-Write-Output "Rendered seamless illustrated profile GIFs in $(Join-Path $root 'assets\motion')"
+Write-Output "Rendered the cover and three seamless illustrated project GIFs in $(Join-Path $root 'assets\motion')"
