@@ -173,9 +173,19 @@ public static class SunlitProfileRenderer {
                 Background(g, art, Width, 350, pan, 0.5f);
                 Tracked(g, "ENGINEERING  /  COMPUTER VISION  /  TOOLING", "Consolas", 11.5f, FontStyle.Bold, Muted, 38, 25, 0.85f);
                 Rule(g, 38, 49, 800, RuleColor, 1f);
-                Text(g, "GOKUL A.", "Georgia", 70f, FontStyle.Bold, Ink, 35, 83, 490, 88, StringAlignment.Near);
-                float pulse = 118f + 22f * (float)Math.Sin(t * Math.PI * 2.0);
-                using (SolidBrush brush = new SolidBrush(Sun)) g.FillRectangle(brush, 39, 174, pulse, 8);
+                float nameX = 39f;
+                float nameY = 74f;
+                using (Font nameFont = new Font("Georgia", 78f, FontStyle.Bold, GraphicsUnit.Pixel))
+                using (SolidBrush nameBrush = new SolidBrush(Ink)) {
+                    g.DrawString("GOKUL", nameFont, nameBrush, nameX, nameY);
+                    float initialX = nameX + g.MeasureString("GOKUL", nameFont).Width + 2f;
+                    float initialWidth = g.MeasureString("A.", nameFont).Width + 10f;
+                    using (SolidBrush highlight = new SolidBrush(Sun))
+                        g.FillRectangle(highlight, initialX, 84f, initialWidth, 70f);
+                    g.DrawString("A.", nameFont, nameBrush, initialX + 5f, nameY);
+                }
+                float pulse = 278f + 14f * (float)Math.Sin(t * Math.PI * 2.0);
+                using (SolidBrush brush = new SolidBrush(Coral)) g.FillRectangle(brush, 39, 174, pulse, 7);
                 Text(g, "I build systems whose decisions can be followed\u2014and whose failure modes stay visible.",
                      "Segoe UI", 21f, FontStyle.Regular, Ink, 39, 204, 470, 72, StringAlignment.Near);
                 Text(g, "github.com/CapedCrusader77", "Consolas", 14.5f, FontStyle.Bold, Ink, 40, 305, 450, 23, StringAlignment.Near);
