@@ -177,14 +177,12 @@ public static class SunlitProfileRenderer {
                 float nameY = 74f;
                 using (Font nameFont = new Font("Georgia", 78f, FontStyle.Bold, GraphicsUnit.Pixel))
                 using (SolidBrush nameBrush = new SolidBrush(Ink)) {
-                    g.DrawString("Gokul", nameFont, nameBrush, nameX, nameY);
-                    float initialX = nameX + g.MeasureString("Gokul", nameFont).Width + 2f;
-                    float initialWidth = g.MeasureString("A", nameFont).Width + 10f;
+                    float nameWidth = g.MeasureString("Gokul A", nameFont).Width + 10f;
                     using (SolidBrush highlight = new SolidBrush(Sun))
-                        g.FillRectangle(highlight, initialX, 84f, initialWidth, 70f);
-                    g.DrawString("A", nameFont, nameBrush, initialX + 5f, nameY);
+                        g.FillRectangle(highlight, nameX, 84f, nameWidth, 70f);
+                    g.DrawString("Gokul A", nameFont, nameBrush, nameX, nameY);
                 }
-                float pulse = 278f + 14f * (float)Math.Sin(t * Math.PI * 2.0);
+                float pulse = 322f + 12f * (float)Math.Sin(t * Math.PI * 2.0);
                 using (SolidBrush brush = new SolidBrush(Coral)) g.FillRectangle(brush, 39, 174, pulse, 7);
                 Text(g, "I build systems whose decisions can be followed\u2014and whose failure modes stay visible.",
                      "Segoe UI", 21f, FontStyle.Regular, Ink, 39, 204, 470, 72, StringAlignment.Near);
