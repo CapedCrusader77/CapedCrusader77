@@ -269,23 +269,26 @@ public static class SunlitProfileRenderer {
     public static void BuildContributions(string outputPath, string backgroundPath, string matrixPath) {
         int activeWeeks;
         int[,] grid = ReadContributionMatrix(matrixPath, out activeWeeks);
-        if (activeWeeks != 22) throw new InvalidDataException("Expected 22 active weeks in the approved snapshot, found " + activeWeeks);
+        if (activeWeeks != 23) throw new InvalidDataException("Expected 23 active weeks in the current 2026 snapshot, found " + activeWeeks);
         using (Image art = Image.FromFile(backgroundPath)) {
             Render(outputPath, Width, 224, delegate(Graphics g, float t) {
                 Background(g, art, Width, 224, 0.012f * (float)Math.Sin(t * Math.PI * 2.0), 0.55f);
                 SectionTitle(g, "Contributions", 3, t);
-                Text(g, "367", "Georgia", 53f, FontStyle.Bold, Ink, 35, 77, 154, 60, StringAlignment.Near);
-                Text(g, "CONTRIBUTIONS", "Consolas", 10f, FontStyle.Bold, Muted, 39, 137, 152, 17, StringAlignment.Near);
-                Text(g, "22", "Georgia", 53f, FontStyle.Bold, Ink, 215, 77, 100, 60, StringAlignment.Near);
+                Text(g, "361", "Georgia", 53f, FontStyle.Bold, Ink, 35, 77, 154, 60, StringAlignment.Near);
+                Text(g, "2026 CONTRIBUTIONS", "Consolas", 10f, FontStyle.Bold, Muted, 39, 137, 152, 17, StringAlignment.Near);
+                Text(g, "23", "Georgia", 53f, FontStyle.Bold, Ink, 215, 77, 100, 60, StringAlignment.Near);
                 Text(g, "ACTIVE WEEKS", "Consolas", 10f, FontStyle.Bold, Muted, 219, 137, 130, 17, StringAlignment.Near);
                 Panel(g, new Rectangle(320, 75, 488, 115), 226);
 
                 int gridX = 332, gridY = 108, cell = 7, gap = 2, step = cell + gap;
-                string[] months = { "OCT", "NOV", "DEC", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP" };
+                string[] months = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
+                DateTime calendarStart = new DateTime(2025, 12, 28);
                 using (Font monthFont = new Font("Consolas", 8.2f, GraphicsUnit.Pixel))
                 using (SolidBrush monthBrush = new SolidBrush(Muted)) {
                     for (int m = 0; m < months.Length; m++) {
-                        float mx = gridX + (m * 53f / months.Length) * step;
+                        DateTime monthStart = new DateTime(2026, m + 1, 1);
+                        int week = (int)(monthStart - calendarStart).TotalDays / 7;
+                        float mx = gridX + week * step;
                         g.DrawString(months[m], monthFont, monthBrush, mx, 91);
                     }
                 }
@@ -305,7 +308,7 @@ public static class SunlitProfileRenderer {
                 }
                 int focusWeek = (int)(t * 53f) % 53;
                 using (SolidBrush marker = new SolidBrush(Coral)) g.FillRectangle(marker, gridX + focusWeek * step, gridY - 8, cell, 4);
-                Text(g, "STATIC SNAPSHOT  /  THROUGH 09 SEP 2026", "Consolas", 9.2f, FontStyle.Bold, Muted, 368, 174, 420, 14, StringAlignment.Near);
+                Text(g, "GITHUB PROFILE  /  THROUGH 25 SEP 2026", "Consolas", 9.2f, FontStyle.Bold, Muted, 368, 174, 420, 14, StringAlignment.Near);
             });
         }
     }
@@ -366,7 +369,7 @@ public static class SunlitProfileRenderer {
 Add-Type -TypeDefinition $source -ReferencedAssemblies 'System.Drawing'
 
 $assetDir = Join-Path $PSScriptRoot 'assets\sunlit'
-$matrix = Join-Path $PSScriptRoot 'real_contrib_matrix.txt'
+$matrix = Join-Path $PSScriptRoot 'real_contrib_matrix_2026.txt'
 [SunlitProfileRenderer]::BuildHero((Join-Path $assetDir 'hero.gif'), (Join-Path $assetDir 'hero-bg.jpg'))
 [SunlitProfileRenderer]::BuildProjects((Join-Path $assetDir 'projects.gif'), (Join-Path $assetDir 'facetrack-bg.jpg'), (Join-Path $assetDir 'skillguard-bg.jpg'), (Join-Path $assetDir 'rootcause-bg.jpg'))
 [SunlitProfileRenderer]::BuildDomains((Join-Path $assetDir 'domains.gif'), (Join-Path $assetDir 'domains-bg.jpg'))
