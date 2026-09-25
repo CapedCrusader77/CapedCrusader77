@@ -150,17 +150,22 @@ public static class SunlitProfileRenderer {
     }
 
     static void Render(string outputPath, int width, int height, Action<Graphics, float> drawFrame) {
-        Bitmap[] frames = new Bitmap[Frames];
+        Render(outputPath, width, height, drawFrame, Frames, DelayMs);
+    }
+
+    static void Render(string outputPath, int width, int height, Action<Graphics, float> drawFrame,
+                       int frameCount, int delayMs) {
+        Bitmap[] frames = new Bitmap[frameCount];
         try {
-            for (int i = 0; i < Frames; i++) {
+            for (int i = 0; i < frameCount; i++) {
                 Bitmap bmp = new Bitmap(width, height, PixelFormat.Format24bppRgb);
                 using (Graphics g = Graphics.FromImage(bmp)) {
                     Quality(g);
-                    drawFrame(g, (float)i / Frames);
+                    drawFrame(g, (float)i / frameCount);
                 }
                 frames[i] = bmp;
             }
-            SaveGif(outputPath, frames, DelayMs);
+            SaveGif(outputPath, frames, delayMs);
         } finally {
             for (int i = 0; i < frames.Length; i++) if (frames[i] != null) frames[i].Dispose();
         }
@@ -169,8 +174,7 @@ public static class SunlitProfileRenderer {
     public static void BuildHero(string outputPath, string backgroundPath) {
         using (Image art = Image.FromFile(backgroundPath)) {
             Render(outputPath, Width, 350, delegate(Graphics g, float t) {
-                float pan = 0.025f * (float)Math.Sin(t * Math.PI * 2.0);
-                Background(g, art, Width, 350, pan, 0.5f);
+                Background(g, art, Width, 350, 0f, 0.5f);
                 Tracked(g, "ENGINEERING  /  COMPUTER VISION  /  TOOLING", "Consolas", 11.5f, FontStyle.Bold, Muted, 38, 25, 0.85f);
                 Rule(g, 38, 49, 800, RuleColor, 1f);
                 float nameX = 39f;
@@ -182,13 +186,13 @@ public static class SunlitProfileRenderer {
                         g.FillRectangle(highlight, nameX, 84f, nameWidth, 70f);
                     g.DrawString("Gokul A", nameFont, nameBrush, nameX, nameY);
                 }
-                float pulse = 322f + 12f * (float)Math.Sin(t * Math.PI * 2.0);
+                float pulse = 305f + 18f * (float)Math.Sin(t * Math.PI * 2.0);
                 using (SolidBrush brush = new SolidBrush(Coral)) g.FillRectangle(brush, 39, 174, pulse, 7);
                 Text(g, "I build systems whose decisions can be followed\u2014and whose failure modes stay visible.",
                      "Segoe UI", 21f, FontStyle.Regular, Ink, 39, 204, 470, 72, StringAlignment.Near);
                 Text(g, "github.com/CapedCrusader77", "Consolas", 14.5f, FontStyle.Bold, Ink, 40, 305, 450, 23, StringAlignment.Near);
-                using (SolidBrush dot = new SolidBrush(Coral)) g.FillEllipse(dot, 14 + 8 * (float)Math.Sin(t * Math.PI * 2.0), 27, 7, 7);
-            });
+                using (SolidBrush dot = new SolidBrush(Coral)) g.FillEllipse(dot, 14, 27, 7, 7);
+            }, 24, 100);
         }
     }
 
