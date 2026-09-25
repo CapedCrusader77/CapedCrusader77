@@ -184,25 +184,25 @@ public static class SunlitProfileRenderer {
         }
     }
 
-    public static void BuildProjects(string outputPath, string facePath, string guardPath, string rootPath) {
-        using (Image face = Image.FromFile(facePath))
+    public static void BuildProjects(string outputPath, string siegePath, string guardPath, string rootPath) {
+        using (Image siege = Image.FromFile(siegePath))
         using (Image guard = Image.FromFile(guardPath))
         using (Image root = Image.FromFile(rootPath)) {
             Render(outputPath, Width, 430, delegate(Graphics g, float t) {
                 g.Clear(Paper);
                 SectionTitle(g, "Selected builds", 1, t);
-                string[] names = { "FaceTrack-AI", "SkillGuard-OSS", "RootCause-IQ" };
+                string[] names = { "SIEGE", "SkillGuard-OSS", "RootCause-IQ" };
                 string[] descriptions = {
-                    "Streams 3D facial landmarks and gaze estimates through a WebAssembly pipeline.",
+                    "Runs scripted attack scenarios and streams firewall/IDS responses to a live dashboard.",
                     "Uses static AST inspection to find excessive capabilities and supply-chain risk.",
                     "Reconstructs distributed traces to locate the event that triggered downstream failures."
                 };
                 string[] stacks = {
-                    "TypeScript  /  WebAssembly  /  OpenCV",
+                    "FastAPI  /  React  /  WebSockets  /  D3",
                     "TypeScript  /  AST  /  Security",
                     "Python  /  OpenTelemetry  /  Causal AI"
                 };
-                Image[] art = { face, guard, root };
+                Image[] art = { siege, guard, root };
                 int[] xs = { 32, 300, 568 };
                 for (int i = 0; i < 3; i++) {
                     int x = xs[i];
@@ -371,7 +371,7 @@ Add-Type -TypeDefinition $source -ReferencedAssemblies 'System.Drawing'
 $assetDir = Join-Path $PSScriptRoot 'assets\sunlit'
 $matrix = Join-Path $PSScriptRoot 'real_contrib_matrix_2026.txt'
 [SunlitProfileRenderer]::BuildHero((Join-Path $assetDir 'hero.gif'), (Join-Path $assetDir 'hero-bg.jpg'))
-[SunlitProfileRenderer]::BuildProjects((Join-Path $assetDir 'projects.gif'), (Join-Path $assetDir 'facetrack-bg.jpg'), (Join-Path $assetDir 'skillguard-bg.jpg'), (Join-Path $assetDir 'rootcause-bg.jpg'))
+[SunlitProfileRenderer]::BuildProjects((Join-Path $assetDir 'projects.gif'), (Join-Path $assetDir 'siege-bg.jpg'), (Join-Path $assetDir 'skillguard-bg.jpg'), (Join-Path $assetDir 'rootcause-bg.jpg'))
 [SunlitProfileRenderer]::BuildDomains((Join-Path $assetDir 'domains.gif'), (Join-Path $assetDir 'domains-bg.jpg'))
 [SunlitProfileRenderer]::BuildContributions((Join-Path $assetDir 'contributions.gif'), (Join-Path $assetDir 'contributions-bg.jpg'), $matrix)
 [SunlitProfileRenderer]::BuildToolkit((Join-Path $assetDir 'toolkit.gif'), (Join-Path $assetDir 'toolkit-bg.jpg'))
