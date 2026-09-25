@@ -184,12 +184,14 @@ public static class SunlitProfileRenderer {
         }
     }
 
-    public static void BuildProjects(string outputPath, string siegePath, string guardPath, string rootPath) {
+    public static void BuildProjects(string outputPath, string backgroundPath, string siegePath, string guardPath, string rootPath) {
+        using (Image section = Image.FromFile(backgroundPath))
         using (Image siege = Image.FromFile(siegePath))
         using (Image guard = Image.FromFile(guardPath))
         using (Image root = Image.FromFile(rootPath)) {
             Render(outputPath, Width, 430, delegate(Graphics g, float t) {
-                g.Clear(Paper);
+                float pan = 0.008f * (float)Math.Sin(t * Math.PI * 2.0);
+                Background(g, section, Width, 430, pan, 0.5f);
                 SectionTitle(g, "Selected builds", 1, t);
                 string[] names = { "SIEGE", "SkillGuard-OSS", "RootCause-IQ" };
                 string[] descriptions = {
@@ -206,7 +208,7 @@ public static class SunlitProfileRenderer {
                 int[] xs = { 32, 300, 568 };
                 for (int i = 0; i < 3; i++) {
                     int x = xs[i];
-                    Panel(g, new Rectangle(x, 77, 240, 330), 238);
+                    Panel(g, new Rectangle(x, 77, 240, 330), 244);
                     float drift = 0.018f * (float)Math.Sin((t + i * 0.07f) * Math.PI * 2.0);
                     DrawCrop(g, art[i], new Rectangle(x + 1, 78, 238, 112), 0.52f + drift, 0.63f);
                     using (SolidBrush tag = new SolidBrush(i == 1 ? Coral : Sun)) g.FillRectangle(tag, x + 14, 202, 29, 4);
@@ -371,7 +373,7 @@ Add-Type -TypeDefinition $source -ReferencedAssemblies 'System.Drawing'
 $assetDir = Join-Path $PSScriptRoot 'assets\sunlit'
 $matrix = Join-Path $PSScriptRoot 'real_contrib_matrix_2026.txt'
 [SunlitProfileRenderer]::BuildHero((Join-Path $assetDir 'hero.gif'), (Join-Path $assetDir 'hero-bg.jpg'))
-[SunlitProfileRenderer]::BuildProjects((Join-Path $assetDir 'projects.gif'), (Join-Path $assetDir 'siege-bg.jpg'), (Join-Path $assetDir 'skillguard-bg.jpg'), (Join-Path $assetDir 'rootcause-bg.jpg'))
+[SunlitProfileRenderer]::BuildProjects((Join-Path $assetDir 'projects.gif'), (Join-Path $assetDir 'projects-bg.jpg'), (Join-Path $assetDir 'siege-bg.jpg'), (Join-Path $assetDir 'skillguard-bg.jpg'), (Join-Path $assetDir 'rootcause-bg.jpg'))
 [SunlitProfileRenderer]::BuildDomains((Join-Path $assetDir 'domains.gif'), (Join-Path $assetDir 'domains-bg.jpg'))
 [SunlitProfileRenderer]::BuildContributions((Join-Path $assetDir 'contributions.gif'), (Join-Path $assetDir 'contributions-bg.jpg'), $matrix)
 [SunlitProfileRenderer]::BuildToolkit((Join-Path $assetDir 'toolkit.gif'), (Join-Path $assetDir 'toolkit-bg.jpg'))
