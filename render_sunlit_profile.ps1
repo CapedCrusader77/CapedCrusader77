@@ -78,6 +78,57 @@ public static class SunlitProfileRenderer {
         using (Pen pen = new Pen(color, thickness)) g.DrawLine(pen, x1, y, x2, y);
     }
 
+    static Color Mix(Color from, Color to, float amount) {
+        amount = Math.Max(0f, Math.Min(1f, amount));
+        return Color.FromArgb(
+            (int)(from.R + (to.R - from.R) * amount),
+            (int)(from.G + (to.G - from.G) * amount),
+            (int)(from.B + (to.B - from.B) * amount));
+    }
+
+    static void AnimatedWordmark(Graphics g, string value, Font font, float x, float y, float t) {
+        CharacterRange[] ranges = new CharacterRange[value.Length];
+        for (int i = 0; i < value.Length; i++) ranges[i] = new CharacterRange(i, 1);
+        using (StringFormat format = new StringFormat()) {
+            format.FormatFlags |= StringFormatFlags.NoWrap | StringFormatFlags.MeasureTrailingSpaces;
+            format.SetMeasurableCharacterRanges(ranges);
+            RectangleF layout = new RectangleF(x, y, 450f, 100f);
+            using (SolidBrush ink = new SolidBrush(Ink))
+                g.DrawString(value, font, ink, layout, format);
+
+            Region[] glyphs = g.MeasureCharacterRanges(value, font, layout, format);
+            try {
+                float minX = Single.MaxValue;
+                float maxX = Single.MinValue;
+                for (int i = 0; i < glyphs.Length; i++) {
+                    if (Char.IsWhiteSpace(value[i])) continue;
+                    RectangleF bounds = glyphs[i].GetBounds(g);
+                    minX = Math.Min(minX, bounds.Left);
+                    maxX = Math.Max(maxX, bounds.Right);
+                }
+                float travel = maxX - minX + 150f;
+                float center = minX - 75f + travel * (0.5f - 0.5f * (float)Math.Cos(t * Math.PI * 2.0));
+                Color warmInk = Color.FromArgb(184, 88, 57);
+                for (int i = 0; i < glyphs.Length; i++) {
+                    if (Char.IsWhiteSpace(value[i])) continue;
+                    RectangleF bounds = glyphs[i].GetBounds(g);
+                    float distance = Math.Abs(bounds.Left + bounds.Width * 0.5f - center);
+                    float strength = Math.Max(0f, 1f - distance / 76f);
+                    if (strength < 0.01f) continue;
+
+                    using (SolidBrush accent = new SolidBrush(Mix(Ink, warmInk, strength))) {
+                        System.Drawing.Drawing2D.GraphicsState state = g.Save();
+                        g.SetClip(glyphs[i], CombineMode.Intersect);
+                        g.DrawString(value, font, accent, layout, format);
+                        g.Restore(state);
+                    }
+                }
+            } finally {
+                for (int i = 0; i < glyphs.Length; i++) glyphs[i].Dispose();
+            }
+        }
+    }
+
     static void SectionTitle(Graphics g, string title, int number, float t) {
         using (SolidBrush brush = new SolidBrush(Coral)) g.FillRectangle(brush, 32, 20, 5, 29);
         Text(g, title, "Georgia", 27f, FontStyle.Bold, Ink, 49, 16, 400, 38, StringAlignment.Near);
@@ -92,14 +143,24 @@ public static class SunlitProfileRenderer {
         using (Pen pen = new Pen(Color.FromArgb(115, 126, 91, 60), 1f)) g.DrawRectangle(pen, rect);
     }
 
-    static void SaveGif(string outputPath, Bitmap[] frames, int delayMs) {
+    static void SaveGif(string outputPath, Bitmap[] frames, int delayMs, Rectangle? updateRect) {
         using (FileStream fs = new FileStream(outputPath, FileMode.Create, FileAccess.Write)) {
             int delay100th = delayMs / 10;
             byte delayLo = (byte)(delay100th & 0xFF);
             byte delayHi = (byte)((delay100th >> 8) & 0xFF);
             for (int i = 0; i < frames.Length; i++) {
                 using (MemoryStream ms = new MemoryStream()) {
-                    frames[i].Save(ms, ImageFormat.Gif);
+                    Bitmap cropped = null;
+                    try {
+                        Bitmap encoded = frames[i];
+                        if (i > 0 && updateRect.HasValue) {
+                            cropped = frames[i].Clone(updateRect.Value, PixelFormat.Format24bppRgb);
+                            encoded = cropped;
+                        }
+                        encoded.Save(ms, ImageFormat.Gif);
+                    } finally {
+                        if (cropped != null) cropped.Dispose();
+                    }
                     byte[] bytes = ms.ToArray();
                     if (i == 0) {
                         fs.Write(bytes, 0, 13);
@@ -133,6 +194,12 @@ public static class SunlitProfileRenderer {
                             if ((bytes[10] & 0x80) != 0) {
                                 byte[] descriptor = new byte[10];
                                 Array.Copy(bytes, imageStart, descriptor, 0, 10);
+                                if (updateRect.HasValue) {
+                                    descriptor[1] = (byte)(updateRect.Value.X & 0xFF);
+                                    descriptor[2] = (byte)((updateRect.Value.X >> 8) & 0xFF);
+                                    descriptor[3] = (byte)(updateRect.Value.Y & 0xFF);
+                                    descriptor[4] = (byte)((updateRect.Value.Y >> 8) & 0xFF);
+                                }
                                 descriptor[9] = (byte)(0x80 | (bytes[10] & 0x07));
                                 fs.Write(descriptor, 0, 10);
                                 int count = 1 << ((bytes[10] & 7) + 1);
@@ -150,11 +217,11 @@ public static class SunlitProfileRenderer {
     }
 
     static void Render(string outputPath, int width, int height, Action<Graphics, float> drawFrame) {
-        Render(outputPath, width, height, drawFrame, Frames, DelayMs);
+        Render(outputPath, width, height, drawFrame, Frames, DelayMs, null);
     }
 
     static void Render(string outputPath, int width, int height, Action<Graphics, float> drawFrame,
-                       int frameCount, int delayMs) {
+                       int frameCount, int delayMs, Rectangle? updateRect) {
         Bitmap[] frames = new Bitmap[frameCount];
         try {
             for (int i = 0; i < frameCount; i++) {
@@ -165,7 +232,7 @@ public static class SunlitProfileRenderer {
                 }
                 frames[i] = bmp;
             }
-            SaveGif(outputPath, frames, delayMs);
+            SaveGif(outputPath, frames, delayMs, updateRect);
         } finally {
             for (int i = 0; i < frames.Length; i++) if (frames[i] != null) frames[i].Dispose();
         }
@@ -180,19 +247,13 @@ public static class SunlitProfileRenderer {
                 float nameX = 39f;
                 float nameY = 74f;
                 using (Font nameFont = new Font("Georgia", 78f, FontStyle.Bold, GraphicsUnit.Pixel))
-                using (SolidBrush nameBrush = new SolidBrush(Ink)) {
-                    float nameWidth = g.MeasureString("Gokul A", nameFont).Width + 10f;
-                    using (SolidBrush highlight = new SolidBrush(Sun))
-                        g.FillRectangle(highlight, nameX, 84f, nameWidth, 70f);
-                    g.DrawString("Gokul A", nameFont, nameBrush, nameX, nameY);
-                }
-                float pulse = 305f + 18f * (float)Math.Sin(t * Math.PI * 2.0);
-                using (SolidBrush brush = new SolidBrush(Coral)) g.FillRectangle(brush, 39, 174, pulse, 7);
+                    AnimatedWordmark(g, "Gokul A", nameFont, nameX, nameY, t);
+                using (SolidBrush brush = new SolidBrush(Coral)) g.FillRectangle(brush, 39, 174, 322, 7);
                 Text(g, "I build systems whose decisions can be followed\u2014and whose failure modes stay visible.",
                      "Segoe UI", 21f, FontStyle.Regular, Ink, 39, 204, 470, 72, StringAlignment.Near);
                 Text(g, "github.com/CapedCrusader77", "Consolas", 14.5f, FontStyle.Bold, Ink, 40, 305, 450, 23, StringAlignment.Near);
                 using (SolidBrush dot = new SolidBrush(Coral)) g.FillEllipse(dot, 14, 27, 7, 7);
-            }, 24, 100);
+            }, 24, 100, new Rectangle(50, 87, 330, 61));
         }
     }
 
