@@ -177,12 +177,12 @@ public static class SunlitProfileRenderer {
                 float nameY = 74f;
                 using (Font nameFont = new Font("Georgia", 78f, FontStyle.Bold, GraphicsUnit.Pixel))
                 using (SolidBrush nameBrush = new SolidBrush(Ink)) {
-                    g.DrawString("GOKUL", nameFont, nameBrush, nameX, nameY);
-                    float initialX = nameX + g.MeasureString("GOKUL", nameFont).Width + 2f;
-                    float initialWidth = g.MeasureString("A.", nameFont).Width + 10f;
+                    g.DrawString("Gokul", nameFont, nameBrush, nameX, nameY);
+                    float initialX = nameX + g.MeasureString("Gokul", nameFont).Width + 2f;
+                    float initialWidth = g.MeasureString("A", nameFont).Width + 10f;
                     using (SolidBrush highlight = new SolidBrush(Sun))
                         g.FillRectangle(highlight, initialX, 84f, initialWidth, 70f);
-                    g.DrawString("A.", nameFont, nameBrush, initialX + 5f, nameY);
+                    g.DrawString("A", nameFont, nameBrush, initialX + 5f, nameY);
                 }
                 float pulse = 278f + 14f * (float)Math.Sin(t * Math.PI * 2.0);
                 using (SolidBrush brush = new SolidBrush(Coral)) g.FillRectangle(brush, 39, 174, pulse, 7);
