@@ -344,14 +344,14 @@ public static class SunlitProfileRenderer {
     public static void BuildContributions(string outputPath, string backgroundPath, string matrixPath) {
         int activeWeeks;
         int[,] grid = ReadContributionMatrix(matrixPath, out activeWeeks);
-        if (activeWeeks != 23) throw new InvalidDataException("Expected 23 active weeks in the current 2026 snapshot, found " + activeWeeks);
+        if (activeWeeks != 26) throw new InvalidDataException("Expected 26 active weeks in the current 2026 snapshot, found " + activeWeeks);
         using (Image art = Image.FromFile(backgroundPath)) {
             Render(outputPath, Width, 224, delegate(Graphics g, float t) {
                 Background(g, art, Width, 224, 0.012f * (float)Math.Sin(t * Math.PI * 2.0), 0.55f);
                 SectionTitle(g, "Contributions", 3, t);
-                Text(g, "361", "Georgia", 53f, FontStyle.Bold, Ink, 35, 77, 154, 60, StringAlignment.Near);
+                Text(g, "386", "Georgia", 53f, FontStyle.Bold, Ink, 35, 77, 154, 60, StringAlignment.Near);
                 Text(g, "2026 CONTRIBUTIONS", "Consolas", 10f, FontStyle.Bold, Muted, 39, 137, 152, 17, StringAlignment.Near);
-                Text(g, "23", "Georgia", 53f, FontStyle.Bold, Ink, 215, 77, 100, 60, StringAlignment.Near);
+                Text(g, "26", "Georgia", 53f, FontStyle.Bold, Ink, 215, 77, 100, 60, StringAlignment.Near);
                 Text(g, "ACTIVE WEEKS", "Consolas", 10f, FontStyle.Bold, Muted, 219, 137, 130, 17, StringAlignment.Near);
                 Panel(g, new Rectangle(320, 75, 488, 115), 226);
 
@@ -383,7 +383,7 @@ public static class SunlitProfileRenderer {
                 }
                 int focusWeek = (int)(t * 53f) % 53;
                 using (SolidBrush marker = new SolidBrush(Coral)) g.FillRectangle(marker, gridX + focusWeek * step, gridY - 8, cell, 4);
-                Text(g, "GITHUB PROFILE  /  THROUGH 25 SEP 2026", "Consolas", 9.2f, FontStyle.Bold, Muted, 368, 174, 420, 14, StringAlignment.Near);
+                Text(g, "GITHUB PROFILE  /  THROUGH 05 NOV 2026", "Consolas", 9.2f, FontStyle.Bold, Muted, 368, 174, 420, 14, StringAlignment.Near);
             });
         }
     }

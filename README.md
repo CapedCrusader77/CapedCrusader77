@@ -17,7 +17,7 @@
 <br />
 
 <p align="center">
-  <img src="assets/sunlit/contributions.gif?v=1" width="840" alt="" />
+  <img src="assets/sunlit/contributions.gif?v=2" width="840" alt="" />
 </p>
 
 <br />
