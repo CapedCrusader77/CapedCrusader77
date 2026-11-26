@@ -257,33 +257,63 @@ public static class SunlitProfileRenderer {
         }
     }
 
-    public static void BuildProjects(string outputPath, string backgroundPath, string siegePath, string guardPath, string rootPath) {
+    static void Gear(Graphics g, float cx, float cy, float radius, int teeth, float angle, Color color) {
+        PointF[] points = new PointF[teeth * 4];
+        for (int i = 0; i < points.Length; i++) {
+            double a = angle + i * Math.PI * 2.0 / points.Length;
+            float r = (i % 4 < 2) ? radius : radius * 0.82f;
+            points[i] = new PointF(cx + r * (float)Math.Cos(a), cy + r * (float)Math.Sin(a));
+        }
+        using (SolidBrush brush = new SolidBrush(color)) g.FillPolygon(brush, points);
+        using (SolidBrush hub = new SolidBrush(Paper)) g.FillEllipse(hub, cx - radius * 0.32f, cy - radius * 0.32f, radius * 0.64f, radius * 0.64f);
+        using (SolidBrush bore = new SolidBrush(Ink)) g.FillEllipse(bore, cx - radius * 0.12f, cy - radius * 0.12f, radius * 0.24f, radius * 0.24f);
+    }
+
+    static void GearArt(Graphics g, Rectangle area, float t) {
+        System.Drawing.Drawing2D.GraphicsState state = g.Save();
+        g.SetClip(area);
+        using (SolidBrush back = new SolidBrush(Color.FromArgb(246, 233, 208))) g.FillRectangle(back, area);
+        using (SolidBrush band = new SolidBrush(Sun)) g.FillRectangle(band, area.X, area.Bottom - 22, area.Width, 22);
+        float turn = t * (float)(Math.PI * 2.0);
+        // Each gear advances exactly one tooth per loop, so the animation repeats without a jump.
+        Gear(g, area.X + 82, area.Y + 58, 47f, 14, turn / 14f, Ink);
+        Gear(g, area.X + 154, area.Y + 68, 31f, 9, -turn / 9f + 0.17f, Coral);
+        Gear(g, area.X + 196, area.Y + 35, 22f, 7, turn / 7f, Muted);
+        using (Pen tolerance = new Pen(Coral, 1.2f)) {
+            tolerance.DashStyle = DashStyle.Dash;
+            g.DrawEllipse(tolerance, area.X + 82 - 53, area.Y + 58 - 53, 106, 106);
+        }
+        g.Restore(state);
+    }
+
+    public static void BuildProjects(string outputPath, string backgroundPath, string guardPath, string siegePath) {
         using (Image section = Image.FromFile(backgroundPath))
-        using (Image siege = Image.FromFile(siegePath))
         using (Image guard = Image.FromFile(guardPath))
-        using (Image root = Image.FromFile(rootPath)) {
+        using (Image siege = Image.FromFile(siegePath)) {
             Render(outputPath, Width, 430, delegate(Graphics g, float t) {
                 float pan = 0.008f * (float)Math.Sin(t * Math.PI * 2.0);
                 Background(g, section, Width, 430, pan, 0.5f);
                 SectionTitle(g, "Selected builds", 1, t);
-                string[] names = { "SIEGE", "SkillGuard-OSS", "RootCause-IQ" };
+                string[] names = { "MotionProof", "SkillGuard-OSS", "SIEGE" };
                 string[] descriptions = {
-                    "Runs scripted attack scenarios and streams firewall/IDS responses to a live dashboard.",
-                    "Uses static AST inspection to find excessive capabilities and supply-chain risk.",
-                    "Reconstructs distributed traces to locate the event that triggered downstream failures."
+                    "Simulates CAD assemblies built off-tolerance to show which fail, and why.",
+                    "Scans MCP servers and agent skills, then checks their claims in a sandbox.",
+                    "Runs scripted attack scenarios and streams firewall/IDS responses to a live dashboard."
                 };
                 string[] stacks = {
-                    "FastAPI  /  React  /  WebSockets  /  D3",
-                    "TypeScript  /  AST  /  Security",
-                    "Python  /  OpenTelemetry  /  Causal AI"
+                    "Python  /  MuJoCo  /  FastAPI  /  React",
+                    "Python  /  AST  /  bubblewrap",
+                    "FastAPI  /  React  /  WebSockets  /  D3"
                 };
-                Image[] art = { siege, guard, root };
+                Image[] art = { null, guard, siege };
                 int[] xs = { 32, 300, 568 };
                 for (int i = 0; i < 3; i++) {
                     int x = xs[i];
                     Panel(g, new Rectangle(x, 77, 240, 330), 244);
                     float drift = 0.018f * (float)Math.Sin((t + i * 0.07f) * Math.PI * 2.0);
-                    DrawCrop(g, art[i], new Rectangle(x + 1, 78, 238, 112), 0.52f + drift, 0.63f);
+                    Rectangle artArea = new Rectangle(x + 1, 78, 238, 112);
+                    if (art[i] == null) GearArt(g, artArea, t);
+                    else DrawCrop(g, art[i], artArea, 0.52f + drift, 0.63f);
                     using (SolidBrush tag = new SolidBrush(i == 1 ? Coral : Sun)) g.FillRectangle(tag, x + 14, 202, 29, 4);
                     Text(g, names[i], "Georgia", 19f, FontStyle.Bold, Ink, x + 14, 211, 214, 28, StringAlignment.Near);
                     Text(g, descriptions[i], "Segoe UI", 14f, FontStyle.Regular, Ink, x + 14, 249, 212, 63, StringAlignment.Near);
@@ -344,14 +374,14 @@ public static class SunlitProfileRenderer {
     public static void BuildContributions(string outputPath, string backgroundPath, string matrixPath) {
         int activeWeeks;
         int[,] grid = ReadContributionMatrix(matrixPath, out activeWeeks);
-        if (activeWeeks != 26) throw new InvalidDataException("Expected 26 active weeks in the current 2026 snapshot, found " + activeWeeks);
+        if (activeWeeks != 29) throw new InvalidDataException("Expected 29 active weeks in the current 2026 snapshot, found " + activeWeeks);
         using (Image art = Image.FromFile(backgroundPath)) {
             Render(outputPath, Width, 224, delegate(Graphics g, float t) {
                 Background(g, art, Width, 224, 0.012f * (float)Math.Sin(t * Math.PI * 2.0), 0.55f);
                 SectionTitle(g, "Contributions", 3, t);
-                Text(g, "386", "Georgia", 53f, FontStyle.Bold, Ink, 35, 77, 154, 60, StringAlignment.Near);
+                Text(g, "459", "Georgia", 53f, FontStyle.Bold, Ink, 35, 77, 154, 60, StringAlignment.Near);
                 Text(g, "2026 CONTRIBUTIONS", "Consolas", 10f, FontStyle.Bold, Muted, 39, 137, 152, 17, StringAlignment.Near);
-                Text(g, "26", "Georgia", 53f, FontStyle.Bold, Ink, 215, 77, 100, 60, StringAlignment.Near);
+                Text(g, "29", "Georgia", 53f, FontStyle.Bold, Ink, 215, 77, 100, 60, StringAlignment.Near);
                 Text(g, "ACTIVE WEEKS", "Consolas", 10f, FontStyle.Bold, Muted, 219, 137, 130, 17, StringAlignment.Near);
                 Panel(g, new Rectangle(320, 75, 488, 115), 226);
 
@@ -383,7 +413,7 @@ public static class SunlitProfileRenderer {
                 }
                 int focusWeek = (int)(t * 53f) % 53;
                 using (SolidBrush marker = new SolidBrush(Coral)) g.FillRectangle(marker, gridX + focusWeek * step, gridY - 8, cell, 4);
-                Text(g, "GITHUB PROFILE  /  THROUGH 05 NOV 2026", "Consolas", 9.2f, FontStyle.Bold, Muted, 368, 174, 420, 14, StringAlignment.Near);
+                Text(g, "GITHUB PROFILE  /  THROUGH 26 NOV 2026", "Consolas", 9.2f, FontStyle.Bold, Muted, 368, 174, 420, 14, StringAlignment.Near);
             });
         }
     }
@@ -446,7 +476,7 @@ Add-Type -TypeDefinition $source -ReferencedAssemblies 'System.Drawing'
 $assetDir = Join-Path $PSScriptRoot 'assets\sunlit'
 $matrix = Join-Path $PSScriptRoot 'real_contrib_matrix_2026.txt'
 [SunlitProfileRenderer]::BuildHero((Join-Path $assetDir 'hero.gif'), (Join-Path $assetDir 'hero-bg.jpg'))
-[SunlitProfileRenderer]::BuildProjects((Join-Path $assetDir 'projects.gif'), (Join-Path $assetDir 'projects-bg.jpg'), (Join-Path $assetDir 'siege-bg.jpg'), (Join-Path $assetDir 'skillguard-bg.jpg'), (Join-Path $assetDir 'rootcause-bg.jpg'))
+[SunlitProfileRenderer]::BuildProjects((Join-Path $assetDir 'projects.gif'), (Join-Path $assetDir 'projects-bg.jpg'), (Join-Path $assetDir 'skillguard-bg.jpg'), (Join-Path $assetDir 'siege-bg.jpg'))
 [SunlitProfileRenderer]::BuildDomains((Join-Path $assetDir 'domains.gif'), (Join-Path $assetDir 'domains-bg.jpg'))
 [SunlitProfileRenderer]::BuildContributions((Join-Path $assetDir 'contributions.gif'), (Join-Path $assetDir 'contributions-bg.jpg'), $matrix)
 [SunlitProfileRenderer]::BuildToolkit((Join-Path $assetDir 'toolkit.gif'), (Join-Path $assetDir 'toolkit-bg.jpg'))
