@@ -379,7 +379,7 @@ public static class SunlitProfileRenderer {
             Render(outputPath, Width, 224, delegate(Graphics g, float t) {
                 Background(g, art, Width, 224, 0.012f * (float)Math.Sin(t * Math.PI * 2.0), 0.55f);
                 SectionTitle(g, "Contributions", 3, t);
-                Text(g, "459", "Georgia", 53f, FontStyle.Bold, Ink, 35, 77, 154, 60, StringAlignment.Near);
+                Text(g, "468", "Georgia", 53f, FontStyle.Bold, Ink, 35, 77, 154, 60, StringAlignment.Near);
                 Text(g, "2026 CONTRIBUTIONS", "Consolas", 10f, FontStyle.Bold, Muted, 39, 137, 152, 17, StringAlignment.Near);
                 Text(g, "29", "Georgia", 53f, FontStyle.Bold, Ink, 215, 77, 100, 60, StringAlignment.Near);
                 Text(g, "ACTIVE WEEKS", "Consolas", 10f, FontStyle.Bold, Muted, 219, 137, 130, 17, StringAlignment.Near);
@@ -413,7 +413,7 @@ public static class SunlitProfileRenderer {
                 }
                 int focusWeek = (int)(t * 53f) % 53;
                 using (SolidBrush marker = new SolidBrush(Coral)) g.FillRectangle(marker, gridX + focusWeek * step, gridY - 8, cell, 4);
-                Text(g, "GITHUB PROFILE  /  THROUGH 26 NOV 2026", "Consolas", 9.2f, FontStyle.Bold, Muted, 368, 174, 420, 14, StringAlignment.Near);
+                Text(g, "GITHUB PROFILE  /  THROUGH 27 NOV 2026", "Consolas", 9.2f, FontStyle.Bold, Muted, 368, 174, 420, 14, StringAlignment.Near);
             });
         }
     }

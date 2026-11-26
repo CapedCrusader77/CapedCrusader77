@@ -2,7 +2,7 @@
   <img src="assets/sunlit/hero.gif?v=1" width="840" alt="" /><br />
   <img src="assets/sunlit/projects.gif?v=2" width="840" alt="" /><br />
   <img src="assets/sunlit/domains.gif?v=1" width="840" alt="" /><br />
-  <img src="assets/sunlit/contributions.gif?v=3" width="840" alt="" /><br />
+  <img src="assets/sunlit/contributions.gif?v=4" width="840" alt="" /><br />
   <img src="assets/sunlit/toolkit.gif?v=1" width="840" alt="" /><br />
   <img src="assets/sunlit/contact-heading.gif?v=1" width="840" alt="" />
 </p>
